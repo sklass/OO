@@ -1,0 +1,29 @@
+package Game.View;
+
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+public class MainMenuView {
+
+    public void start (Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/Game/View/MainMenu.fxml"));
+
+        Scene scene = new Scene(root, 300, 275);
+        Pane MainMenuPane = (AnchorPane) scene.lookup("#MainMenuPane");
+        MainMenuPane.setMaxSize(300,275);
+       /* Button btn = (Button) scene.lookup("#StartBtn");
+        Label MainMenuLabel = (Label) scene.lookup("#MainMenuLabel");
+        MainMenuLabel.setText("MainMenu Test");
+        */
+        stage.setTitle("FXML Welcome");
+        stage.setScene(scene);
+        stage.show();
+    }
+}
