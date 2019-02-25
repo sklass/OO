@@ -1,13 +1,20 @@
 package Game.Controller;
 
+import Game.View.FourWinsView;
+import Game.View.TicTacToeView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-public class MainMenuController {
+public class MainMenuController{
 
     public MainMenuController(){
     }
+
+    @FXML
+    private AnchorPane MainMenuPane;
 
    @FXML
     private Label MainMenuLabel;
@@ -23,18 +30,23 @@ public class MainMenuController {
 
     //Methode zum starten von TicTacToe
     @FXML
-    private void TicTacToe()
+    private void TicTacToe () throws Exception
     {
-        //
         System.out.println("TicTacToe");
+        TicTacToeView TicTacToe = new TicTacToeView();                      //TicTacToeView erzeugen
+        Stage primaryStage = (Stage) MainMenuPane.getScene().getWindow();   //primaryStage ermitteln
+        TicTacToe.start(primaryStage);                                      //TicTacToe auf PrimaryStage anzeigen
     }
 
     //Methode zum starten von FourWins
     @FXML
-    private void FourWins()
+    private void FourWins()throws Exception
     {
         //
         System.out.println("FourWins");
+        FourWinsView FourWins = new FourWinsView();                      //TicTacToeView erzeugen
+        Stage primaryStage = (Stage) MainMenuPane.getScene().getWindow();   //primaryStage ermitteln
+        FourWins.start(primaryStage);                                      //TicTacToe auf PrimaryStage anzeigen
     }
 
     //Methode zum Beenden des Programms

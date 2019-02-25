@@ -1,5 +1,6 @@
 
 
+import Game.Controller.MainMenuController;
 import Game.View.MainMenuView;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -12,6 +13,7 @@ public class Main extends Application {
 
         MainMenuView MainMenu = new MainMenuView();
         MainMenu.start(primaryStage);
+
         //Model erzeugen und Stage übergeben
         //BoardModel myBoardModel = new BoardModel(primaryStage);
         //Controller erzeugen und Model übergeben
