@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -8,7 +9,7 @@
 
 <AnchorPane fx:id="FourWinsPane" prefHeight="360.0" prefWidth="614.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Game.Controller.FourWinsController">
    <children>
-      <GridPane fx:id="FourWinsGrid" gridLinesVisible="true" layoutX="134.0" layoutY="87.0" prefHeight="187.0" prefWidth="346.0">
+      <GridPane fx:id="FourWinsGrid" gridLinesVisible="true" layoutX="134.0" layoutY="87.0" prefHeight="187.0" prefWidth="346.0" style="-fx-background-color: grey;">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,5 +29,6 @@
         </rowConstraints>
       </GridPane>
       <Button fx:id="backBtn" layoutX="14.0" layoutY="321.0" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="Back" />
+      <Label fx:id="FourWinsLabel" layoutX="270.0" layoutY="14.0" text="FourWins v1.2" />
    </children>
 </AnchorPane>
