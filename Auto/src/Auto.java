@@ -4,12 +4,13 @@ public class Auto {
     String Marke;
     String Modell;
     String Farbe;
+    Fahrer Besitzer;
 
     double TankVolumen;
     double Verbrauch;
     double TankStand;
 
-    void setzeEigenschaften(String Marke, String Modell, String Farbe, String Seriennummer, double TankVolumen, double Verbrauch){
+    void setzeEigenschaften(String Marke, String Modell, String Farbe, String Seriennummer, double TankVolumen, double Verbrauch, double FahrerKontostand){
         this.Marke = Marke;
         this.Modell = Modell;
         this.Farbe = Farbe;
@@ -17,6 +18,7 @@ public class Auto {
         this.TankVolumen = TankVolumen;
         this.Verbrauch = Verbrauch;
         this.TankStand = 0;
+        this.Besitzer = new Fahrer(FahrerKontostand);
     }
 
     void druckeEigenschaften(){
@@ -35,9 +37,10 @@ public class Auto {
     //fahre(Anzahl km)
     boolean fahre(double kilometer){
         double FahrtVerbrauch = kilometer *  Verbrauch / 100;
-        double maximaleStrecke = TankStand / Verbrauch;
+        double maximaleStrecke = TankStand / Verbrauch * 100;
         if(FahrtVerbrauch > TankStand){
-            System.out.println("Tankfüllung reicht nicht um so weit zu Fahren");
+            System.out.println("Tankfüllung reicht nicht um " + kilometer + "Km weit zu Fahren");
+            System.out.printf("Die maximale Strecke bei aktueller Tankfüllung beträgt: %.2f Km", maximaleStrecke);
         }else{
             TankStand -= FahrtVerbrauch;
             System.out.printf("Die Fahrt hat %.2f L Benzin verbraucht\n", FahrtVerbrauch);
@@ -50,17 +53,8 @@ public class Auto {
         return TankStand;
     }
 
-    void tanke(double Liter){
-        double PlatzImTank = TankVolumen-TankStand;
-        if(Liter < 0 ){
-            System.out.println("Keine negativen Werte möglich");
-            Liter = 0;
-        }
-        if(Liter > PlatzImTank ){
-            System.out.println("Maximales Tankvolumen überschritten!\nSetze Anzahl Liter auf " + PlatzImTank);
-            Liter = PlatzImTank;
-        }
-        System.out.println(Liter + " L getankt");
+    void tanke(Tankstelle MeineTankstelle){
+        double Liter = MeineTankstelle.vollTanken(this.TankVolumen, this.TankStand, this.Besitzer.Kontostand);
         TankStand += Liter;
         druckeTankstand();
     }
