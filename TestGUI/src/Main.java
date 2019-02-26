@@ -1,10 +1,7 @@
 
 
 import Game.Controller.MainMenuController;
-import Game.Controller.TicTacToeController;
-import Game.Model.BoardModel;
 import Game.Model.MainMenuModel;
-import Game.View.MainMenuView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

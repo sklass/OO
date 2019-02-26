@@ -13,9 +13,7 @@ import javafx.stage.Stage;
 
 
 public class TicTacToeController {
-    TicTacToe TicTacToeModel = null;
-
-
+    TicTacToe TicTacToeModel = new TicTacToe();
 
     public void setModel(TicTacToe TicTacToeModel){
         this.TicTacToeModel = TicTacToeModel;
@@ -24,7 +22,8 @@ public class TicTacToeController {
     public void showView() throws Exception{
         TicTacToeView TicTacToeView = new TicTacToeView();                     //TicTacToeView erzeugen
         TicTacToeView.start(TicTacToeModel.primaryStage);
-        //setGridIndex();
+        //TicTacToeModel = new TicTacToe();
+        TicTacToeModel.GameStateHandler();
     }
 
 
@@ -48,11 +47,11 @@ public class TicTacToeController {
             Integer colIndex = TicTacToeGrid.getColumnIndex(clickedNode) == null ? 0 : TicTacToeGrid.getColumnIndex(clickedNode);
             Integer rowIndex = TicTacToeGrid.getRowIndex(clickedNode) == null ? 0 :  TicTacToeGrid.getRowIndex(clickedNode);
 
-            //System.out.printf("Mouse entered cell [%d, %d]%n", colIndex.intValue(), rowIndex.intValue());
-            System.out.println("ColIndex: " + colIndex);
-            System.out.println("RowIndex: " + rowIndex);
-
-            addCircle(colIndex,rowIndex);
+           if(TicTacToeModel.makeAMove(rowIndex,colIndex)){
+                addCircle(colIndex,rowIndex);
+                System.out.println("ColIndex: " + colIndex);
+                System.out.println("RowIndex: " + rowIndex);
+            }
 
             }
         }
@@ -72,5 +71,4 @@ public class TicTacToeController {
         Stage primaryStage = (Stage)TicTacToePane.getScene().getWindow();   //primaryStage ermitteln
         MainMenuView.start(primaryStage);                                      //TicTacToe auf PrimaryStage anzeigen
     }
-
 }

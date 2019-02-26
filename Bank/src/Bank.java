@@ -26,9 +26,16 @@ public class Bank {
         Account myNewAccount = new Account(accountID,customerID);
         return myNewAccount;
     }
+
     public void printAllCustomers(){
-        for(int i = 0; i < BankCustomers.length; i++){
-            printCustomerInfo(BankCustomers[i]);
+        for(Customer customer: BankCustomers){
+            printCustomerInfo(customer);
+            for(Account account: BankAccounts){
+                if(customer.getCustomerID() == account.getCustomerID()) {
+                    System.out.println("Kontoinformationen:");
+                    printAccountInfo(account);
+                }
+            }
         }
     }
 
@@ -39,6 +46,11 @@ public class Bank {
         System.out.println("nachname: " + customer.getLastname());
         System.out.println("Straße: " + customer.getStreet());
         System.out.println("Ort: " + customer.getCity());
+    }
+
+    private void printAccountInfo(Account account) {
+        System.out.println("Kontonummer:\t" + account.getAccountID());
+        System.out.println("Guthaben:\t" + account.getBalance());
 
     }
 }

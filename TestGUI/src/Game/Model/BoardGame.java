@@ -15,7 +15,7 @@ abstract class BoardGame {
 
     //zwingt die instanzen der Klasse BoardGame die folgenden Methoden zu definierenk
     abstract void GameStateHandler();
-    abstract void makeAMove();
+    abstract boolean makeAMove(int rowIndex, int colIndex);
     abstract void checkDiagonale();
 
     public BoardGame() {
@@ -72,8 +72,9 @@ abstract class BoardGame {
         String header = this.Board.getHeader();
         int[][] coordinates = this.Board.getCoordinates();        //das Koordinaten array wird in ein String-Array umgewandelt und ausgegeben
         //this.Console.PrintBoard(cols, rows, header, interpretCoordinates(coordinates));
-    }
 
+    }
+/*
     protected String[][] interpretCoordinates(int[][] coordinates) {
         int rows = this.Board.getRows();
         int cols = this.Board.getCols();
@@ -119,7 +120,7 @@ abstract class BoardGame {
         }
         return BoardContent;
     }
-
+*/
     protected boolean checkField(int row, int col, int[][]coordinates) {  //Methode um zu prüfen ob ein einzelnes Spielfeld noch frei ist. Die position des zu setzenden Spielsteins sowie die bisher gesetzen Spielsteine werden übergeben
         if (coordinates[row][col] == 0) {                               //Befindet sich im angegebenen Feld eine 0 ist das Feld leer
             return true;

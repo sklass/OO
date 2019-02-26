@@ -5,10 +5,12 @@ import javafx.stage.Stage;
 public class TicTacToe extends BoardGame{
     public Stage primaryStage;
 
-    void GameStateHandler(){ //Zustandsautomat zuständig für die Regelung des Spielablaufs in Schritten
-
-        while(GameStatus <=10){
+    public void GameStateHandler(){ //Zustandsautomat zuständig für die Regelung des Spielablaufs in Schritten
+        this.initGame(3,3,'X','O');
+                /*
+       // while(GameStatus <=10){
             switch(GameStatus){
+
                 case 0: // Vor dem Spiel die Regeln und bedienung erklären
                     //this.Console.print("Welcome to TicTacToe v1.1");
                     //this.Console.print("Get 3 of your symbols in a row");
@@ -16,22 +18,22 @@ public class TicTacToe extends BoardGame{
                     break;
                 case 1: //Spiel wird gestartet
                     this.initGame(3,3,'X','O');
-                    this.changeGameState(2);
+                    //this.changeGameState(2);
                     break;
                 case 2: //Spieler wechseln
                     this.toggleActivePlayer();
                     this.changeGameState(3);
                     break;
                 case 3: //Spielfeld anzeigen
-                    this.showBoard();
+                    //this.showBoard();
                     this.changeGameState(4);
                     break;
                 case 4: //Aktiven Spieler anzeigen
-                    this.showActivePlayer();
+                    //this.showActivePlayer();
                     this.changeGameState(5);
                     break;
                 case 5: //Spielzug durchführen
-                    this.makeAMove();
+                    //this.makeAMove();
                     this.changeGameState(6);
                     break;
                 case 6:     //Gewinner  prüfen
@@ -53,34 +55,26 @@ public class TicTacToe extends BoardGame{
                     this.changeGameState(10);
                     break;
                 case 10: //Nochmal spielen
-                    this.Playagain();
+                    //this.Playagain();
                     break;
                 default: //Beenden
                     //System.out.println("Bye");
                     changeGameState(11);
                     break;
             }
+            */
         }
-    }
+    //}
 
    //Methode um neuen Spielstein aufs Feld zu setzen
-    void makeAMove(){
- /*       int[][] coordinates = this.Board.getCoordinates();  //Array mit bisherigen Spielsteinen holen
-        int[] validAnswers = new int[]{1,2,3};
-
-        while(true){                                                         //Schleife solange durchlaufen bis gültiger wert eingegeben wird
-            int col = this.Console.ask("Column: ", validAnswers);   //Der User wird nach einer Spalte gefragt
-            int row = this.Console.ask("Row: ", validAnswers);      //Der User wird nach einer Reihe gefragt
-
-            if(checkField(row,col,coordinates)){                //Ist der Eintrag im Koordianten Array leer
-                coordinates[row][col] = activePlayer.getPlayerID();     //Wird das Zeichen des Spieler eingetragen
-                break;
-            }else{
-                this.Console.print("Field is not empty!");
-            }
+    public boolean makeAMove(int rowIndex,int colIndex){
+        int[][] coordinates = this.Board.getCoordinates();  //Array mit bisherigen Spielsteinen holen //TODO Fehler coordinates leer!!!
+        if(checkField(rowIndex,colIndex,coordinates)) {                //Ist der Eintrag im Koordianten Array leer
+            coordinates[rowIndex][colIndex] = activePlayer.getPlayerID();     //Wird das Zeichen des Spieler eingetragen
+            this.Board.setCoordinates(coordinates); //Das aktuelle Koordinaten array wird ans Board zurückgegeben
+            return true;
         }
-        this.Board.setCoordinates(coordinates); //Das aktuelle Koordinaten array wird ans Board zurückgegeben
-  */
+        return false;
     }
 
     void checkDiagonale(){
