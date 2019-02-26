@@ -1,6 +1,9 @@
 package Game.Model;
 
+import javafx.stage.Stage;
+
 public class TicTacToe extends BoardGame{
+    public Stage primaryStage;
 
     void GameStateHandler(){ //Zustandsautomat zuständig für die Regelung des Spielablaufs in Schritten
 

@@ -17,10 +17,6 @@ public class MainMenuView {
         Scene scene = new Scene(root, 300, 275);
         Pane MainMenuPane = (AnchorPane) scene.lookup("#MainMenuPane");
         MainMenuPane.setMaxSize(300,275);
-       /* Button btn = (Button) scene.lookup("#StartBtn");
-        Label MainMenuLabel = (Label) scene.lookup("#MainMenuLabel");
-        MainMenuLabel.setText("MainMenu Test");
-        */
         stage.setTitle("FXML Welcome");
         stage.setScene(scene);
         stage.show();

@@ -16,6 +16,9 @@ public class FourWinsView {
         Scene scene = new Scene(root);
         //Pane FourWinsPane = (AnchorPane) scene.lookup("#FourWinsPane");
         //FourWinsPane.setMaxSize(800,600);
+
+
+
         stage.setTitle("FourWins");
         stage.setScene(scene);
         stage.show();
