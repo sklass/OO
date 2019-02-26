@@ -7,8 +7,10 @@ public class TicTacToe extends BoardGame{
 
     public void GameStateHandler(){ //Zustandsautomat zuständig für die Regelung des Spielablaufs in Schritten
         this.initGame(3,3,'X','O');
-                /*
+        this.toggleActivePlayer();
+
        // while(GameStatus <=10){
+        /*
             switch(GameStatus){
 
                 case 0: // Vor dem Spiel die Regeln und bedienung erklären
@@ -61,8 +63,7 @@ public class TicTacToe extends BoardGame{
                     //System.out.println("Bye");
                     changeGameState(11);
                     break;
-            }
-            */
+            } */
         }
     //}
 
@@ -70,7 +71,7 @@ public class TicTacToe extends BoardGame{
     public boolean makeAMove(int rowIndex,int colIndex){
         int[][] coordinates = this.Board.getCoordinates();  //Array mit bisherigen Spielsteinen holen //TODO Fehler coordinates leer!!!
         if(checkField(rowIndex,colIndex,coordinates)) {                //Ist der Eintrag im Koordianten Array leer
-            coordinates[rowIndex][colIndex] = activePlayer.getPlayerID();     //Wird das Zeichen des Spieler eingetragen
+            coordinates[rowIndex][colIndex] = 1;     //Wird das Zeichen des Spieler eingetragen
             this.Board.setCoordinates(coordinates); //Das aktuelle Koordinaten array wird ans Board zurückgegeben
             return true;
         }

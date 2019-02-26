@@ -4,12 +4,12 @@ public class Board { //Klasse für das Spielfeld
     //SpielfeldEigenschaften
     private int rows;           //höhe
     private int cols ;          //breite
-    private int[][] coordinates;//Spielsteine
+    private int[][] coordinates = new int[4][4];//Spielsteine
 
     void setSize(int cols, int rows){   //Methode zum festlegen der Spielfeldgröße
         this.rows = rows;
         this.cols = cols;
-        this.coordinates = new int[this.rows+1][this.cols+1];   //TODO +1 aktuell damit bei user eingaben von 1 und nicht von 0 angefangen wird
+        //this.coordinates = new int[this.rows+1][this.cols+1];   //TODO +1 aktuell damit bei user eingaben von 1 und nicht von 0 angefangen wird
     }
 
     void initialize(int FillWithValue){     //Das Array für die Spielersymbole wird zu beginn des Spiels mit 0en gefüllt
@@ -26,7 +26,7 @@ public class Board { //Klasse für das Spielfeld
     }   //Array mit den Spielsteine übergeben
 
     void setCoordinates(int[][] coordinates) {//Array mit Spielsteinen aktualisieren
-        this.coordinates = coordinates;
+        this.coordinates = coordinates.clone();
     }
 
     int getCols(){

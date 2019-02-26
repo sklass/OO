@@ -22,7 +22,6 @@ public class TicTacToeController {
     public void showView() throws Exception{
         TicTacToeView TicTacToeView = new TicTacToeView();                     //TicTacToeView erzeugen
         TicTacToeView.start(TicTacToeModel.primaryStage);
-        //TicTacToeModel = new TicTacToe();
         TicTacToeModel.GameStateHandler();
     }
 
@@ -36,7 +35,6 @@ public class TicTacToeController {
         @FXML
         private void HandleGridClick(javafx.scene.input.MouseEvent event){
             Node clickedNode = event.getPickResult().getIntersectedNode();
-            //Integer colIndex = TicTacToeGrid.getColumnIndex(clickedNode);
             if (clickedNode != TicTacToeGrid) {
                 Node parent = clickedNode.getParent();
                 while (parent != TicTacToeGrid) {
@@ -59,7 +57,6 @@ public class TicTacToeController {
     @FXML
     private void addCircle(int colIndex, int rowIndex){
         Circle MyCircle = new Circle(200, 200, 10, Color.BLACK);
-        //TicTacToeGrid.getChildren().add(MyCircle);
         TicTacToeGrid.add(MyCircle,colIndex,rowIndex);
     }
 

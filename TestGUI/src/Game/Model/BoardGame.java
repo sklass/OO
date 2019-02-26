@@ -3,7 +3,8 @@ package Game.Model;
 //Grundgerüst für TicTacToe und 4Gewinnt von denen beide abgeleitet werden
 
 abstract class BoardGame {
-    protected int GameStatus;
+
+    public int GameStatus;
     protected Player player1;
     protected Player player2;
     protected Player activePlayer;
@@ -30,6 +31,15 @@ abstract class BoardGame {
     void start(){
         this.GameStateHandler();    //Ruft den Zustandsautomaten auf
     }
+
+    public int getGameStatus() {
+        return GameStatus;
+    }
+
+    public void setGameStatus(int gameStatus) {
+        GameStatus = gameStatus;
+    }
+
 
     protected void changeGameState(int newGameState) {
         this.GameStatus = newGameState;
