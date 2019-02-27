@@ -1,63 +1,30 @@
 package Game.View;
-
-
-import javafx.event.EventHandler;
+import Game.Controller.TicTacToeController;
+import Game.Model.BoardGame;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class TicTacToeView {
 
-    public void start (Stage stage) throws Exception {
-        Pane root = FXMLLoader.load(getClass().getResource("/Game/View/TicTacToe.fxml"));
-        //Scene scene = new Scene(root, 300, 275);
+    public void start (BoardGame Model) throws Exception {
+        //Stage aus Modell auslesen
+        Stage stage = Model.getPrimaryStage();
+        //Oberflächeninhalte in den FXML Loader laden
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Game/View/TicTacToe.fxml"));
+        //Oberflächeninhalte in einem Pane platzieren
+        Pane root = loader.load();
+        //Der TTT Controller ist in TicTacToe.fxml definiert, hier wird er abgefragt
+        TicTacToeController Controller = loader.getController();
+        //Dem Controller wird das TTT Model zugewiesen. Auf diesem Weg sind dem Controller und der View das Modell bekannt
+        Controller.setModel(Model);
         Scene scene = new Scene(root);
-        Pane TicTacToePane = (AnchorPane) scene.lookup("#TicTacToePane");
+       // Pane TicTacToePane = (AnchorPane) scene.lookup("#TicTacToePane");
         //TicTacToePane.setMaxSize(300,275);
         stage.setTitle("TicTacToe");
-/*
-        GridPane TicTacToeGrid = new GridPane();
-        TicTacToeGrid.setGridLinesVisible(true);
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-
-                Label label = new Label("Label " + i + "/" + j);
-                label.setMouseTransparent(true);
-                TicTacToeGrid.setRowIndex(label, i);
-                TicTacToeGrid.setColumnIndex(label, j);
-
-                TicTacToeGrid.getChildren().add(label);
-            }
-        }
-        root.getChildren().add( TicTacToeGrid);
-
-*/
         stage.setScene(scene);
         stage.show();
-/*
-        TicTacToeGrid.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-
-                for( Node node: TicTacToeGrid.getChildren()) {
-
-                    if( node instanceof Label) {
-                        if( node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
-                            System.out.println( "Node: " + node + " at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex( node));
-                        }
-                    }
-                }
-            }
-        });
-        */
     }
 
 }

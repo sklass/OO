@@ -5,22 +5,22 @@ public class Player { //Klasse für die Spieler
     private char symbol;
     private int Points;
 
-    void setPlayerID(int playerID){
+    public void setPlayerID(int playerID){
         this.ID =  playerID;
     }
-    void setPlayerSymbol( char playerSymbol){
+    public void setPlayerSymbol( char playerSymbol){
         this.symbol = playerSymbol;
     }
-    int getPlayerID(){
+    public int getPlayerID(){
         return this.ID;
     }
-    char getPlayerSymbol(){
+    public char getPlayerSymbol(){
         return this.symbol;
     }
-    int getPoints() {
+    public int getPoints() {
         return Points;
     }
-    void increasePoints() {
+    public void increasePoints() {
         this.Points++;
     }
 

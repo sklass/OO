@@ -1,9 +1,10 @@
 package Game.Controller;
 
+import Game.Model.BoardGame;
 import Game.Model.MainMenuModel;
-import Game.Model.TicTacToe;
 import Game.View.FourWinsView;
 import Game.View.MainMenuView;
+import Game.View.TicTacToeView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,11 +13,7 @@ import javafx.stage.Stage;
 
 public class MainMenuController{
     MainMenuModel MainMenuModel;
-
-
-    public MainMenuController(){
-
-    }
+    BoardGame TicTacToeModel;
 
     public void setModel(MainMenuModel MainMenuModel){
         this.MainMenuModel = MainMenuModel;
@@ -46,12 +43,17 @@ public class MainMenuController{
     @FXML
     private void TicTacToe () throws Exception
     {
+        //TODO Modell ggf erst in der view erzeugen
         System.out.println("TicTacToe");
-        TicTacToe TicTacToe = new TicTacToe();
-        TicTacToe.primaryStage = (Stage) MainMenuPane.getScene().getWindow();
-        TicTacToeController TicTacToeController = new TicTacToeController();
-        TicTacToeController.setModel(TicTacToe);
-        TicTacToeController.showView();
+        //Modell für TTT erzeugen
+        BoardGame TicTacToeModel = new BoardGame();
+        //Stage im Model speichern
+        TicTacToeModel.setPrimaryStage((Stage) MainMenuPane.getScene().getWindow());
+        //TTT View erzeugen
+        TicTacToeView View = new TicTacToeView();
+        //View anzeigen und Modell übergeben (Modell wird vom View an den Controller weitergereicht)
+        View.start(TicTacToeModel);
+
     }
 
     //Methode zum starten von FourWins
