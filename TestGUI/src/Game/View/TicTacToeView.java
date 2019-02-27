@@ -19,6 +19,7 @@ public class TicTacToeView {
         TicTacToeController Controller = loader.getController();
         //Dem Controller wird das TTT Model zugewiesen. Auf diesem Weg sind dem Controller und der View das Modell bekannt
         Controller.setModel(Model);
+        Controller.GameStateHandler();
         Scene scene = new Scene(root);
        // Pane TicTacToePane = (AnchorPane) scene.lookup("#TicTacToePane");
         //TicTacToePane.setMaxSize(300,275);

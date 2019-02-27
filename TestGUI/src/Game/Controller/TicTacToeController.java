@@ -7,6 +7,7 @@ package Game.Controller;
 import Game.View.MainMenuView;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -16,17 +17,13 @@ import javafx.stage.Stage;
 
 public class TicTacToeController extends BoardGameController{
 
-  /*  @FXML
-    public void initialize() {
-        GameStateHandler();
-    }
-*/
     public void GameStateHandler(){
 
         switch(Model.getGameStatus()){
             case 0:
                 initGame(3,3,'X','O');
                 Model.setGameStatus(1);
+                GameStateHandler();
                 break;
             case 1:
                 toggleActivePlayer();
@@ -35,12 +32,25 @@ public class TicTacToeController extends BoardGameController{
             case 2:
                 checkRow(3);
                 checkCol(3);
-                checkDraw();
+                checkDiagonale();
+                checkWinner();
+                GameStateHandler();
                 break;
             case 3:
-                System.out.println("Winner!");
+                checkDraw();
+                GameStateHandler();
                 break;
             case 4:
+
+                InfoLabel.setText("We have a Winner");
+                InfoLabel.setVisible(true);
+                //Label WinnerLabel = new Label();
+                //WinnerLabel.setText("We have a Winner");
+                //WinnerLabel.setLayoutX(150);
+                //WinnerLabel.setLayoutY(100);
+               // TicTacToePane.getChildren().add(WinnerLabel);
+                break;
+            case 5:
                 System.out.println("Draw");
                 break;
 
@@ -58,60 +68,51 @@ public class TicTacToeController extends BoardGameController{
         }
         return false;
     }
-/*
+
     void checkDiagonale(){
-        int rows = Model.getBoard().getRows();
-        int cols = Model.getBoard().getCols();
+
         int coordinates[][] = Model.getBoard().getCoordinates();
-        //drei diagonale von links unten nach rechts oben
         int Points1 = 0;
         int Points2 = 0;
         int[][] WinCoordinates1 = new int[2][4];       //Speichert die position des Spielsteins in einem Array
         int[][] WinCoordinates2 = new int[2][4];
 
-        for(int i = 1; i <=3; i++) {
-            if(coordinates[i][i] == this.activePlayer.getPlayerID()) { //1-1 2-2 3-3 -> Von oben links nach unten rechts
+        for(int i = 0; i <3; i++) {
+            if(coordinates[i][i] == Model.getActivePlayer().getPlayerID()) { //1-1 2-2 3-3 -> Von oben links nach unten rechts
                 WinCoordinates1[0][Points1] = i;
                 WinCoordinates1[1][Points1] = i;
                 Points1++;
             }else Points1 = 0;
 
             if(Points1 == 3 ){                   //Wurden 3 gleiche Zeichen in folge gefunden
-                this.WinCondition = "Three diagonal -> upper left to lower right";
-                setWinner(this.activePlayer,this.WinCondition,WinCoordinates1);           //setzen wir einen Sieger
+                Model.setWinner(Model.getActivePlayer());           //setzen wir einen Sieger
                 break;
             }
 
-            int y = 4-i;
+            int y = 2-i;
             int x = i;
-            if(coordinates[y][x] == activePlayer.getPlayerID()) { //3-1 2-2 1-3 -> Von oben links nach unten rechts
+            if(coordinates[y][x] == Model.getActivePlayer().getPlayerID()) { //2-0 1-1 0-2 -> Von oben rechts nach unten links
                 WinCoordinates2[0][Points2] = y;
                 WinCoordinates2[1][Points2] = x;
                 Points2++;
             }else Points2 = 0;
 
             if(Points2 == 3 ){                   //Wurden 3 gleiche Zeichen in folge gefunden
-                WinCondition = "Three diagonal -> lower left to upper right";
-                setWinner(this.activePlayer,this.WinCondition,WinCoordinates2);           //setzen wir einen Sieger
+                Model.setWinner(Model.getActivePlayer());           //setzen wir einen Sieger
                 break;
             }
         }
 
     }
-*/
-/*
-    public void showView() throws Exception{
-        TicTacToeView TicTacToeView = new TicTacToeView();                     //TicTacToeView erzeugen
-        TicTacToeView.start(Model.getPrimaryStage());
-        //Model.GameStateHandler();
-    }
-*/
 
     @FXML
     private AnchorPane TicTacToePane;
 
         @FXML
         private GridPane TicTacToeGrid;
+
+        @FXML
+        private Label InfoLabel;
 
         @FXML
         private void HandleGridClick(javafx.scene.input.MouseEvent event){
@@ -126,10 +127,10 @@ public class TicTacToeController extends BoardGameController{
             Integer colIndex = TicTacToeGrid.getColumnIndex(clickedNode) == null ? 0 : TicTacToeGrid.getColumnIndex(clickedNode);
             Integer rowIndex = TicTacToeGrid.getRowIndex(clickedNode) == null ? 0 :  TicTacToeGrid.getRowIndex(clickedNode);
 
-           if(makeAMove(rowIndex,colIndex)){
+           if(makeAMove(rowIndex,colIndex) && Model.getWinner() == null){
                 addCircle(colIndex,rowIndex);
-                System.out.println("ColIndex: " + colIndex);
-                System.out.println("RowIndex: " + rowIndex);
+                //System.out.println("ColIndex: " + colIndex);
+                //System.out.println("RowIndex: " + rowIndex);
                 Model.setGameStatus(2); //Prüfe gewinner
             }
 

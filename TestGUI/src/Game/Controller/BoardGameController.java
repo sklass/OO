@@ -9,9 +9,9 @@ abstract class BoardGameController {
     BoardGame Model;
 
     //zwingt die instanzen der Klasse BoardGame die folgenden Methoden zu definierenk
-    //abstract void GameStateHandler();
+    abstract void GameStateHandler();
     abstract boolean makeAMove(int rowIndex, int colIndex);
-   // abstract void checkDiagonale();
+    abstract void checkDiagonale();
 
 
     public void setModel(BoardGame model) {
@@ -59,13 +59,14 @@ abstract class BoardGameController {
         int Points = 0;
         //String WinCondition;
         //waagerecht
-        for (int y = rows; y > 0; y--) {             //Läuft von der untersten bis zur obersten Reihe (6-1)
+        for (int y = rows; y >= 0; y--) {             //Läuft von der untersten bis zur obersten Reihe (6-1)
             int[][] WinCoordinates = new int[2][4];       //Speichert die position des Spielsteins in einem Array
-            for (int x = 1; x <= cols; x++) {       //für jedes Feld in der Reihe
+            for (int x = 0; x < cols; x++) {       //für jedes Feld in der Reihe
                 if (coordinates[y][x] == Model.getActivePlayer().getPlayerID()) {    //Prüfung ob sich darin das Zeichen des Spielers befindet der gerade dran ist
-                    Points++;                                     //Für jedes aufeinenderfolgende gleiche Zeiche gibt es einen Punkt
-                    WinCoordinates[0][Points - 1] = y;
-                    WinCoordinates[1][Points - 1] = x;
+                    WinCoordinates[0][Points] = y;
+                    WinCoordinates[1][Points] = x;
+                    Points++;                       //Für jedes aufeinenderfolgende gleiche Zeiche gibt es einen Punkt
+                   // System.out.println(Points);
                 }
                 if (coordinates[y][x] != Model.getActivePlayer().getPlayerID()) {    //Findet die Schleife ein anderes Zeichen als das des Spielers der and er Reihe sit
                     Points = 0;                     // Punktezähler wieder auf 0 setzen
@@ -73,7 +74,6 @@ abstract class BoardGameController {
                 if (Points == AmountofSymbolsToWin) {                   //Wurden vier gleiche Zeichen in folge gefunden
 
                     Model.setWinner(Model.getActivePlayer(),WinCoordinates);                   // Gibt die Schleife den Gewinner zurück
-                    Model.setGameStatus(3);
                     return;
                 }
             }
@@ -86,9 +86,9 @@ abstract class BoardGameController {
         int coordinates[][] = Model.getBoard().getCoordinates();
         //Senkrecht
         int Points = 0;
-        for (int x = cols; x > 0; x--) {             //Läuft von Spalte ganz rechts bis zum anfang
+        for (int x = cols; x >= 0; x--) {             //Läuft von Spalte ganz rechts bis zum anfang
             int[][] WinCoordinates = new int[2][4];       //Speichert die position des Spielsteins in einem Array
-            for (int y = 1; y <= rows; y++) {       //Prüft jedes Feld in der Spalte
+            for (int y = 0; y <= rows; y++) {       //Prüft jedes Feld in der Spalte
                 if (coordinates[y][x] == Model.getActivePlayer().getPlayerID()) {    //ob sich darin das Zeichen des Spielers befindet der gerade dran ist
                     Points++;                       //Für jedes aufeinenderfolgende gleiche Zeiche gibt es einen Punkt
                     WinCoordinates[0][Points - 1] = y;
@@ -97,11 +97,8 @@ abstract class BoardGameController {
                 if (coordinates[y][x] != Model.getActivePlayer().getPlayerID()) {    //Findet die Schleife ein anderes Zeichen als das des Spielers der and er Reihe sit
                     Points = 0;                     // Punktezähler wieder auf 0 srtzen
                 }
-                //System.out.print(Points);
                 if (Points == AmountofSymbolsToWin) {                   //Wurden vier gleiche Zeichen in folge gefunden
-                    //WinCondition = AmountofSymbolsToWin + " in one Column";
                     Model.setWinner(Model.getActivePlayer(),WinCoordinates);                   // Gibt die Schleife den Gewinner zurück
-                    Model.setGameStatus(3);
                     return;
                 }
             }
@@ -114,23 +111,23 @@ abstract class BoardGameController {
         int cols = Model.getBoard().getCols();
         int[][] coordinates = Model.getBoard().getCoordinates();
 
-        for(int y = 1; y <= rows; y++){    //Alle Zeilen
-            for(int x = 1; x <= cols; x++){    // Und alle Felder in der Reihe abarbeiten
+        for(int y = 0; y < rows; y++){    //Alle Zeilen
+            for(int x = 0; x < cols; x++){    // Und alle Felder in der Reihe abarbeiten
                 if (coordinates[y][x] == 0){ //Prüfen ob leer
                     Model.setGameStatus(1);
                     return;                      //Wenn leer, kein unentschieden
                 }
             }
         }
-        Model.setGameStatus(4); //Wird kein freies feld gefunden endet das Spiel mit unentschieden
+        Model.setGameStatus(5); //Wird kein freies feld gefunden endet das Spiel mit unentschieden
     }
 
     protected void checkWinner(){
         if(Model.getWinner() != null){
             this.increaseWinningPlayerPoints();       //Punkt des Spielers der gewonnen hat um eins erhöhen
-            //this.changeGameState(8);    //Spielstatus 8 -> Gewinner anzeigen
+            Model.setGameStatus(4);    //Spielstatus 8 -> Gewinner anzeigen
         }else {
-            //this.changeGameState(7); //auf Unentschieden prüfen
+            Model.setGameStatus(3); //auf Unentschieden prüfen
 
         }
     }

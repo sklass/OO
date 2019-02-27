@@ -40,5 +40,6 @@
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
+      <Label fx:id="InfoLabel" layoutX="184.0" layoutY="103.0" text="InfoLabel" visible="false" />
    </children>
 </AnchorPane>
