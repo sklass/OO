@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/4WinsTicTactoeGUI.iml" filepath="$PROJECT_DIR$/4WinsTicTactoeGUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestGUI.iml" filepath="$PROJECT_DIR$/TestGUI.iml" />
     </modules>
   </component>
 </project>
