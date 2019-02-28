@@ -11,8 +11,6 @@ public class BoardGame {
     protected Player player2;
     protected Player activePlayer;
     protected Player winner;
-    protected String WinCondition;
-    protected int[][] WinCoordinates;
     protected Board Board;
     protected Stage primaryStage;
 
@@ -71,30 +69,6 @@ public class BoardGame {
 
     public void setWinner(Player winner) {
         this.winner = winner;
-    }
-
-    public void setWinner(Player winner, int[][] WinCoordinates) {
-        this.winner = winner;
-       // this.WinCondition = WindCondition;
-        this.WinCoordinates = new int[2][4];
-        this.WinCoordinates = WinCoordinates;
-
-    }
-
-    public String getWinCondition() {
-        return WinCondition;
-    }
-
-    public void setWinCondition(String winCondition) {
-        WinCondition = winCondition;
-    }
-
-    public int[][] getWinCoordinates() {
-        return WinCoordinates;
-    }
-
-    public void setWinCoordinates(int[][] winCoordinates) {
-        WinCoordinates = winCoordinates;
     }
 
     public Game.Model.Board getBoard() {
