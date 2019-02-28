@@ -4,7 +4,11 @@ public class Board { //Klasse für das Spielfeld
     //SpielfeldEigenschaften
     private int rows;           //höhe
     private int cols ;          //breite
-    private int[][] coordinates = new int[3][3];//Spielsteine
+    private int[][] coordinates;//Spielsteine
+
+    public Board(int rows, int cols){
+        coordinates = new int[rows][cols];
+    }
 
     public void setSize(int cols, int rows){   //Methode zum festlegen der Spielfeldgröße
         this.rows = rows;

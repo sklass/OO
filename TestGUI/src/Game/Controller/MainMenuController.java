@@ -46,7 +46,7 @@ public class MainMenuController{
         //TODO Modell ggf erst in der view erzeugen
         System.out.println("TicTacToe");
         //Modell für TTT erzeugen
-        BoardGame TicTacToeModel = new BoardGame();
+        BoardGame TicTacToeModel = new BoardGame(3,3);
         //Stage im Model speichern
         TicTacToeModel.setPrimaryStage((Stage) MainMenuPane.getScene().getWindow());
         //TTT View erzeugen
@@ -60,11 +60,15 @@ public class MainMenuController{
     @FXML
     private void FourWins()throws Exception
     {
-        //
         System.out.println("FourWins");
-        FourWinsView FourWinsView = new FourWinsView();                      //TicTacToeView erzeugen
-        Stage primaryStage = (Stage) MainMenuPane.getScene().getWindow();   //primaryStage ermitteln
-        FourWinsView.start(primaryStage);                                   //TicTacToe auf PrimaryStage anzeigen
+        //Modell für TTT erzeugen
+        BoardGame FourWinsModel = new BoardGame(6,7);
+        //Stage im Model speichern
+        FourWinsModel.setPrimaryStage((Stage) MainMenuPane.getScene().getWindow());
+        //TTT View erzeugen
+        FourWinsView View = new FourWinsView();
+        //View anzeigen und Modell übergeben (Modell wird vom View an den Controller weitergereicht)
+        View.start(FourWinsModel);                                  //TicTacToe auf PrimaryStage anzeigen
     }
 
     //Methode zum Beenden des Programms

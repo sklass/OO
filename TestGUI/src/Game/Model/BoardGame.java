@@ -14,13 +14,13 @@ public class BoardGame {
     protected Board Board;
     protected Stage primaryStage;
 
-    public BoardGame() {
+    public BoardGame(int rows, int cols) {
         player1 = new Player();
         player2 = new Player();
         activePlayer = new Player();
         winner = new Player();
         GameStatus = 0;
-        Board = new Board();
+        Board = new Board(rows, cols);
     }
 
     public Stage getPrimaryStage() {
