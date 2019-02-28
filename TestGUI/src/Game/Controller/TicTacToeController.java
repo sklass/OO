@@ -5,6 +5,8 @@
 package Game.Controller;
 import Game.View.MainMenuView;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -157,6 +159,8 @@ public class TicTacToeController extends BoardGameController{
 
         Color CircleColor = Model.getActivePlayer().getPlayerColor();
         Circle MyCircle = new Circle(200, 200, 10, CircleColor);
+        GridPane.setHalignment(MyCircle, HPos.CENTER);
+        GridPane.setValignment(MyCircle, VPos.CENTER);
         TicTacToeGrid.add(MyCircle,colIndex,rowIndex);
     }
 
