@@ -1,12 +1,16 @@
 public class Player {
-    int ID;
-    String name;
-    int credit;
-    int bet;
-    Card[] hand;
+    private int ID;
+    private String name;
+    private int credit;
+    private int bet;
+    private Card[] hand;
+    private boolean BJ;
+    private boolean out;
 
     public Player(){
         int startCredit = 200;
+        BJ = false;
+        out = false;
         credit = startCredit;
     }
 
@@ -53,5 +57,21 @@ public class Player {
 
     public void setHand(Card[] hand) {
         this.hand = hand;
+    }
+
+    public boolean isBJ() {
+        return BJ;
+    }
+
+    public void setBJ(boolean BJ) {
+        this.BJ = BJ;
+    }
+
+    public boolean isOut() {
+        return out;
+    }
+
+    public void setOut(boolean out) {
+        this.out = out;
     }
 }
