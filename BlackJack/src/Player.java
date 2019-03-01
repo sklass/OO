@@ -1,16 +1,21 @@
+import java.util.ArrayList;
+
 public class Player {
     private int ID;
     private String name;
     private int credit;
     private int bet;
-    private Card[] hand;
+    //private Card[] hand;
+    ArrayList <Card> hand = new ArrayList();
     private boolean BJ;
     private boolean out;
+    private boolean stand;
 
     public Player(){
         int startCredit = 200;
         BJ = false;
         out = false;
+        stand = false;
         credit = startCredit;
     }
 
@@ -46,17 +51,19 @@ public class Player {
         this.bet = bet;
     }
 
-    public Card[] getHand() {
+    public ArrayList<Card> getHand() {
         return hand;
     }
 
-    public Card getCard(int index) {
-
-        return hand[index];
+    public Card getCard(int index){
+            return this.hand.get(index);
+    }
+    public void setCard(Card newCard){
+       this.hand.add(newCard);
     }
 
-    public void setHand(Card[] hand) {
-        this.hand = hand;
+    public void setHand(Card newCard) {
+        this.hand.add(newCard);
     }
 
     public boolean isBJ() {
@@ -70,8 +77,13 @@ public class Player {
     public boolean isOut() {
         return out;
     }
-
+    public boolean isStand() {
+        return stand;
+    }
     public void setOut(boolean out) {
         this.out = out;
+    }
+    public void setStand(boolean stand) {
+        this.stand = stand;
     }
 }
