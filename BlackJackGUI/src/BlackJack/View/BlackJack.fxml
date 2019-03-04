@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="BlackJack.View.BlackJack"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="573.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BlackJack.controller.BJController">
+   <children>
+      <Pane fx:id="Player1Pane" layoutX="8.0" layoutY="51.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Player1" />
+            <Label layoutX="14.0" layoutY="31.0" text="Credit:" />
+         </children>
+      </Pane>
+      <Pane fx:id="Player2Pane" layoutX="8.0" layoutY="295.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Player2" />
+            <Label layoutX="14.0" layoutY="31.0" text="Credit:" />
+         </children>
+      </Pane>
+      <Pane fx:id="Player3Pane" layoutX="228.0" layoutY="341.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Player3" />
+            <Label layoutX="12.0" layoutY="30.0" text="Credit:" />
+         </children>
+      </Pane>
+      <Pane fx:id="Player4Pane" layoutX="437.0" layoutY="341.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Player4" />
+            <Label layoutX="14.0" layoutY="31.0" text="Credit:" />
+         </children>
+      </Pane>
+      <Pane fx:id="Player5Pane" layoutX="659.0" layoutY="295.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Player5" />
+            <Label layoutX="11.0" layoutY="30.0" text="Credit:" />
+         </children>
+      </Pane>
+      <Pane fx:id="Player6Pane" layoutX="659.0" layoutY="51.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Player6" />
+            <Label layoutX="14.0" layoutY="28.0" text="Credit:" />
+         </children>
+      </Pane>
+      <Pane fx:id="BankPane" layoutX="313.0" layoutY="14.0" prefHeight="221.0" prefWidth="249.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Bank" />
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>

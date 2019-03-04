@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 //TODO output aufhübschen
 
-class BJController {
+public class BJController {
     private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler()
     private ArrayList <Player> Players; //Array List mit allen vorhandenen Spielern
     private Player Bank;            //Der Spieler der die Bank repäsentiert
@@ -20,7 +20,7 @@ class BJController {
     private int minBet;                     //minimaler Wetteinsatz
     private int maxBet;                     //maximaler Wetteinsatz
 
-    BJController(){
+   public BJController(){
         gamestatus = 0;
         input = new Scanner(System.in);
         CardCounter = 0;
