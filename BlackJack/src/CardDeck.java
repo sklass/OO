@@ -106,15 +106,11 @@ public class CardDeck {
         for (int i = CardArray.length - 1; i > 0; i--)  //array von hinten nach vorne durchlaufen
         {
             int randomIndex = rnd.nextInt(i + 1);     //zufallszahl zwischen 0 und 52 generieren
-            // Simple swap
+
             Card temp = CardArray[randomIndex];       //zufällige Karte in temp speichern
             CardArray[randomIndex] = CardArray[i];    //Anstelle der zufällig bestimmten karte, die karte speichern die anhand der for schleife gerade dran ist
             CardArray[i] = temp;                      //an der position der per schleife definierten karte wird nun die zufällig bestimmte karte abgelegt
         }
-    }
-
-    public Card[] getCards() {
-        return cards;
     }
 
     public Card drawCard(int whichCard){

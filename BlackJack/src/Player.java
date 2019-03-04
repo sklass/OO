@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 
 public class Player {
-    private int ID;
     private String name;
-    private int credit;
-    private int bet;
+    private double credit;
+    private double bet;
     ArrayList <Card> hand = new ArrayList();
     private boolean BJ;
     private boolean out;
@@ -18,14 +17,6 @@ public class Player {
         credit = startCredit;
     }
 
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public String getName() {
         return name;
     }
@@ -34,19 +25,19 @@ public class Player {
         this.name = name;
     }
 
-    public int getCredit() {
+    public double getCredit() {
         return credit;
     }
 
-    public void setCredit(int credit) {
+    public void setCredit(double credit) {
         this.credit = credit;
     }
 
-    public int getBet() {
+    public double getBet() {
         return bet;
     }
 
-    public void setBet(int bet) {
+    public void setBet(double bet) {
         this.bet = bet;
     }
 
@@ -60,10 +51,6 @@ public class Player {
 
     public void setCard(Card newCard){
        this.hand.add(newCard);
-    }
-
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
     }
 
     public boolean isBJ() {

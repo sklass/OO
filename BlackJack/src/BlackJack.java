@@ -2,13 +2,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 //TODO output aufhübschen
-//TODO credits für spieler als double -> bei blackjack nur 2.5facher einsatz als gewinn
 //TODO tripple 7 insta win -> dreifacher einsatz als gewinn
 
  class BlackJack {
     private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler() 
-    //private Player[] Players;       //Array mit allen Spielern
-    private ArrayList <Player> Players;
+    private ArrayList <Player> Players; //Array List mit allen vorhandenen Spielern
     private Player Bank;            //Der Spieler der die Bank repäsentiert
     private Scanner input;          //Für Eingaben in getUserInput
     private CardDeck CardDeck;      //Das bzw. die Kartenspiele
@@ -78,17 +76,15 @@ import java.util.Scanner;
         }
     }
 
-    private void definePlayers(){
+    private void definePlayers(){               //Anzahl der Spieler abfragen, sowie deren namen
         int[] answers = new int[]{1,2,3,4,5,6};
         int numberOfPlayer = getUserInput("How many player?", answers);
         Players = new ArrayList<>();
         Bank = new Player();
         Bank.setName("Bank");
-        Bank.setID(0);
         for(int i=0; i < numberOfPlayer; i++){
             Player newPlayer = new Player();
             newPlayer.setName(getUserInput("Enter name for Player " + (i)));
-            newPlayer.setID(i);
             Players.add(newPlayer);
         }
     }
@@ -117,12 +113,6 @@ import java.util.Scanner;
     private void drawStartCard() { //jeder spieler inkl. Bank zieht eine karte
 
         for(Player player: Players){
-            drawCard(player);
-        }
-    }
-
-    private void drawSecondCard(){              //alle spieler ziehen eine zweite Karte (aber nicht die bank)
-        for(Player player : Players){
             drawCard(player);
         }
     }
@@ -184,7 +174,7 @@ import java.util.Scanner;
     }
 
     public void GameResult(){
-        int winnings;
+        double winnings;
         for (Player player : Players){
             if(!player.isOut()){
 
@@ -193,7 +183,7 @@ import java.util.Scanner;
                         player.setCredit(player.getCredit() + player.getBet()); //Spieler bekommt seinen einsatz zurück
                         System.out.println(player.getName() + "gets back his bet of " + player.getBet());
                     }else{                                                      //Spieler hat BJ aber bank nicht
-                        winnings = player.getBet()*3;                           //Spieler erhält dreifachen einsatz
+                        winnings = player.getBet()*2.5;                           //Spieler erhält dreifachen einsatz
                         player.setCredit(player.getCredit() + winnings);
                         System.out.println(player.getName() + " wins " + winnings);
                     }
@@ -215,20 +205,18 @@ import java.util.Scanner;
 
     private void continueGame(){
         int[] validAnswers = {0,1};
-        ArrayList <Integer> remPlayerIDs = new ArrayList<>();
+        ArrayList <Player> remPlayers = new ArrayList<>();
         for(Player player : Players){
             if(getUserInput(player.getName() + " do you want to play another round?", validAnswers) == 0){
-                remPlayerIDs.add(player.getID());
+                remPlayers.add(player);
             }
         }
-        for(Integer i : remPlayerIDs){
-            Player removeMe = Players.get(i);
-            Players.remove(removeMe);
+        for(Player player : remPlayers){
+           Players.remove(player);
         }
     }
      public void unsetPlayerVars(){
         for (Player player : Players){
-            //player.setHand(null);
             player.getHand().clear();
             player.setBet(0);
             player.setStand(false);
