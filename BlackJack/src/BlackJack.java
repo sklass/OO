@@ -207,7 +207,10 @@ import java.util.Scanner;
         int[] validAnswers = {0,1};
         ArrayList <Player> remPlayers = new ArrayList<>();
         for(Player player : Players){
-            if(getUserInput(player.getName() + " do you want to play another round?", validAnswers) == 0){
+            if(player.getCredit() == 0){
+                remPlayers.add(player);
+                System.out.println("Sorry " + player.getName() + " your out. You have no money to play another round");
+            }else if(getUserInput(player.getName() + " do you want to play another round?", validAnswers) == 0){
                 remPlayers.add(player);
             }
         }
