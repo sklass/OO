@@ -2,7 +2,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 //TODO output aufhübschen
-//TODO tripple 7 insta win -> dreifacher einsatz als gewinn
 
  class BlackJack {
     private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler() 
@@ -19,7 +18,7 @@ import java.util.Scanner;
         gamestatus = 0;
         input = new Scanner(System.in);
         CardCounter = 0;
-        numberOfCardDecks = 4;
+        numberOfCardDecks = 6;
         minBet = 10;
         maxBet = 250;
         GameStateHandler();
@@ -34,37 +33,37 @@ import java.util.Scanner;
                     break;
                 case 1:
                     unsetPlayerVars();       //unset all player vars
-                    gamestatus = 2;
+                    gamestatus += 1;
                     break;
                 case 2:
                     CardDeck = new CardDeck(numberOfCardDecks); //kartendeck erstellen
-                    gamestatus = 3;
+                    gamestatus += 1;
                     break;
                 case 3:
                     System.out.println(Players.size());
                     getPlayerBets();                        //Wetteinsätze abfragen
-                    gamestatus = 4;
+                    gamestatus += +1;
                     break;
                 case 4:
-                    drawCard(Bank);
-                    drawStartCard();    //Zu beginn des Spiels wird je eine karte an alle Spieler vergeben (inklusive Bank)
-                    gamestatus = 5;
+                    drawCard(Bank, 1); // Die Bank zieht nur eine Karte
+                    drawStartCards();    //Zu beginn des Spiels wwerden 2 karten an alle Spieler vergeben
+                    gamestatus += 1;
                     break;
                 case 5:
-                    drawStartCard();   //Anschließend erhalten nur die spieler eine weitere karte
-                    gamestatus = 6;
+                    //double?
+                    gamestatus += 1;
                     break;
                 case 6:
                     anotherCard();    //Jeden spieler fragen ob er weitere Karten haben möchte
-                    gamestatus = 7;
+                    gamestatus += 1;
                     break;
                 case 7:
                     BanksTurn();    //Nachdem alle Spieler ihre karten erhalten haben ist die bank dran
-                    gamestatus = 8;
+                    gamestatus += 1;
                     break;
                 case 8:
                     GameResult();  //Ist die Bank fertig wird das Ergebnis der spielrunde geprüft und angezeigt
-                     gamestatus = 9;
+                     gamestatus += 1;
                     break;
                 case 9:
                     continueGame();  //Ist die Bank fertig wird das Ergebnis der spielrunde geprüft und angezeigt
@@ -110,34 +109,17 @@ import java.util.Scanner;
         }
     }
 
-    private void drawStartCard() { //jeder spieler inkl. Bank zieht eine karte
-
+    private void drawStartCards() { //jeder spieler zieht 2 karten
         for(Player player: Players){
-            drawCard(player);
+            drawCard(player, 2);
         }
     }
 
-    private void anotherCard(){      //fragt die spieler solange nach weiteren karten wie sie nicht gewonnen, verloren haben oder keine weiteren karten haben wollen
-        int[] validAnswers = {0,1};
-        for(int i=0; i < Players.size(); i++){
-            showPlayerCards(Bank);            //karte der Bank anzeigen
-            showPlayerCards(Players.get(i));            //Karten des aktuellen spielers zeigen
-
-            while(!Players.get(i).isOut() && !Players.get(i).isStand() && !Players.get(i).isBJ()){
-                int answer = getUserInput(Players.get(i).getName() + " do you want another card?",validAnswers);
-                if(answer == 1){
-                    drawCard(Players.get(i));
-                    showPlayerCards(Players.get(i));            //Karten des aktuellen spielers zeigen
-                }else{
-                    Players.get(i).setStand(true);
-                }
-            }
-        }
-    }
-
-    private void drawCard(Player player) {
+    private void drawCard(Player player , int numberOfCards) {
+        for(int i=0; i< numberOfCards; i++) {
             player.setCard(CardDeck.drawCard(CardCounter));
             CardCounter++;
+        }
     }
 
     private void showPlayerCards(Player player){
@@ -148,13 +130,51 @@ import java.util.Scanner;
             checkCardValues(player);
     }
 
+    private void doubleBet(Player player){
+        int[] validAnswers = new int[]{0,1};
+        int answer = getUserInput("Do you want to double your bet? ", validAnswers );
+        if(answer == 1){
+            if((player.getBet()) > player.getCredit()){
+                System.out.println("Sorry " + player.getName() + " you dont have enough credit to double up");
+            }else {
+                System.out.println("OK " + player.getName() + " your bet is doubled");
+                player.setCredit(player.getCredit()-player.getBet()); //Credit des spielers um den erhöhten einsatz verringern
+                player.setBet(player.getBet()*2);                     //Einsatz des spielers verdoppeln
+                player.setDoubleBet(true);                            //Flag setzen das spieler verdoppelt hat
+                drawCard(player, 1);                    //Spieler zieht karte
+                showPlayerCards(player);                                //Karten des spielers zeigen
+            }
+        }
+    }
+
+     private void anotherCard(){      //fragt die spieler solange nach weiteren karten wie sie nicht gewonnen, verloren haben oder keine weiteren karten haben wollen
+         int[] validAnswers = {0,1};
+         for(Player player : Players){
+             showPlayerCards(Bank);            //karte der Bank anzeigen
+             showPlayerCards(player);            //Karten des aktuellen spielers zeigen
+
+             if(player.getHand().size() == 2 && !player.BJ()) {  //der Spieler kann nur nach den ersten beiden karten verdoppeln und wenn er keinen blackjack hat
+                 doubleBet(player);
+             }
+             while(!player.isOut() && !player.isStand() && !player.BJ() && !player.DoubleBet()){
+                 int answer = getUserInput(player.getName() + " do you want another card?",validAnswers);
+                 if(answer == 1){
+                     drawCard(player,1);
+                     showPlayerCards(player);            //Karten des aktuellen spielers zeigen
+                 }else{
+                     player.setStand(true);
+                 }
+             }
+         }
+     }
+
     private void BanksTurn(){
-        drawCard(Bank);                   //zunächst zieht die Bank eine weitere Karte
+        drawCard(Bank,1);                   //zunächst zieht die Bank eine weitere Karte
         showPlayerCards(Bank);            //Die karten der Bank werden angezeigt
         int handValue = 0;
         handValue = getHandValue(Bank);
 
-        while(!Bank.isBJ() && !Bank.isStand() && !Bank.isOut()){
+        while(!Bank.BJ() && !Bank.isStand() && !Bank.isOut()){
             if(handValue > 21){                     //hat die Bank mehr als 21 ist sie raus
                 Bank.setOut(true);
                 System.out.println("The bank is out");
@@ -163,7 +183,7 @@ import java.util.Scanner;
                 System.out.println("The bank has BlackJack");
             }else if(handValue < 17){                     //bei weniger als 17 -> karte ziehen
                 System.out.println("The bank takes another Card");
-                drawCard(Bank);
+                drawCard(Bank,1);
                 showPlayerCards(Bank);            //Die karten der Bank werden angezeigt
                 handValue = getHandValue(Bank);     //und hand wert berechnen
             }else{                                  //ansonsten stehen
@@ -173,13 +193,13 @@ import java.util.Scanner;
         }
     }
 
-    public void GameResult(){
+    private void GameResult(){
         double winnings;
         for (Player player : Players){
             if(!player.isOut()){
 
-                if(player.isBJ()){                                              //Spieler hat BlackJack
-                    if(Bank.isBJ()){                                      //und Bank auch
+                if(player.BJ()){                                              //Spieler hat BlackJack
+                    if(Bank.BJ()){                                      //und Bank auch
                         player.setCredit(player.getCredit() + player.getBet()); //Spieler bekommt seinen einsatz zurück
                         System.out.println(player.getName() + "gets back his bet of " + player.getBet());
                     }else{                                                      //Spieler hat BJ aber bank nicht
@@ -218,7 +238,7 @@ import java.util.Scanner;
            Players.remove(player);
         }
     }
-     public void unsetPlayerVars(){
+     private void unsetPlayerVars(){
         for (Player player : Players){
             player.getHand().clear();
             player.setBet(0);

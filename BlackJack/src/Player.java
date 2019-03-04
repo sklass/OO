@@ -8,6 +8,7 @@ public class Player {
     private boolean BJ;
     private boolean out;
     private boolean stand;
+    private boolean doubleBet;
 
     public Player(){
         int startCredit = 200;
@@ -53,7 +54,7 @@ public class Player {
        this.hand.add(newCard);
     }
 
-    public boolean isBJ() {
+    public boolean BJ() {
         return BJ;
     }
 
@@ -72,5 +73,13 @@ public class Player {
     }
     public void setStand(boolean stand) {
         this.stand = stand;
+    }
+
+    public boolean DoubleBet() {
+        return doubleBet;
+    }
+
+    public void setDoubleBet(boolean doubleBet) {
+        this.doubleBet = doubleBet;
     }
 }
