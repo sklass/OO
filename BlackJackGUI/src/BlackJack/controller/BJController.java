@@ -1,10 +1,16 @@
-import java.lang.reflect.Array;
+package BlackJack.controller;
+
+import BlackJack.Model.Card;
+import BlackJack.Model.CardDeck;
+import BlackJack.Model.Player;
+
+
 import java.util.ArrayList;
 import java.util.Scanner;
 //TODO output aufhübschen
 
- class BlackJack {
-    private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler() 
+class BJController {
+    private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler()
     private ArrayList <Player> Players; //Array List mit allen vorhandenen Spielern
     private Player Bank;            //Der Spieler der die Bank repäsentiert
     private Scanner input;          //Für Eingaben in getUserInput
@@ -14,7 +20,7 @@ import java.util.Scanner;
     private int minBet;                     //minimaler Wetteinsatz
     private int maxBet;                     //maximaler Wetteinsatz
 
-    BlackJack(){
+    BJController(){
         gamestatus = 0;
         input = new Scanner(System.in);
         CardCounter = 0;
@@ -59,7 +65,7 @@ import java.util.Scanner;
                     break;
                 case 7:
                     GameResult();  //Ist die Bank fertig wird das Ergebnis der spielrunde geprüft und angezeigt
-                     gamestatus += 1;
+                    gamestatus += 1;
                     break;
                 case 8:
                     continueGame();  //Ist die Bank fertig wird das Ergebnis der spielrunde geprüft und angezeigt
@@ -119,11 +125,11 @@ import java.util.Scanner;
     }
 
     private void showPlayerCards(Player player){
-            System.out.println(player.getName() + "'s cards:");
-            for(int j =0; j < player.getHand().size(); j++){
-                System.out.println(player.getCard(j).getType() +" " + player.getCard(j).getName());
-            }
-            checkCardValues(player);
+        System.out.println(player.getName() + "'s cards:");
+        for(int j =0; j < player.getHand().size(); j++){
+            System.out.println(player.getCard(j).getType() +" " + player.getCard(j).getName());
+        }
+        checkCardValues(player);
     }
 
     private void doubleBet(Player player){
@@ -143,26 +149,26 @@ import java.util.Scanner;
         }
     }
 
-     private void anotherCard(){      //fragt die spieler solange nach weiteren karten wie sie nicht gewonnen, verloren haben oder keine weiteren karten haben wollen
-         int[] validAnswers = {0,1};
-         for(Player player : Players){
-             showPlayerCards(Bank);            //karte der Bank anzeigen
-             showPlayerCards(player);            //Karten des aktuellen spielers zeigen
+    private void anotherCard(){      //fragt die spieler solange nach weiteren karten wie sie nicht gewonnen, verloren haben oder keine weiteren karten haben wollen
+        int[] validAnswers = {0,1};
+        for(Player player : Players){
+            showPlayerCards(Bank);            //karte der Bank anzeigen
+            showPlayerCards(player);            //Karten des aktuellen spielers zeigen
 
-             if(player.getHand().size() == 2 && !player.BJ()) {  //der Spieler kann nur nach den ersten beiden karten verdoppeln und wenn er keinen blackjack hat
-                 doubleBet(player);
-             }
-             while(!player.isOut() && !player.isStand() && !player.BJ() && !player.DoubleBet()){
-                 int answer = getUserInput(player.getName() + " do you want another card?",validAnswers);
-                 if(answer == 1){
-                     drawCard(player,1);
-                     showPlayerCards(player);            //Karten des aktuellen spielers zeigen
-                 }else{
-                     player.setStand(true);
-                 }
-             }
-         }
-     }
+            if(player.getHand().size() == 2 && !player.BJ()) {  //der Spieler kann nur nach den ersten beiden karten verdoppeln und wenn er keinen blackjack hat
+                doubleBet(player);
+            }
+            while(!player.isOut() && !player.isStand() && !player.BJ() && !player.DoubleBet()){
+                int answer = getUserInput(player.getName() + " do you want another card?",validAnswers);
+                if(answer == 1){
+                    drawCard(player,1);
+                    showPlayerCards(player);            //Karten des aktuellen spielers zeigen
+                }else{
+                    player.setStand(true);
+                }
+            }
+        }
+    }
 
     private void BanksTurn(){
         drawCard(Bank,1);                   //zunächst zieht die Bank eine weitere Karte
@@ -231,10 +237,10 @@ import java.util.Scanner;
             }
         }
         for(Player player : remPlayers){
-           Players.remove(player);
+            Players.remove(player);
         }
     }
-     private void unsetPlayerVars(){
+    private void unsetPlayerVars(){
         for (Player player : Players){
             player.getHand().clear();
             player.setBet(0);
@@ -246,7 +252,7 @@ import java.util.Scanner;
         Bank.setStand(false);
         Bank.setBJ(false);
         Bank.setOut(false);
-     }
+    }
 
     private boolean playersLeft(){
         if(Players.size() == 0) return false;
@@ -267,22 +273,22 @@ import java.util.Scanner;
     }
 
     private void checkCardValues(Player player){
-            int handValue = getHandValue(player);
-            if(handValue == 21){                    //Kartenwert von 21
-                if(player.getHand().size() < 3){    //und max. 2 karten
-                    player.setBJ(true);             //BlackJack!
-                    System.out.println(player.getName() + " has a BlackJack!");
-                }else{
-                    player.setStand(true);          //Kartenwert 21 und mehr als 3 karten -> stand
-                    System.out.println(player.getName() + " has reached 21 points. stand!");
-                }
-
-            }else if (handValue > 21) {
-                System.out.println(player.getName() + " has more than 21 Points, hes out");
-                player.setOut(true);
+        int handValue = getHandValue(player);
+        if(handValue == 21){                    //Kartenwert von 21
+            if(player.getHand().size() < 3){    //und max. 2 karten
+                player.setBJ(true);             //BlackJack!
+                System.out.println(player.getName() + " has a BlackJack!");
             }else{
-                System.out.println(player.getName() + "'s cards total value: " + handValue);
+                player.setStand(true);          //Kartenwert 21 und mehr als 3 karten -> stand
+                System.out.println(player.getName() + " has reached 21 points. stand!");
             }
+
+        }else if (handValue > 21) {
+            System.out.println(player.getName() + " has more than 21 Points, hes out");
+            player.setOut(true);
+        }else{
+            System.out.println(player.getName() + "'s cards total value: " + handValue);
+        }
         System.out.println();
     }
 
