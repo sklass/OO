@@ -5,7 +5,6 @@ public class Player {
     private String name;
     private int credit;
     private int bet;
-    //private Card[] hand;
     ArrayList <Card> hand = new ArrayList();
     private boolean BJ;
     private boolean out;
@@ -58,12 +57,13 @@ public class Player {
     public Card getCard(int index){
             return this.hand.get(index);
     }
+
     public void setCard(Card newCard){
        this.hand.add(newCard);
     }
 
-    public void setHand(Card newCard) {
-        this.hand.add(newCard);
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
     }
 
     public boolean isBJ() {
