@@ -1,6 +1,7 @@
 package BlackJack.Model;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
@@ -22,6 +23,7 @@ public class Player {
     private Button StandButton;
     private Button DoubleButton;
     private Button NotDoubleButton;
+    private Label CreditLabel;
 
 
     public Player(double startCredit){
@@ -150,5 +152,13 @@ public class Player {
 
     public void setCardPane(Pane cardPane) {
         this.cardPane = cardPane;
+    }
+
+    public Label getCreditLabel() {
+        return CreditLabel;
+    }
+
+    public void setCreditLabel(Label creditLabel) {
+        CreditLabel = creditLabel;
     }
 }
