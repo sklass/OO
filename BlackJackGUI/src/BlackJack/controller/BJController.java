@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -46,7 +48,7 @@ public class BJController {
                 case 4:
                     System.out.println("draw Cards");
                    // drawCard(Model.getBank(), 1); // Die Bank zieht nur eine Karte
-                   // drawStartCards();    //Zu beginn des Spiels wwerden 2 karten an alle Spieler vergeben
+                    drawStartCards();    //Zu beginn des Spiels wwerden 2 karten an alle Spieler vergeben
                     Model.setGamestatus(5);
                     break;
                 case 5:
@@ -79,6 +81,7 @@ public class BJController {
             newPlayer.setName("Player " + i);
             switch(i){
                 case 0:
+                    newPlayer.setCardPane(Player1CardPane);
                     newPlayer.setBetField(Player1BetField);
                     newPlayer.setBetButton(Player1BetBtn);
                     newPlayer.setTakeCardButton(Player1CardBtn);
@@ -133,6 +136,7 @@ public class BJController {
         for(Player player: Model.getPlayers()){
             drawCard(player, 2);
         }
+        showPlayerCards();
     }
 
     private void drawCard(Player player , int numberOfCards) {
@@ -142,6 +146,21 @@ public class BJController {
         }
     }
 
+
+    private void showPlayerCards(){
+        for(Player player : Model.getPlayers()){
+            int cardPos = 0;
+            for (Card card : player.getHand()){
+                Rectangle GUIcard = new Rectangle(60,120);
+                GUIcard.setX(cardPos);
+                //GUIcard.setY(120);
+                GUIcard.setFill(new ImagePattern(card.getImg()));
+                player.getCardPane().getChildren().add(GUIcard);
+                cardPos += 30;
+            }
+        }
+    }
+    /*
     private void showPlayerCards(Player player){
         System.out.println(player.getName() + "'s cards:");
         for(int j =0; j < player.getHand().size(); j++){
@@ -149,7 +168,7 @@ public class BJController {
         }
         checkCardValues(player);
     }
-
+*/
     private void doubleBet(Player player){
     /*    int[] validAnswers = new int[]{0,1};
         int answer = getUserInput("Do you want to double your bet? ", validAnswers );
@@ -171,8 +190,8 @@ public class BJController {
     private void anotherCard(){      //fragt die spieler solange nach weiteren karten wie sie nicht gewonnen, verloren haben oder keine weiteren karten haben wollen
         int[] validAnswers = {0,1};
         for(Player player : Model.getPlayers()){
-            showPlayerCards(Model.getBank());            //karte der Bank anzeigen
-            showPlayerCards(player);            //Karten des aktuellen spielers zeigen
+       //     showPlayerCards(Model.getBank());            //karte der Bank anzeigen
+       //     showPlayerCards(player);            //Karten des aktuellen spielers zeigen
 
             if(player.getHand().size() == 2 && !player.BJ()) {  //der Spieler kann nur nach den ersten beiden karten verdoppeln und wenn er keinen blackjack hat
                 doubleBet(player);
@@ -193,7 +212,7 @@ public class BJController {
 
     private void BanksTurn(){
         drawCard(Model.getBank(),1);                   //zunächst zieht die Bank eine weitere Karte
-        showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
+       // showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
         int handValue = 0;
         handValue = getHandValue(Model.getBank());
 
@@ -207,7 +226,7 @@ public class BJController {
             }else if(handValue < 17){                     //bei weniger als 17 -> karte ziehen
                 System.out.println("The bank takes another Card");
                 drawCard(Model.getBank(),1);
-                showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
+                //showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
                 handValue = getHandValue(Model.getBank());     //und hand wert berechnen
             }else{                                  //ansonsten stehen
                 System.out.println("The bank stands");

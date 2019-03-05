@@ -1,12 +1,14 @@
 package BlackJack.Model;
 
+import javafx.scene.image.Image;
+
 import java.nio.file.Path;
 
 public class Card {
     private String name;
     private int value;
     private String type;
-    private Path imgPath;
+    private Image img;
 
     public String getName() {
         return name;
@@ -32,11 +34,11 @@ public class Card {
         this.type = type;
     }
 
-    public Path getImgPath() {
-        return imgPath;
+    public Image getImg() {
+        return img;
     }
 
-    public void setImgPath(Path imgPath) {
-        this.imgPath = imgPath;
+    public void setImg(Image img) {
+        this.img = img;
     }
 }

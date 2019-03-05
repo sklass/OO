@@ -2,6 +2,7 @@ package BlackJack.Model;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ public class Player {
     private boolean out;
     private boolean stand;
     private boolean doubleBet;
+    private Pane cardPane;
     private TextField BetField;
     private Button BetButton;
     private Button TakeCardButton;
@@ -140,5 +142,13 @@ public class Player {
 
     public void setNotDoubleButton(Button notDoubleButton) {
         NotDoubleButton = notDoubleButton;
+    }
+
+    public Pane getCardPane() {
+        return cardPane;
+    }
+
+    public void setCardPane(Pane cardPane) {
+        this.cardPane = cardPane;
     }
 }
