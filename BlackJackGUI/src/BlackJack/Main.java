@@ -1,17 +1,23 @@
 package BlackJack;
 
+import BlackJack.Model.BlackJackModel;
 import BlackJack.View.MainMenuView;
+import BlackJack.controller.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        MainMenuView MainMenu = new MainMenuView(primaryStage);
+        BlackJackModel Model = new BlackJackModel();
+        Model.setStage(primaryStage);
+        MainMenuController Controller = new MainMenuController();
+        Controller.setModel(Model);
+        Controller.shoView();
     }
 
 

@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="284.0" prefWidth="352.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BlackJack.controller.MainMenuController">
    <children>
       <ImageView fitHeight="284.0" fitWidth="352.0">
@@ -27,7 +26,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="PlayBtn" layoutX="164.0" layoutY="191.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="39.0" text="Play" />
+      <Button fx:id="PlayBtn" layoutX="164.0" layoutY="191.0" mnemonicParsing="false" onMouseClicked="#PlayBJ" prefHeight="25.0" prefWidth="39.0" text="Play" />
       <TextField fx:id="MinBetTextField" layoutX="164.0" layoutY="104.0" prefHeight="25.0" prefWidth="39.0" text="10" />
       <TextField fx:id="MaxBetTextField" layoutX="164.0" layoutY="146.0" prefHeight="25.0" prefWidth="39.0" text="250" />
       <Label layoutX="27.0" layoutY="106.0" text="Minimum Bet" textFill="WHITE">

@@ -1,126 +1,120 @@
 package BlackJack.controller;
 
+import BlackJack.Model.BlackJackModel;
 import BlackJack.Model.Card;
-import BlackJack.Model.CardDeck;
 import BlackJack.Model.Player;
-
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-//TODO output aufhübschen
+
 
 public class BJController {
-    private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler()
-    private ArrayList <Player> Players; //Array List mit allen vorhandenen Spielern
-    private Player Bank;            //Der Spieler der die Bank repäsentiert
-    private Scanner input;          //Für Eingaben in getUserInput
-    private CardDeck CardDeck;      //Das bzw. die Kartenspiele
-    private int numberOfCardDecks;  //Anzahl der verwendeten Kartenspiele
-    private int CardCounter;                //zählt mit jeder gezogenen karte eins hoch
-    private int minBet;                     //minimaler Wetteinsatz
-    private int maxBet;                     //maximaler Wetteinsatz
+    private BlackJackModel Model;
 
-   public BJController(){
-        gamestatus = 0;
-        input = new Scanner(System.in);
-        CardCounter = 0;
-        numberOfCardDecks = 6;
-        minBet = 10;
-        maxBet = 250;
-        GameStateHandler();
+    @FXML
+    Label GameStatusLabel;
+    @FXML
+    TextField Player1BetField;
+
+    public void setModel(BlackJackModel Model){
+       this.Model = Model;
     }
 
-    private void GameStateHandler(){
-        while(gamestatus < 9) {
-            switch (gamestatus) {
+    public void GameStateHandler(){
+        while(Model.getGamestatus()< 9) {
+            switch (Model.getGamestatus()) {
                 case 0:
                     definePlayers();    //Spieler festlegen
-                    gamestatus = 2;
+                    Model.setGamestatus(2);
                     break;
                 case 1:
                     unsetPlayerVars();       //unset all player vars
-                    gamestatus += 1;
+                    Model.setGamestatus(2);
                     break;
                 case 2:
-                    CardDeck = new CardDeck(numberOfCardDecks); //kartendeck erstellen
-                    gamestatus += 1;
+                    //CardDeck = new CardDeck(Model.getNumberOfCardDecks()); //kartendeck erstellen
+                    Model.createCardDeck(6);
+                    Model.setGamestatus(3);
                     break;
                 case 3:
-                    System.out.println(Players.size());
+                    //System.out.println(Model.getPlayers().size());
                     getPlayerBets();                        //Wetteinsätze abfragen
-                    gamestatus += +1;
+                    Model.setGamestatus(4);
                     break;
                 case 4:
-                    drawCard(Bank, 1); // Die Bank zieht nur eine Karte
+                    drawCard(Model.getBank(), 1); // Die Bank zieht nur eine Karte
                     drawStartCards();    //Zu beginn des Spiels wwerden 2 karten an alle Spieler vergeben
-                    gamestatus += 1;
+                    Model.setGamestatus(5);
                     break;
                 case 5:
                     anotherCard();    //Jeden spieler fragen ob er weitere Karten haben möchte
-                    gamestatus += 1;
+                    Model.setGamestatus(6);
                     break;
                 case 6:
                     BanksTurn();    //Nachdem alle Spieler ihre karten erhalten haben ist die bank dran
-                    gamestatus += 1;
+                    Model.setGamestatus(7);
                     break;
                 case 7:
                     GameResult();  //Ist die Bank fertig wird das Ergebnis der spielrunde geprüft und angezeigt
-                    gamestatus += 1;
+                    Model.setGamestatus(8);
                     break;
                 case 8:
                     continueGame();  //Ist die Bank fertig wird das Ergebnis der spielrunde geprüft und angezeigt
                     if(playersLeft()) {
-                        gamestatus = 1;
-                    }else gamestatus = 9;
+                        Model.setGamestatus(1);
+                    }else Model.setGamestatus(9);
                     break;
             }
         }
     }
 
     private void definePlayers(){               //Anzahl der Spieler abfragen, sowie deren namen
-        int[] answers = new int[]{1,2,3,4,5,6};
-        int numberOfPlayer = getUserInput("How many player?", answers);
-        Players = new ArrayList<>();
-        Bank = new Player();
-        Bank.setName("Bank");
-        for(int i=0; i < numberOfPlayer; i++){
+
+        Model.getBank().setName("Bank");
+        for(int i=0; i < Model.getNumberOfPlayers(); i++){
             Player newPlayer = new Player();
-            newPlayer.setName(getUserInput("Enter name for Player " + (i)));
-            Players.add(newPlayer);
+            newPlayer.setName("Player " + i);
+            Model.getPlayers().add(newPlayer);
         }
     }
 
     private void getPlayerBets(){   //Alle spieler (außer Bank) müssen einen einsatz machen
         /////////////// Ein array mit allen gültigen Wettwerten erstellen
-        int[] validAnswers = new int[maxBet-minBet+1];
+        int[] validInput = new int[Model.getMaxBet()-Model.getMinBet()+1];
         int j = 0;
-        for(int i = minBet; i <= maxBet; i++){
-            validAnswers[j] = i;
+        for(int i = Model.getMinBet(); i <= Model.getMaxBet(); i++){
+            validInput[j] = i;
             j++;
         }
         ////////////
-        for(Player player : Players){
-            System.out.println("Your actual Credit is " + player.getCredit());
-            int bet = getUserInput(player.getName() + " place your bet for this Round", validAnswers);
+        for(Player player : Model.getPlayers()){
+            GameStatusLabel.setText(player.getName() + "place your bet and press ok!");
+
+
+  /*          int bet = getUserInput(player.getName() + " place your bet for this Round", validAnswers);
             while(bet > player.getCredit()){
                 System.out.println("Your actual Credit is " + player.getCredit() + " , you cant bet more than you have :)");
                 bet = getUserInput(player.getName() + " place your bet for this Round", validAnswers);
             }
             player.setCredit(player.getCredit()-bet);
             player.setBet(bet);
+  */
         }
+
     }
 
     private void drawStartCards() { //jeder spieler zieht 2 karten
-        for(Player player: Players){
+        for(Player player: Model.getPlayers()){
             drawCard(player, 2);
         }
     }
 
     private void drawCard(Player player , int numberOfCards) {
         for(int i=0; i< numberOfCards; i++) {
-            player.setCard(CardDeck.drawCard(CardCounter));
-            CardCounter++;
+            player.setCard(Model.getCardDeck().drawCard(Model.getCardCounter()));
+            Model.setCardCounter(Model.getCardCounter()+1);
         }
     }
 
@@ -133,7 +127,7 @@ public class BJController {
     }
 
     private void doubleBet(Player player){
-        int[] validAnswers = new int[]{0,1};
+    /*    int[] validAnswers = new int[]{0,1};
         int answer = getUserInput("Do you want to double your bet? ", validAnswers );
         if(answer == 1){
             if((player.getBet()) > player.getCredit()){
@@ -147,17 +141,19 @@ public class BJController {
                 showPlayerCards(player);                                //Karten des spielers zeigen
             }
         }
+        */
     }
 
     private void anotherCard(){      //fragt die spieler solange nach weiteren karten wie sie nicht gewonnen, verloren haben oder keine weiteren karten haben wollen
         int[] validAnswers = {0,1};
-        for(Player player : Players){
-            showPlayerCards(Bank);            //karte der Bank anzeigen
+        for(Player player : Model.getPlayers()){
+            showPlayerCards(Model.getBank());            //karte der Bank anzeigen
             showPlayerCards(player);            //Karten des aktuellen spielers zeigen
 
             if(player.getHand().size() == 2 && !player.BJ()) {  //der Spieler kann nur nach den ersten beiden karten verdoppeln und wenn er keinen blackjack hat
                 doubleBet(player);
             }
+  /*
             while(!player.isOut() && !player.isStand() && !player.BJ() && !player.DoubleBet()){
                 int answer = getUserInput(player.getName() + " do you want another card?",validAnswers);
                 if(answer == 1){
@@ -167,41 +163,42 @@ public class BJController {
                     player.setStand(true);
                 }
             }
+            */
         }
     }
 
     private void BanksTurn(){
-        drawCard(Bank,1);                   //zunächst zieht die Bank eine weitere Karte
-        showPlayerCards(Bank);            //Die karten der Bank werden angezeigt
+        drawCard(Model.getBank(),1);                   //zunächst zieht die Bank eine weitere Karte
+        showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
         int handValue = 0;
-        handValue = getHandValue(Bank);
+        handValue = getHandValue(Model.getBank());
 
-        while(!Bank.BJ() && !Bank.isStand() && !Bank.isOut()){
+        while(!Model.getBank().BJ() && !Model.getBank().isStand() && !Model.getBank().isOut()){
             if(handValue > 21){                     //hat die Bank mehr als 21 ist sie raus
-                Bank.setOut(true);
+                Model.getBank().setOut(true);
                 System.out.println("The bank is out");
             }else if(handValue == 21){              //bei 21 Blackjack
-                Bank.setBJ(true);
+                Model.getBank().setBJ(true);
                 System.out.println("The bank has BlackJack");
             }else if(handValue < 17){                     //bei weniger als 17 -> karte ziehen
                 System.out.println("The bank takes another Card");
-                drawCard(Bank,1);
-                showPlayerCards(Bank);            //Die karten der Bank werden angezeigt
-                handValue = getHandValue(Bank);     //und hand wert berechnen
+                drawCard(Model.getBank(),1);
+                showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
+                handValue = getHandValue(Model.getBank());     //und hand wert berechnen
             }else{                                  //ansonsten stehen
                 System.out.println("The bank stands");
-                Bank.setStand(true);
+                Model.getBank().setStand(true);
             }
         }
     }
 
     private void GameResult(){
         double winnings;
-        for (Player player : Players){
+        for (Player player : Model.getPlayers()){
             if(!player.isOut()){
 
                 if(player.BJ()){                                              //Spieler hat BlackJack
-                    if(Bank.BJ()){                                      //und Bank auch
+                    if(Model.getBank().BJ()){                                      //und Bank auch
                         player.setCredit(player.getCredit() + player.getBet()); //Spieler bekommt seinen einsatz zurück
                         System.out.println(player.getName() + "gets back his bet of " + player.getBet());
                     }else{                                                      //Spieler hat BJ aber bank nicht
@@ -209,14 +206,14 @@ public class BJController {
                         player.setCredit(player.getCredit() + winnings);
                         System.out.println(player.getName() + " wins " + winnings);
                     }
-                }else if(Bank.isOut()){                                         //Ist die Bank über 21 und der spieler nicht
+                }else if(Model.getBank().isOut()){                                         //Ist die Bank über 21 und der spieler nicht
                     winnings = player.getBet()*2;                               // erhält er seinen doppelten einsatz als gewinn
                     player.setCredit(player.getCredit() + winnings);
                     System.out.println(player.getName() + " wins " + winnings);
-                }else if(getHandValue(player) == getHandValue(Bank)){           //Spieler handwert = Bank
+                }else if(getHandValue(player) == getHandValue(Model.getBank())){           //Spieler handwert = Bank
                     player.setCredit(player.getCredit() + player.getBet()); //Spieler bekommt seinen einsatz zurück
                     System.out.println(player.getName() + " gets back his bet of " + player.getBet());
-                }else if(getHandValue(player) > getHandValue(Bank) ){
+                }else if(getHandValue(player) > getHandValue(Model.getBank()) ){
                     winnings = player.getBet()*2;                               // erhält er seinen doppelten einsatz als gewinn
                     player.setCredit(player.getCredit() + winnings);
                     System.out.println(player.getName() + " wins " + winnings);
@@ -228,34 +225,36 @@ public class BJController {
     private void continueGame(){
         int[] validAnswers = {0,1};
         ArrayList <Player> remPlayers = new ArrayList<>();
-        for(Player player : Players){
+        for(Player player : Model.getPlayers()){
             if(player.getCredit() == 0){
                 remPlayers.add(player);
                 System.out.println("Sorry " + player.getName() + " your out. You have no money to play another round");
-            }else if(getUserInput(player.getName() + " do you want to play another round?", validAnswers) == 0){
+            }
+/*           else if(getUserInput(player.getName() + " do you want to play another round?", validAnswers) == 0){
                 remPlayers.add(player);
             }
+*/
         }
         for(Player player : remPlayers){
-            Players.remove(player);
+            Model.getPlayers().remove(player);
         }
     }
     private void unsetPlayerVars(){
-        for (Player player : Players){
+        for (Player player : Model.getPlayers()){
             player.getHand().clear();
             player.setBet(0);
             player.setStand(false);
             player.setBJ(false);
             player.setOut(false);
         }
-        Bank.getHand().clear();
-        Bank.setStand(false);
-        Bank.setBJ(false);
-        Bank.setOut(false);
+        Model.getBank().getHand().clear();
+        Model.getBank().setStand(false);
+        Model.getBank().setBJ(false);
+        Model.getBank().setOut(false);
     }
 
     private boolean playersLeft(){
-        if(Players.size() == 0) return false;
+        if(Model.getPlayers().size() == 0) return false;
         return true;
     }
 
@@ -291,7 +290,7 @@ public class BJController {
         }
         System.out.println();
     }
-
+/*
     private int getUserInput(String question, int[] validAnswers){
         System.out.println(question);
         while(true){
@@ -312,4 +311,6 @@ public class BJController {
         System.out.println(question);
         return input.next();
     }
+
+    */
 }
