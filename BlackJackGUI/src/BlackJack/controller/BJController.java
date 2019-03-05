@@ -4,8 +4,10 @@ import BlackJack.Model.BlackJackModel;
 import BlackJack.Model.Card;
 import BlackJack.Model.Player;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
@@ -13,21 +15,20 @@ import java.util.ArrayList;
 public class BJController {
     private BlackJackModel Model;
 
-    @FXML
-    Label GameStatusLabel;
-    @FXML
-    TextField Player1BetField;
+
 
     public void setModel(BlackJackModel Model){
        this.Model = Model;
     }
 
     public void GameStateHandler(){
-        while(Model.getGamestatus()< 9) {
+
             switch (Model.getGamestatus()) {
                 case 0:
                     definePlayers();    //Spieler festlegen
+                    initGUI();
                     Model.setGamestatus(2);
+                    GameStateHandler();
                     break;
                 case 1:
                     unsetPlayerVars();       //unset all player vars
@@ -37,27 +38,27 @@ public class BJController {
                     //CardDeck = new CardDeck(Model.getNumberOfCardDecks()); //kartendeck erstellen
                     Model.createCardDeck(6);
                     Model.setGamestatus(3);
+                    GameStateHandler();
                     break;
                 case 3:
-                    //System.out.println(Model.getPlayers().size());
-                    getPlayerBets();                        //Wetteinsätze abfragen
-                    Model.setGamestatus(4);
+                    GameStatusLabel.setText("Please place your bets and press ok!");
                     break;
                 case 4:
-                    drawCard(Model.getBank(), 1); // Die Bank zieht nur eine Karte
-                    drawStartCards();    //Zu beginn des Spiels wwerden 2 karten an alle Spieler vergeben
+                    System.out.println("draw Cards");
+                   // drawCard(Model.getBank(), 1); // Die Bank zieht nur eine Karte
+                   // drawStartCards();    //Zu beginn des Spiels wwerden 2 karten an alle Spieler vergeben
                     Model.setGamestatus(5);
                     break;
                 case 5:
-                    anotherCard();    //Jeden spieler fragen ob er weitere Karten haben möchte
+                   // anotherCard();    //Jeden spieler fragen ob er weitere Karten haben möchte
                     Model.setGamestatus(6);
                     break;
                 case 6:
-                    BanksTurn();    //Nachdem alle Spieler ihre karten erhalten haben ist die bank dran
+                  //  BanksTurn();    //Nachdem alle Spieler ihre karten erhalten haben ist die bank dran
                     Model.setGamestatus(7);
                     break;
                 case 7:
-                    GameResult();  //Ist die Bank fertig wird das Ergebnis der spielrunde geprüft und angezeigt
+                    //GameResult();  //Ist die Bank fertig wird das Ergebnis der spielrunde geprüft und angezeigt
                     Model.setGamestatus(8);
                     break;
                 case 8:
@@ -68,41 +69,64 @@ public class BJController {
                     break;
             }
         }
-    }
+
 
     private void definePlayers(){               //Anzahl der Spieler abfragen, sowie deren namen
 
         Model.getBank().setName("Bank");
         for(int i=0; i < Model.getNumberOfPlayers(); i++){
-            Player newPlayer = new Player();
+            Player newPlayer = new Player(Model.getStartCredit());
             newPlayer.setName("Player " + i);
+            switch(i){
+                case 0:
+                    newPlayer.setBetField(Player1BetField);
+                    newPlayer.setBetButton(Player1BetBtn);
+                    newPlayer.setTakeCardButton(Player1CardBtn);
+                    newPlayer.setDoubleButton(Player1DoubleBtn);
+                    newPlayer.setNotDoubleButton(Player1NotDoubleBtn);
+                    break;
+                case 1:
+                    newPlayer.setBetField(Player2BetField);
+                    newPlayer.setBetButton(Player2BetBtn);
+                    newPlayer.setTakeCardButton(Player2CardBtn);
+                    newPlayer.setDoubleButton(Player2DoubleBtn);
+                    newPlayer.setNotDoubleButton(Player2NotDoubleBtn);
+                    break;
+            }
             Model.getPlayers().add(newPlayer);
         }
     }
 
-    private void getPlayerBets(){   //Alle spieler (außer Bank) müssen einen einsatz machen
-        /////////////// Ein array mit allen gültigen Wettwerten erstellen
-        int[] validInput = new int[Model.getMaxBet()-Model.getMinBet()+1];
-        int j = 0;
-        for(int i = Model.getMinBet(); i <= Model.getMaxBet(); i++){
-            validInput[j] = i;
-            j++;
-        }
-        ////////////
-        for(Player player : Model.getPlayers()){
-            GameStatusLabel.setText(player.getName() + "place your bet and press ok!");
+    private void initGUI(){
+        for(int i=0; i < Model.getNumberOfPlayers(); i++){
+            switch(i) {
+                case 0:
+                    Player1Pane.setVisible(true);
+                    Player1CreditLabel.setText(String.valueOf(Model.getPlayers().get(i).getCredit()));
+                    break;
+                case 1:
+                    Player2Pane.setVisible(true);
+                    Player2CreditLabel.setText(String.valueOf(Model.getPlayers().get(i).getCredit()));
+                    break;
+                case 2:
+                    Player3Pane.setVisible(true);
+                    Player3CreditLabel.setText(String.valueOf(Model.getPlayers().get(i).getCredit()));
 
-
-  /*          int bet = getUserInput(player.getName() + " place your bet for this Round", validAnswers);
-            while(bet > player.getCredit()){
-                System.out.println("Your actual Credit is " + player.getCredit() + " , you cant bet more than you have :)");
-                bet = getUserInput(player.getName() + " place your bet for this Round", validAnswers);
+                    break;
+                case 3:
+                    Player4Pane.setVisible(true);
+                    Player4CreditLabel.setText(String.valueOf(Model.getPlayers().get(i).getCredit()));
+                    break;
+                case 4:
+                    Player5Pane.setVisible(true);
+                    Player5CreditLabel.setText(String.valueOf(Model.getPlayers().get(i).getCredit()));
+                    break;
+                case 5:
+                    Player6Pane.setVisible(true);
+                    Player6CreditLabel.setText(String.valueOf(Model.getPlayers().get(i).getCredit()));
+                    break;
             }
-            player.setCredit(player.getCredit()-bet);
-            player.setBet(bet);
-  */
         }
-
     }
 
     private void drawStartCards() { //jeder spieler zieht 2 karten
@@ -290,27 +314,211 @@ public class BJController {
         }
         System.out.println();
     }
-/*
-    private int getUserInput(String question, int[] validAnswers){
-        System.out.println(question);
-        while(true){
-            while(!input.hasNextInt()){
-                System.out.println("Numbers only please!");
-                input.next();
-            }
-            int answer = input.nextInt();
 
-            for(int valid : validAnswers){
-                if(answer == valid) return answer;
-            }
-            System.out.println("Only values between " + validAnswers[0] + " and " + validAnswers[validAnswers.length-1] + " are valid!");
+    @FXML
+    public void Player1Bet(){
+        double bet = Double.parseDouble(Player1BetField.getText());
+        if (bet < Model.getMinBet() || bet > Model.getMaxBet()){
+            GameStatusLabel.setText("Place a bet between " + Model.getMinBet() + " and "+ Model.getMaxBet());
+        }else{
+            Model.getPlayers().get(0).setBet(bet);
+            Model.getPlayers().get(0).setCredit(Model.getPlayers().get(0).getCredit() - bet);
+            Player1BetField.setEditable(false);
+            Player1BetBtn.setDisable(true);
+            Player1CreditLabel.setText(String.valueOf(Model.getPlayers().get(0).getCredit()));
         }
+        betCounter();
     }
 
-    private String getUserInput(String question){
-        System.out.println(question);
-        return input.next();
+    @FXML
+    public void Player2Bet(){
+        double bet = Double.parseDouble(Player2BetField.getText());
+        if (bet < Model.getMinBet() || bet > Model.getMaxBet()){
+            GameStatusLabel.setText("Place a bet between " + Model.getMinBet() + " and "+ Model.getMaxBet());
+        }else{
+            Model.getPlayers().get(1).setBet(bet);
+            Model.getPlayers().get(1).setCredit(Model.getPlayers().get(1).getCredit() - bet);
+            Player2BetField.setEditable(false);
+            Player2BetBtn.setDisable(true);
+            Player2CreditLabel.setText(String.valueOf(Model.getPlayers().get(1).getCredit()));
+        }
+        betCounter();
     }
 
-    */
+    @FXML
+    public void Player3Bet(){
+        double bet = Double.parseDouble(Player3BetField.getText());
+        if (bet < Model.getMinBet() || bet > Model.getMaxBet()){
+            GameStatusLabel.setText("Place a bet between " + Model.getMinBet() + " and "+ Model.getMaxBet());
+        }else{
+            Model.getPlayers().get(2).setBet(bet);
+            Model.getPlayers().get(2).setCredit(Model.getPlayers().get(2).getCredit() - bet);
+            Player3BetField.setEditable(false);
+            Player3BetBtn.setDisable(true);
+            Player3CreditLabel.setText(String.valueOf(Model.getPlayers().get(2).getCredit()));
+        }
+        betCounter();
+    }
+
+    @FXML
+    public void Player4Bet(){
+        double bet = Double.parseDouble(Player4BetField.getText());
+        if (bet < Model.getMinBet() || bet > Model.getMaxBet()){
+            GameStatusLabel.setText("Place a bet between " + Model.getMinBet() + " and "+ Model.getMaxBet());
+        }else{
+            Model.getPlayers().get(3).setBet(bet);
+            Model.getPlayers().get(3).setCredit(Model.getPlayers().get(3).getCredit() - bet);
+            Player4BetField.setEditable(false);
+            Player4BetBtn.setDisable(true);
+            Player4CreditLabel.setText(String.valueOf(Model.getPlayers().get(3).getCredit()));
+        }
+        betCounter();
+    }
+
+    @FXML
+    public void Player5Bet(){
+        double bet = Double.parseDouble(Player5BetField.getText());
+        if (bet < Model.getMinBet() || bet > Model.getMaxBet()){
+            GameStatusLabel.setText("Place a bet between " + Model.getMinBet() + " and "+ Model.getMaxBet());
+        }else{
+            Model.getPlayers().get(4).setBet(bet);
+            Model.getPlayers().get(4).setCredit(Model.getPlayers().get(4).getCredit() - bet);
+            Player5BetField.setEditable(false);
+            Player5BetBtn.setDisable(true);
+            Player5CreditLabel.setText(String.valueOf(Model.getPlayers().get(4).getCredit()));
+        }
+        betCounter();
+    }
+
+    @FXML
+    public void Player6Bet(){
+        double bet = Double.parseDouble(Player6BetField.getText());
+        if (bet < Model.getMinBet() || bet > Model.getMaxBet()){
+            GameStatusLabel.setText("Place a bet between " + Model.getMinBet() + " and "+ Model.getMaxBet());
+        }else{
+            Model.getPlayers().get(5).setBet(bet);
+            Model.getPlayers().get(5).setCredit(Model.getPlayers().get(5).getCredit() - bet);
+            Player6BetField.setEditable(false);
+            Player6BetBtn.setDisable(true);
+            Player6CreditLabel.setText(String.valueOf(Model.getPlayers().get(5).getCredit()));
+        }
+        betCounter();
+    }
+
+    public void betCounter(){
+        int betCounter = 0;
+        for(Player player : Model.getPlayers()){
+            if(player.getBet() >= 10){
+                betCounter++;
+            }
+        }
+        if(betCounter == Model.getPlayers().size()) Model.setGamestatus(4);;
+        GameStateHandler();
+    }
+
+    @FXML
+    Label GameStatusLabel;
+    @FXML
+    Pane Player1Pane;
+    @FXML
+    Pane Player1CardPane;
+    @FXML
+    Label Player1CreditLabel;
+    @FXML
+    TextField Player1BetField;
+    @FXML
+    Button Player1BetBtn;
+    @FXML
+    Button Player1CardBtn;
+    @FXML
+    Button Player1StandBtn;
+    @FXML
+    Button Player1DoubleBtn;
+    @FXML
+    Button Player1NotDoubleBtn;
+
+    @FXML
+    Pane Player2Pane;
+    @FXML
+    Label Player2CreditLabel;
+    @FXML
+    TextField Player2BetField;
+    @FXML
+    Button Player2BetBtn;
+    @FXML
+    Button Player2CardBtn;
+    @FXML
+    Button Player2StandBtn;
+    @FXML
+    Button Player2DoubleBtn;
+    @FXML
+    Button Player2NotDoubleBtn;
+
+    @FXML
+    Pane Player3Pane;
+    @FXML
+    Label Player3CreditLabel;
+    @FXML
+    TextField Player3BetField;
+    @FXML
+    Button Player3BetBtn;
+    @FXML
+    Button Player3CardBtn;
+    @FXML
+    Button Player3StandBtn;
+    @FXML
+    Button Player3DoubleBtn;
+    @FXML
+    Button Player3NotDoubleBtn;
+
+    @FXML
+    Pane Player4Pane;
+    @FXML
+    Label Player4CreditLabel;
+    @FXML
+    TextField Player4BetField;
+    @FXML
+    Button Player4BetBtn;
+    @FXML
+    Button Player4CardBtn;
+    @FXML
+    Button Player4StandBtn;
+    @FXML
+    Button Player4DoubleBtn;
+    @FXML
+    Button Player4NotDoubleBtn;
+
+    @FXML
+    Pane Player5Pane;
+    @FXML
+    Label Player5CreditLabel;
+    @FXML
+    TextField Player5BetField;
+    @FXML
+    Button Player5BetBtn;
+    @FXML
+    Button Player5CardBtn;
+    @FXML
+    Button Player5StandBtn;
+    @FXML
+    Button Player5DoubleBtn;
+    @FXML
+    Button Player5NotDoubleBtn;
+
+    @FXML
+    Pane Player6Pane;
+    @FXML
+    Label Player6CreditLabel;
+    @FXML
+    TextField Player6BetField;
+    @FXML
+    Button Player6BetBtn;
+    @FXML
+    Button Player6CardBtn;
+    @FXML
+    Button Player6StandBtn;
+    @FXML
+    Button Player6DoubleBtn;
+    @FXML
+    Button Player6NotDoubleBtn;
 }

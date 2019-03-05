@@ -1,9 +1,12 @@
 package BlackJack.Model;
 
+import java.nio.file.Path;
+
 public class Card {
     private String name;
     private int value;
     private String type;
+    private Path imgPath;
 
     public String getName() {
         return name;
@@ -27,5 +30,13 @@ public class Card {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Path getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(Path imgPath) {
+        this.imgPath = imgPath;
     }
 }

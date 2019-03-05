@@ -18,7 +18,7 @@ public class CardDeck {
         //printCards();                       //methode zur anzeige der Karteneigenschaften - Debug only!
     }
 
-    //Erzeugt 52 Karten, Karten von 2-Ass jeweils 4 mal
+    //Erzeugt Kartenspiel(e), Karten von 2-Ass jeweils 4 mal
     private void createCardDeck(){
         int i = 0;
         for(int decks = 0; decks < numberOfDecks; decks++) {    //Erstellt die vorgegebene Anzahl an Kartendecks
@@ -49,6 +49,20 @@ public class CardDeck {
                     switch (value) {                          //Zusätzlich zum Wert und Typ wird auch der Name der Karte definiert (hauptsächlich für Bube, Dame, König)
                         case 1:
                             cards[i].setName("Ass");
+                            switch (type) {                      //Jede Karte wird 4mal erstellt , je einmal Herz,Pik,Karo,Kreuz
+                                case 0: //herz
+                                    cards[i].setImgPath(/BlackJack/img/cards/AH.jpg);
+                                    break;
+                                case 1: //piek
+                                    cards[i].setType("Pik");
+                                    break;
+                                case 2: //karo
+                                    cards[i].setType("Karo");
+                                    break;
+                                case 3: //kreuz
+                                    cards[i].setType("Kreuz");
+                                    break;
+                            }
                             break;
                         case 2:
                             cards[i].setName("Zwei");

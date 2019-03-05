@@ -11,40 +11,23 @@
    <children>
       <Pane fx:id="Player1Pane" layoutX="37.0" layoutY="196.0" prefHeight="225.0" prefWidth="225.0" style="-fx-background-color: green;">
          <children>
-            <Label layoutX="58.0" layoutY="6.0" text="Credit:" />
+            <Label layoutX="58.0" layoutY="6.0" text="Credit:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <TextField fx:id="Player1BetField" layoutX="13.0" layoutY="186.0" prefHeight="25.0" prefWidth="38.0" text="0" />
-            <Button fx:id="Player1BetBtn" layoutX="58.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="OK" />
-            <Button fx:id="Player1DoubleBtn" layoutX="104.0" layoutY="155.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Double" />
+            <Button fx:id="Player1BetBtn" layoutX="58.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#Player1Bet" prefHeight="25.0" prefWidth="35.0" text="OK" />
+            <Button fx:id="Player1DoubleBtn" layoutX="104.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Double" visible="false" />
             <Label layoutX="14.0" layoutY="167.0" text="Bet:" />
-            <Label layoutX="13.0" layoutY="6.0" text="Player1" />
-            <Button fx:id="Player1CardBtn" layoutX="104.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Card" />
-            <Label fx:id="Player1CreditLabel" layoutX="99.0" layoutY="6.0" text="0" />
-            <Button fx:id="Player1StandBtn" layoutX="163.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Stand" />
-            <Button fx:id="Player1NotDoubleBtn" layoutX="165.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="No." />
-         </children>
-      </Pane>
-      <Pane fx:id="Player4Pane" layoutX="562.0" layoutY="495.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
-         <children>
-            <Label layoutX="14.0" layoutY="14.0" text="Player4" />
-            <Label layoutX="14.0" layoutY="31.0" text="Credit:" />
-            <TextField layoutX="12.0" layoutY="48.0" prefHeight="25.0" prefWidth="38.0" />
-            <Button layoutX="52.0" layoutY="48.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Button" />
-         </children>
-      </Pane>
-      <Pane fx:id="Player5Pane" layoutX="793.0" layoutY="435.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
-         <children>
-            <Label layoutX="14.0" layoutY="14.0" text="Player5" />
-            <Label layoutX="11.0" layoutY="30.0" text="Credit:" />
-            <TextField layoutX="9.0" layoutY="47.0" prefHeight="25.0" prefWidth="38.0" />
-            <Button layoutX="52.0" layoutY="47.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Button" />
-         </children>
-      </Pane>
-      <Pane fx:id="Player6Pane" layoutX="836.0" layoutY="195.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
-         <children>
-            <Label layoutX="14.0" layoutY="14.0" text="Player6" />
-            <Label layoutX="14.0" layoutY="28.0" text="Credit:" />
-            <TextField layoutX="12.0" layoutY="45.0" prefHeight="25.0" prefWidth="38.0" />
-            <Button layoutX="52.0" layoutY="45.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Button" />
+            <Label fx:id="Player1NameLabel" layoutX="13.0" layoutY="6.0" text="Player1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Button fx:id="Player1CardBtn" layoutX="104.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Card" visible="false" />
+            <Label fx:id="Player1CreditLabel" layoutX="99.0" layoutY="6.0" text="123" />
+            <Button fx:id="Player1StandBtn" layoutX="163.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Stand" visible="false" />
+            <Button fx:id="Player1NotDoubleBtn" layoutX="164.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
+            <Pane fx:id="Player1CardPane" layoutY="22.0" prefHeight="144.0" prefWidth="225.0" />
          </children>
       </Pane>
       <Pane fx:id="BankPane" layoutX="382.0" layoutY="66.0" prefHeight="259.0" prefWidth="300.0" style="-fx-background-color: green;">
@@ -62,14 +45,74 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="Player1Pane" layoutX="332.0" layoutY="495.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;">
+      <Pane fx:id="Player2Pane" layoutX="77.0" layoutY="448.0" prefHeight="225.0" prefWidth="225.0" style="-fx-background-color: green;">
          <children>
-            <Label layoutX="9.0" layoutY="144.0" text="Credit:" />
-            <TextField layoutX="62.0" layoutY="161.0" prefHeight="25.0" prefWidth="38.0" text="0" />
-            <Button layoutX="110.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="OK" />
-            <Button layoutX="151.0" layoutY="161.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="35.0" text="x2" />
-            <Label layoutX="9.0" layoutY="165.0" text="Your Bet:" />
-            <Label layoutX="8.0" layoutY="2.0" text="Player1" />
+            <Label layoutX="58.0" layoutY="6.0" text="Credit:" />
+            <TextField fx:id="Player2BetField" layoutX="13.0" layoutY="186.0" prefHeight="25.0" prefWidth="38.0" text="0" />
+            <Button fx:id="Player2BetBtn" layoutX="58.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#Player2Bet" prefHeight="25.0" prefWidth="35.0" text="OK" />
+            <Button fx:id="Player2DoubleBtn" layoutX="104.0" layoutY="155.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Double" />
+            <Label layoutX="14.0" layoutY="167.0" text="Bet:" />
+            <Label fx:id="Player2NameLabel" layoutX="13.0" layoutY="6.0" text="Player2" />
+            <Button fx:id="Player2CardBtn" layoutX="104.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Card" />
+            <Label fx:id="Player2CreditLabel" layoutX="99.0" layoutY="6.0" text="0" />
+            <Button fx:id="Player2StandBtn" layoutX="163.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Stand" />
+            <Button fx:id="Player2NotDoubleBtn" layoutX="165.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="No." />
+         </children>
+      </Pane>
+      <Pane fx:id="Player3Pane" layoutX="316.0" layoutY="483.0" prefHeight="225.0" prefWidth="225.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="58.0" layoutY="6.0" text="Credit:" />
+            <TextField fx:id="Player3BetField" layoutX="13.0" layoutY="186.0" prefHeight="25.0" prefWidth="38.0" text="0" />
+            <Button fx:id="Player3BetBtn" layoutX="58.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#Player3Bet" prefHeight="25.0" prefWidth="35.0" text="OK" />
+            <Button fx:id="Player3DoubleBtn" layoutX="104.0" layoutY="155.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Double" />
+            <Label layoutX="14.0" layoutY="167.0" text="Bet:" />
+            <Label fx:id="Player2NameLabel" layoutX="13.0" layoutY="6.0" text="Player3" />
+            <Button fx:id="Player3CardBtn" layoutX="104.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Card" />
+            <Label fx:id="Player3CreditLabel" layoutX="99.0" layoutY="6.0" text="0" />
+            <Button fx:id="Player3StandBtn" layoutX="163.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Stand" />
+            <Button fx:id="Player3NotDoubleBtn" layoutX="165.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="No." />
+         </children>
+      </Pane>
+      <Pane fx:id="Player4Pane" layoutX="555.0" layoutY="483.0" prefHeight="225.0" prefWidth="225.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="58.0" layoutY="6.0" text="Credit:" />
+            <TextField fx:id="Player4BetField" layoutX="13.0" layoutY="186.0" prefHeight="25.0" prefWidth="38.0" text="0" />
+            <Button fx:id="Player4BetBtn" layoutX="58.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#Player4Bet" prefHeight="25.0" prefWidth="35.0" text="OK" />
+            <Button fx:id="Player4DoubleBtn" layoutX="104.0" layoutY="155.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Double" />
+            <Label layoutX="14.0" layoutY="167.0" text="Bet:" />
+            <Label fx:id="Player2NameLabel" layoutX="13.0" layoutY="6.0" text="Player4" />
+            <Button fx:id="Player4CardBtn" layoutX="104.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Card" />
+            <Label fx:id="Player4CreditLabel" layoutX="99.0" layoutY="6.0" text="0" />
+            <Button fx:id="Player4StandBtn" layoutX="163.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Stand" />
+            <Button fx:id="Player4NotDoubleBtn" layoutX="165.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="No." />
+         </children>
+      </Pane>
+      <Pane fx:id="Player5Pane" layoutX="803.0" layoutY="448.0" prefHeight="225.0" prefWidth="225.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="58.0" layoutY="6.0" text="Credit:" />
+            <TextField fx:id="Player5BetField" layoutX="13.0" layoutY="186.0" prefHeight="25.0" prefWidth="38.0" text="0" />
+            <Button fx:id="Player5BetBtn" layoutX="58.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#Player5Bet" prefHeight="25.0" prefWidth="35.0" text="OK" />
+            <Button fx:id="Player5DoubleBtn" layoutX="104.0" layoutY="155.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Double" />
+            <Label layoutX="14.0" layoutY="167.0" text="Bet:" />
+            <Label fx:id="Player2NameLabel" layoutX="13.0" layoutY="6.0" text="Player5" />
+            <Button fx:id="Player5CardBtn" layoutX="104.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Card" />
+            <Label fx:id="Player5CreditLabel" layoutX="99.0" layoutY="6.0" text="0" />
+            <Button fx:id="Player5StandBtn" layoutX="163.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Stand" />
+            <Button fx:id="Player5NotDoubleBtn" layoutX="165.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="No." />
+         </children>
+      </Pane>
+      <Pane fx:id="Player6Pane" layoutX="824.0" layoutY="196.0" prefHeight="225.0" prefWidth="225.0" style="-fx-background-color: green;">
+         <children>
+            <Label layoutX="58.0" layoutY="6.0" text="Credit:" />
+            <TextField fx:id="Player6BetField" layoutX="13.0" layoutY="186.0" prefHeight="25.0" prefWidth="38.0" text="0" />
+            <Button fx:id="Player6BetBtn" layoutX="58.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#Player6Bet" prefHeight="25.0" prefWidth="35.0" text="OK" />
+            <Button fx:id="Player6DoubleBtn" layoutX="104.0" layoutY="155.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Double" />
+            <Label layoutX="14.0" layoutY="167.0" text="Bet:" />
+            <Label fx:id="Player2NameLabel" layoutX="13.0" layoutY="6.0" text="Player6" />
+            <Button fx:id="Player6CardBtn" layoutX="104.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Card" />
+            <Label fx:id="Player6CreditLabel" layoutX="99.0" layoutY="6.0" text="0" />
+            <Button fx:id="Player6StandBtn" layoutX="163.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Stand" />
+            <Button fx:id="Player6NotDoubleBtn" layoutX="165.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="No." />
          </children>
       </Pane>
    </children>

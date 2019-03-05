@@ -1,5 +1,8 @@
 package BlackJack.Model;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -11,9 +14,15 @@ public class Player {
     private boolean out;
     private boolean stand;
     private boolean doubleBet;
+    private TextField BetField;
+    private Button BetButton;
+    private Button TakeCardButton;
+    private Button StandButton;
+    private Button DoubleButton;
+    private Button NotDoubleButton;
 
-    public Player(){
-        int startCredit = 200;
+
+    public Player(double startCredit){
         BJ = false;
         out = false;
         stand = false;
@@ -83,5 +92,53 @@ public class Player {
 
     public void setDoubleBet(boolean doubleBet) {
         this.doubleBet = doubleBet;
+    }
+
+    public TextField getBetField() {
+        return BetField;
+    }
+
+    public void setBetField(TextField betField) {
+        BetField = betField;
+    }
+
+    public Button getBetButton() {
+        return BetButton;
+    }
+
+    public void setBetButton(Button betButton) {
+        BetButton = betButton;
+    }
+
+    public Button getTakeCardButton() {
+        return TakeCardButton;
+    }
+
+    public void setTakeCardButton(Button takeCardButton) {
+        TakeCardButton = takeCardButton;
+    }
+
+    public Button getStandButton() {
+        return StandButton;
+    }
+
+    public void setStandButton(Button standButton) {
+        StandButton = standButton;
+    }
+
+    public Button getDoubleButton() {
+        return DoubleButton;
+    }
+
+    public void setDoubleButton(Button doubleButton) {
+        DoubleButton = doubleButton;
+    }
+
+    public Button getNotDoubleButton() {
+        return NotDoubleButton;
+    }
+
+    public void setNotDoubleButton(Button notDoubleButton) {
+        NotDoubleButton = notDoubleButton;
     }
 }

@@ -24,6 +24,8 @@ public class MainMenuController {
     @FXML
     TextField NumberOfPlayersTextField;
     @FXML
+    TextField StartCreditTextField;
+    @FXML
     TextField MinBetTextField;
     @FXML
     TextField MaxBetTextField;
@@ -31,6 +33,7 @@ public class MainMenuController {
     @FXML
     public void PlayBJ() throws Exception{
         Model.setNumberOfPlayers(Integer.parseInt(NumberOfPlayersTextField.getText()));
+        Model.setStartCredit(Double.parseDouble(StartCreditTextField.getText()));
         Model.setMinBet(Integer.parseInt(MinBetTextField.getText()));
         Model.setMaxBet(Integer.parseInt(MaxBetTextField.getText()));
         Model.setGamestatus(0);
@@ -38,8 +41,6 @@ public class MainMenuController {
         Model.setNumberOfCardDecks(6);
         BlackJackView BJView = new BlackJackView();
         BJView.start(Model);
-
-
     }
 
     @FXML

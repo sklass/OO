@@ -10,12 +10,13 @@ public class BlackJackModel {
     private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler()
     private int numberOfPlayers;
     private ArrayList<Player> Players = new ArrayList<>(); //Array List mit allen vorhandenen Spielern
-    private Player Bank = new Player();            //Der Spieler der die Bank repäsentiert
+    private Player Bank = new Player(0);            //Der Spieler der die Bank repäsentiert
     private CardDeck CardDeck;      //Das bzw. die Kartenspiele
     private int numberOfCardDecks;  //Anzahl der verwendeten Kartenspiele
     private int CardCounter;                //zählt mit jeder gezogenen karte eins hoch
     private int minBet;                     //minimaler Wetteinsatz
     private int maxBet;                     //maximaler Wetteinsatz
+    private double startCredit;
 
     public Stage getStage() {
         return Stage;
@@ -45,16 +46,8 @@ public class BlackJackModel {
         return Players;
     }
 
-    public void setPlayers(ArrayList<Player> players) {
-        Players = players;
-    }
-
     public Player getBank() {
         return Bank;
-    }
-
-    public void setBank(Player bank) {
-        Bank = bank;
     }
 
     public void createCardDeck(int numberOfCardDecks){
@@ -99,5 +92,13 @@ public class BlackJackModel {
 
     public void setMaxBet(int maxBet) {
         this.maxBet = maxBet;
+    }
+
+    public double getStartCredit() {
+        return startCredit;
+    }
+
+    public void setStartCredit(double startCredit) {
+        this.startCredit = startCredit;
     }
 }
