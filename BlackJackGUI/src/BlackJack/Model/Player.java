@@ -23,7 +23,10 @@ public class Player {
     private Button StandButton;
     private Button DoubleButton;
     private Button NotDoubleButton;
+    private Button PlayAgainButton;
+    private Button QuitButton;
     private Label CreditLabel;
+
 
 
     public Player(double startCredit){
@@ -61,10 +64,10 @@ public class Player {
         return hand;
     }
 
-    public Card getCard(int index){
+   /* public Card getCard(int index){
             return this.hand.get(index);
     }
-
+*/
     public void setCard(Card newCard){
        this.hand.add(newCard);
     }
@@ -160,5 +163,21 @@ public class Player {
 
     public void setCreditLabel(Label creditLabel) {
         CreditLabel = creditLabel;
+    }
+
+    public Button getPlayAgainButton() {
+        return PlayAgainButton;
+    }
+
+    public void setPlayAgainButton(Button playAgainButton) {
+        PlayAgainButton = playAgainButton;
+    }
+
+    public Button getQuitButton() {
+        return QuitButton;
+    }
+
+    public void setQuitButton(Button quitButton) {
+        QuitButton = quitButton;
     }
 }

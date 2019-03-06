@@ -9,6 +9,7 @@ public class BlackJackModel {
     Stage Stage;
     private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler()
     private int numberOfPlayers;
+    private int MovesThisTurn;
     private ArrayList<Player> Players = new ArrayList<>(); //Array List mit allen vorhandenen Spielern
     private Player Bank = new Player(0);            //Der Spieler der die Bank repäsentiert
     private CardDeck CardDeck;      //Das bzw. die Kartenspiele
@@ -100,5 +101,13 @@ public class BlackJackModel {
 
     public void setStartCredit(double startCredit) {
         this.startCredit = startCredit;
+    }
+
+    public int getMovesThisTurn() {
+        return MovesThisTurn;
+    }
+
+    public void setMovesThisTurn(int movesThisTurn) {
+        MovesThisTurn = movesThisTurn;
     }
 }

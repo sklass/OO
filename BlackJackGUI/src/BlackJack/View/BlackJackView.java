@@ -25,8 +25,9 @@ public class BlackJackView {
         Scene scene = new Scene(root);
         stage.setTitle("BlackJack");
         stage.setScene(scene);
-        stage.show();
+        stage.setResizable(false);
         //Aufruf Gamestatehandler um das Soiel zu initialisieren
         Controller.GameStateHandler();
+        stage.show();
     }
 }

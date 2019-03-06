@@ -2,19 +2,17 @@ package BlackJack.Model;
 
 import javafx.scene.image.Image;
 
-import java.nio.file.Path;
-
 public class Card {
-    private String name;
-    private int value;
-    private String type;
-    private Image img;
+    private String name;    //Name der Karte (Ass,Bube usw)
+    private int value;      //kartenwerte (von 1-10)
+    private String type;    //Kartentyp (Pik,Karow,Herz,Kreuz)
+    private Image img;      //Bild der Karte (img/cards/)
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -22,15 +20,15 @@ public class Card {
         return value;
     }
 
-    public void setValue(int value) {
+    void setValue(int value) {
         this.value = value;
     }
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    void setType(String type) {
         this.type = type;
     }
 
@@ -38,7 +36,7 @@ public class Card {
         return img;
     }
 
-    public void setImg(Image img) {
+    void setImg(Image img) {
         this.img = img;
     }
 }
