@@ -64,10 +64,6 @@ public class Player {
         return hand;
     }
 
-   /* public Card getCard(int index){
-            return this.hand.get(index);
-    }
-*/
     public void setCard(Card newCard){
        this.hand.add(newCard);
     }

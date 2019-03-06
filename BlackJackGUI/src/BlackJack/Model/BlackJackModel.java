@@ -3,7 +3,6 @@ package BlackJack.Model;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class BlackJackModel {
     Stage Stage;
@@ -57,14 +56,6 @@ public class BlackJackModel {
 
     public BlackJack.Model.CardDeck getCardDeck() {
         return CardDeck;
-    }
-
-    public void setCardDeck(BlackJack.Model.CardDeck cardDeck) {
-        CardDeck = cardDeck;
-    }
-
-    public int getNumberOfCardDecks() {
-        return numberOfCardDecks;
     }
 
     public void setNumberOfCardDecks(int numberOfCardDecks) {

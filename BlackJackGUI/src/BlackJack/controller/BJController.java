@@ -37,7 +37,6 @@ public class BJController {
                     break;
                 case 1:
                     unsetPlayerVars();       //unset all player vars
-
                     Model.setGamestatus(2);
                     GameStateHandler();
                     break;
@@ -299,7 +298,6 @@ public class BJController {
                 countMoves();
                 System.out.println(player.getName() + " has reached 21 points. stand!");
             }
-
         }else if (handValue > 21) {
             System.out.println(player.getName() + " has more than 21 Points, hes out");
             player.setOut(true);
@@ -334,7 +332,7 @@ public class BJController {
             }else if(handValue < 17){                     //bei weniger als 17 -> karte ziehen
                 System.out.println("The bank takes another Card");
                 drawCard(Model.getBank(),1);
-                showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
+
                 handValue = getHandValue(Model.getBank());     //und hand wert berechnen
             }else{                                  //ansonsten stehen
                 Label Info = new Label();
@@ -343,6 +341,7 @@ public class BJController {
                 System.out.println("The bank stands");
                 Model.getBank().setStand(true);
             }
+            showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
         }
     }
 
@@ -393,6 +392,38 @@ public class BJController {
         }
         for(Player player : remPlayers){
             Model.getPlayers().remove(player);
+        }
+    }
+
+    private void unsetPlayerVars(){
+        for (Player player : Model.getPlayers()){
+            player.getHand().clear();
+            player.setBet(0);
+            player.setStand(false);
+            player.setBJ(false);
+            player.setOut(false);
+            player.getBetButton().setDisable(false);
+            player.getBetField().setEditable(true);
+            player.getCardPane().getChildren().clear();
+        }
+        Model.getBank().getHand().clear();
+        Model.getBank().setStand(false);
+        Model.getBank().setBJ(false);
+        Model.getBank().setOut(false);
+
+    }
+
+    private boolean playersLeft(){
+        if(Model.getPlayers().size() == 0) return false;
+        return true;
+    }
+
+    public static boolean isDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
@@ -459,8 +490,13 @@ public class BJController {
     private void PlayerBets(MouseEvent event){  //Methode verarbeitet die Wetteingaben der Spieler. Über den MouseEvent wird die Quelle des Klicks bestimmt
         int playerID = whoClickedTheButton(event);
         double bet = 0;
-
-        bet = Double.parseDouble(Model.getPlayers().get(playerID).getBetField().getText());                     //Wert aus Textfeld jeweiligem auslesen
+        if(isDouble(Model.getPlayers().get(playerID).getBetField().getText())) {
+            bet = Double.parseDouble(Model.getPlayers().get(playerID).getBetField().getText());                     //Wert aus Textfeld jeweiligem auslesen
+        }else{
+            GameStatusLabel.setText("Only numbers please!");
+            Model.getPlayers().get(playerID).getBetField().setStyle("-fx-control-inner-background: red;");
+            return;
+        }
         if (bet < Model.getMinBet() || bet > Model.getMaxBet()){                                                //Prüfen ob Wette nicht zu klein oder groß ist
             GameStatusLabel.setText("Place a bet between " + Model.getMinBet() + " and "+ Model.getMaxBet());
             Model.getPlayers().get(playerID).getBetField().setStyle("-fx-control-inner-background: red;");      //Meldung + hintergrund falls ungültige wette
@@ -534,6 +570,7 @@ public class BJController {
     Pane GameStatusPane;
     @FXML
     Label GameStatusLabel;
+
     @FXML
     Pane Player1Pane;
     @FXML
@@ -675,57 +712,4 @@ public class BJController {
 
     @FXML
     Button backToMainMenuBtn;
-
-    private void unsetPlayerVars(){
-        for (Player player : Model.getPlayers()){
-            player.getHand().clear();
-            player.setBet(0);
-            player.setStand(false);
-            player.setBJ(false);
-            player.setOut(false);
-            player.getBetButton().setDisable(false);
-            player.getBetField().setEditable(true);
-            player.getCardPane().getChildren().clear();
-        }
-        Model.getBank().getHand().clear();
-        Model.getBank().setStand(false);
-        Model.getBank().setBJ(false);
-        Model.getBank().setOut(false);
-
-    }
-
-    private boolean playersLeft(){
-        if(Model.getPlayers().size() == 0) return false;
-        return true;
-    }
-
-
-
-
-
-
-
-/*
-    private void anotherCard(){      //fragt die spieler solange nach weiteren karten wie sie nicht gewonnen, verloren haben oder keine weiteren karten haben wollen
-        int[] validAnswers = {0,1};
-        for(Player player : Model.getPlayers()){
-            //     showPlayerCards(Model.getBank());            //karte der Bank anzeigen
-            //     showPlayerCards(player);            //Karten des aktuellen spielers zeigen
-
-            if(player.getHand().size() == 2 && !player.BJ()) {  //der Spieler kann nur nach den ersten beiden karten verdoppeln und wenn er keinen blackjack hat
-                //   doubleBet(player);
-            }
-
-            while(!player.isOut() && !player.isStand() && !player.BJ() && !player.DoubleBet()){
-                int answer = getUserInput(player.getName() + " do you want another card?",validAnswers);
-                if(answer == 1){
-                    drawCard(player,1);
-                    showPlayerCards(player);            //Karten des aktuellen spielers zeigen
-                }else{
-                    player.setStand(true);
-                }
-            }
-
-        }
-    } */
 }

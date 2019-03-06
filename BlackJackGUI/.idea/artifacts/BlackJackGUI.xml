@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="BlackJackGUI">
+    <output-path>$PROJECT_DIR$/out/artifacts/BlackJackGUI</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="BlackJack.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="nativeBundle" value="all" />
+        <option name="title" value="BlackJack" />
+        <option name="vendor" value="S.Klass" />
+        <option name="version" value="0.1 alpha" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="BlackJackGUI.jar">
+        <element id="module-output" name="BlackJackGUI" />
+      </element>
+      <element id="module-source" name="BlackJackGUI" />
+      <element id="module-output" name="BlackJackGUI" />
+    </root>
+  </artifact>
+</component>

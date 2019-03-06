@@ -20,14 +20,12 @@ public class BlackJackView {
         BJController Controller = loader.getController();
         //Dem Controller wird das TTT Model zugewiesen. Auf diesem Weg sind dem Controller und der View das Modell bekannt
         Controller.setModel(Model);
-
-
+        Controller.GameStateHandler();
         Scene scene = new Scene(root);
         stage.setTitle("BlackJack");
         stage.setScene(scene);
         stage.setResizable(false);
         //Aufruf Gamestatehandler um das Soiel zu initialisieren
-        Controller.GameStateHandler();
         stage.show();
     }
 }

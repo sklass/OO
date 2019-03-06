@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="blackjackgui" default="all">
+  
+  
+  <property file="blackjackgui.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.klib"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.11" value="${jdk.home.11}/bin"/>
+  <path id="jdk.classpath.11">
+    <fileset dir="${jdk.home.11}">
+      <include name="../jdk-11.0.2!/java.base"/>
+      <include name="../jdk-11.0.2!/java.compiler"/>
+      <include name="../jdk-11.0.2!/java.datatransfer"/>
+      <include name="../jdk-11.0.2!/java.desktop"/>
+      <include name="../jdk-11.0.2!/java.instrument"/>
+      <include name="../jdk-11.0.2!/java.logging"/>
+      <include name="../jdk-11.0.2!/java.management"/>
+      <include name="../jdk-11.0.2!/java.management.rmi"/>
+      <include name="../jdk-11.0.2!/java.naming"/>
+      <include name="../jdk-11.0.2!/java.net.http"/>
+      <include name="../jdk-11.0.2!/java.prefs"/>
+      <include name="../jdk-11.0.2!/java.rmi"/>
+      <include name="../jdk-11.0.2!/java.scripting"/>
+      <include name="../jdk-11.0.2!/java.se"/>
+      <include name="../jdk-11.0.2!/java.security.jgss"/>
+      <include name="../jdk-11.0.2!/java.security.sasl"/>
+      <include name="../jdk-11.0.2!/java.smartcardio"/>
+      <include name="../jdk-11.0.2!/java.sql"/>
+      <include name="../jdk-11.0.2!/java.sql.rowset"/>
+      <include name="../jdk-11.0.2!/java.transaction.xa"/>
+      <include name="../jdk-11.0.2!/java.xml"/>
+      <include name="../jdk-11.0.2!/java.xml.crypto"/>
+      <include name="../jdk-11.0.2!/jdk.accessibility"/>
+      <include name="../jdk-11.0.2!/jdk.aot"/>
+      <include name="../jdk-11.0.2!/jdk.attach"/>
+      <include name="../jdk-11.0.2!/jdk.charsets"/>
+      <include name="../jdk-11.0.2!/jdk.compiler"/>
+      <include name="../jdk-11.0.2!/jdk.crypto.cryptoki"/>
+      <include name="../jdk-11.0.2!/jdk.crypto.ec"/>
+      <include name="../jdk-11.0.2!/jdk.crypto.mscapi"/>
+      <include name="../jdk-11.0.2!/jdk.dynalink"/>
+      <include name="../jdk-11.0.2!/jdk.editpad"/>
+      <include name="../jdk-11.0.2!/jdk.hotspot.agent"/>
+      <include name="../jdk-11.0.2!/jdk.httpserver"/>
+      <include name="../jdk-11.0.2!/jdk.internal.ed"/>
+      <include name="../jdk-11.0.2!/jdk.internal.jvmstat"/>
+      <include name="../jdk-11.0.2!/jdk.internal.le"/>
+      <include name="../jdk-11.0.2!/jdk.internal.opt"/>
+      <include name="../jdk-11.0.2!/jdk.internal.vm.ci"/>
+      <include name="../jdk-11.0.2!/jdk.internal.vm.compiler"/>
+      <include name="../jdk-11.0.2!/jdk.internal.vm.compiler.management"/>
+      <include name="../jdk-11.0.2!/jdk.jartool"/>
+      <include name="../jdk-11.0.2!/jdk.javadoc"/>
+      <include name="../jdk-11.0.2!/jdk.jcmd"/>
+      <include name="../jdk-11.0.2!/jdk.jconsole"/>
+      <include name="../jdk-11.0.2!/jdk.jdeps"/>
+      <include name="../jdk-11.0.2!/jdk.jdi"/>
+      <include name="../jdk-11.0.2!/jdk.jdwp.agent"/>
+      <include name="../jdk-11.0.2!/jdk.jfr"/>
+      <include name="../jdk-11.0.2!/jdk.jlink"/>
+      <include name="../jdk-11.0.2!/jdk.jshell"/>
+      <include name="../jdk-11.0.2!/jdk.jsobject"/>
+      <include name="../jdk-11.0.2!/jdk.jstatd"/>
+      <include name="../jdk-11.0.2!/jdk.localedata"/>
+      <include name="../jdk-11.0.2!/jdk.management"/>
+      <include name="../jdk-11.0.2!/jdk.management.agent"/>
+      <include name="../jdk-11.0.2!/jdk.management.jfr"/>
+      <include name="../jdk-11.0.2!/jdk.naming.dns"/>
+      <include name="../jdk-11.0.2!/jdk.naming.rmi"/>
+      <include name="../jdk-11.0.2!/jdk.net"/>
+      <include name="../jdk-11.0.2!/jdk.pack"/>
+      <include name="../jdk-11.0.2!/jdk.rmic"/>
+      <include name="../jdk-11.0.2!/jdk.scripting.nashorn"/>
+      <include name="../jdk-11.0.2!/jdk.scripting.nashorn.shell"/>
+      <include name="../jdk-11.0.2!/jdk.sctp"/>
+      <include name="../jdk-11.0.2!/jdk.security.auth"/>
+      <include name="../jdk-11.0.2!/jdk.security.jgss"/>
+      <include name="../jdk-11.0.2!/jdk.unsupported"/>
+      <include name="../jdk-11.0.2!/jdk.unsupported.desktop"/>
+      <include name="../jdk-11.0.2!/jdk.xml.dom"/>
+      <include name="../jdk-11.0.2!/jdk.zipfs"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.11}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.11}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.11"/>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <fileset dir="${javac2.home}">
+      <include name="javac2.jar"/>
+      <include name="jdom.jar"/>
+      <include name="asm-all*.jar"/>
+      <include name="forms-*.jar"/>
+    </fileset>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module BlackJackGUI -->
+  
+  <dirname property="module.blackjackgui.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.blackjackgui" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.blackjackgui" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.blackjackgui" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.blackjackgui" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
+  
+  <property name="blackjackgui.output.dir" value="${module.blackjackgui.basedir}/out/production/BlackJackGUI"/>
+  <property name="blackjackgui.testoutput.dir" value="${module.blackjackgui.basedir}/out/test/BlackJackGUI"/>
+  
+  <path id="blackjackgui.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="blackjackgui.module.production.classpath">
+    <path refid="${module.jdk.classpath.blackjackgui}"/>
+    <fileset dir="${path.variable.fx}">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="blackjackgui.runtime.production.module.classpath">
+    <pathelement location="${blackjackgui.output.dir}"/>
+    <fileset dir="${path.variable.fx}">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="blackjackgui.module.classpath">
+    <path refid="${module.jdk.classpath.blackjackgui}"/>
+    <pathelement location="${blackjackgui.output.dir}"/>
+    <fileset dir="${path.variable.fx}">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="blackjackgui.runtime.module.classpath">
+    <pathelement location="${blackjackgui.testoutput.dir}"/>
+    <pathelement location="${blackjackgui.output.dir}"/>
+    <fileset dir="${path.variable.fx}">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.blackjackgui">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.blackjackgui">
+    <patternset refid="excluded.from.module.blackjackgui"/>
+  </patternset>
+  
+  <path id="blackjackgui.module.sourcepath">
+    <dirset dir="${module.blackjackgui.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.blackjackgui" depends="compile.module.blackjackgui.production,compile.module.blackjackgui.tests" description="Compile module BlackJackGUI"/>
+  
+  <target name="compile.module.blackjackgui.production" depends="register.custom.compilers" description="Compile module BlackJackGUI; production classes">
+    <mkdir dir="${blackjackgui.output.dir}"/>
+    <javac2 destdir="${blackjackgui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.blackjackgui}/javac">
+      <compilerarg line="${compiler.args.blackjackgui}"/>
+      <bootclasspath refid="blackjackgui.module.bootclasspath"/>
+      <classpath refid="blackjackgui.module.production.classpath"/>
+      <src refid="blackjackgui.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.blackjackgui"/>
+    </javac2>
+    
+    <copy todir="${blackjackgui.output.dir}">
+      <fileset dir="${module.blackjackgui.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.blackjackgui.tests" depends="register.custom.compilers,compile.module.blackjackgui.production" description="compile module BlackJackGUI; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.blackjackgui" description="cleanup module">
+    <delete dir="${blackjackgui.output.dir}"/>
+    <delete dir="${blackjackgui.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.blackjackgui, clean.artifact.blackjackgui" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.blackjackgui" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.blackjackgui" value="${basedir}/out/artifacts/BlackJackGUI"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="artifact.temp.output.BlackJackGUI" value="${artifacts.temp.dir}/BlackJackGUI.jar"/>
+    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath="${jdk.home.11}/lib/ant-javafx.jar"/>
+  </target>
+  
+  <target name="clean.artifact.blackjackgui" description="clean BlackJackGUI artifact output">
+    <delete dir="${artifact.output.blackjackgui}"/>
+  </target>
+  
+  <target name="artifact.blackjackgui" depends="init.artifacts, compile.module.blackjackgui, compile.module.blackjackgui" description="Build &#39;BlackJackGUI&#39; artifact" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <mkdir dir="${artifact.output.blackjackgui}"/>
+    <copy todir="${artifact.temp.output.BlackJackGUI}">
+      <fileset dir="${blackjackgui.output.dir}"/>
+    </copy>
+    <copy todir="${artifact.temp.output.BlackJackGUI}">
+      <fileset dir="C:/Users/sklass/Documents/GitHub/OO_Sebastian/BlackJackGUI/src"/>
+    </copy>
+    <copy todir="${artifact.temp.output.BlackJackGUI}">
+      <fileset dir="${blackjackgui.output.dir}"/>
+    </copy>
+    <fx:fileset id="all_but_BlackJackGUI" dir="${artifact.temp.output.BlackJackGUI}" includes="**/*.jar">
+      <exclude name="BlackJackGUI.jar"/>
+    </fx:fileset>
+    <fx:fileset id="all_BlackJackGUI" dir="${artifact.temp.output.BlackJackGUI}" includes="**/*.jar"/>
+    <fx:application id="BlackJackGUI_id" name="BlackJackGUI" mainClass="BlackJack.Main" version="0.1-alpha"/>
+    <fx:jar destfile="${artifact.temp.output.BlackJackGUI}/BlackJackGUI.jar">
+      <fx:application refid="BlackJackGUI_id"/>
+      <fileset dir="${artifact.temp.output.BlackJackGUI}" excludes="**/*.jar"/>
+      <fx:resources>
+        <fx:fileset refid="all_but_BlackJackGUI"/>
+      </fx:resources>
+      <manifest>
+        <attribute name="Implementation-Title" value="BlackJack"/>
+        <attribute name="Implementation-Version" value="0.1 alpha"/>
+        <attribute name="Implementation-Vendor" value="S.Klass"/>
+      </manifest>
+    </fx:jar>
+    <fx:deploy width="600" height="400" updatemode="background" outdir="${artifact.temp.output.BlackJackGUI}/deploy" outfile="BlackJackGUI" nativeBundles="all">
+      <fx:application refid="BlackJackGUI_id"/>
+      <fx:info title="BlackJack" vendor="S.Klass"/>
+      <fx:resources>
+        <fx:fileset refid="all_BlackJackGUI"/>
+      </fx:resources>
+    </fx:deploy>
+    <copy todir="${artifact.output.blackjackgui}">
+      <fileset dir="${artifact.temp.output.BlackJackGUI}/deploy"/>
+    </copy>
+    <delete includeemptydirs="true">
+      <fileset dir="${artifact.temp.output.BlackJackGUI}"/>
+    </delete>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.blackjackgui" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

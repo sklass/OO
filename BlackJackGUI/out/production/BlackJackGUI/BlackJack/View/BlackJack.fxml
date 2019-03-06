@@ -25,7 +25,7 @@
             <Pane fx:id="BankCardPane" layoutX="1.0" layoutY="31.0" prefHeight="175.0" prefWidth="342.0" />
          </children>
       </Pane>
-      <Pane fx:id="Player1Pane" layoutX="37.0" layoutY="136.0" maxHeight="225.0" maxWidth="225.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;">
+      <Pane fx:id="Player1Pane" layoutX="37.0" layoutY="136.0" maxHeight="225.0" maxWidth="225.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;" visible="false">
          <children>
             <Label layoutX="58.0" layoutY="6.0" text="Credit:">
                <font>
@@ -51,7 +51,7 @@
             <Button fx:id="Player1QuitBtn" layoutX="166.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
          </children>
       </Pane>
-      <Pane fx:id="Player2Pane" layoutX="77.0" layoutY="383.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;">
+      <Pane fx:id="Player2Pane" layoutX="77.0" layoutY="383.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;" visible="false">
          <children>
             <Label layoutX="58.0" layoutY="6.0" text="Credit:">
                <font>
@@ -77,7 +77,7 @@
             <Button fx:id="Player2QuitBtn" layoutX="161.0" layoutY="187.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
          </children>
       </Pane>
-      <Pane fx:id="Player3Pane" layoutX="325.0" layoutY="432.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;">
+      <Pane fx:id="Player3Pane" layoutX="325.0" layoutY="432.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;" visible="false">
          <children>
             <Label layoutX="58.0" layoutY="6.0" text="Credit:">
                <font>
@@ -106,7 +106,7 @@
             <Button fx:id="Player3QuitBtn" layoutX="164.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
          </children>
       </Pane>
-      <Pane fx:id="Player4Pane" layoutX="566.0" layoutY="432.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;">
+      <Pane fx:id="Player4Pane" layoutX="566.0" layoutY="432.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;" visible="false">
          <children>
             <Label layoutX="58.0" layoutY="6.0" text="Credit:">
                <font>
@@ -132,7 +132,7 @@
             <Button fx:id="Player4QuitBtn" layoutX="164.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
          </children>
       </Pane>
-      <Pane fx:id="Player5Pane" layoutX="813.0" layoutY="383.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;">
+      <Pane fx:id="Player5Pane" layoutX="813.0" layoutY="383.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;" visible="false">
          <children>
             <Label layoutX="58.0" layoutY="6.0" text="Credit:">
                <font>
@@ -158,7 +158,7 @@
             <Button fx:id="Player5QuitBtn" layoutX="164.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
          </children>
       </Pane>
-      <Pane fx:id="Player6Pane" layoutX="868.0" layoutY="136.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;">
+      <Pane fx:id="Player6Pane" layoutX="868.0" layoutY="136.0" prefHeight="225.0" prefWidth="225.0" style="-fx-border-color: black;" visible="false">
          <children>
             <Label layoutX="58.0" layoutY="6.0" text="Credit:">
                <font>
