@@ -25,6 +25,7 @@ public class BJController {
     private Pane cardPane = new Pane();
     private Label statusLabel = new Label();
     private Label creditLabel = new Label();
+    private Label cardValueLabel = new Label();
     private TextField betField = new TextField();
     private Button betButton = new Button();
     private Button cardButton = new Button();
@@ -69,7 +70,7 @@ public class BJController {
                     GameStateHandler();
                     break;
                 case 5:                 //Nachdem die spieler ihre karten haben, können sie ihren einsatz verdoppeln
-                    doubleBet();
+                    showDoubleBet();
                     break;
                 case 6:
                     GameStatusLabel.setText("Do you want another Card?");
@@ -108,7 +109,6 @@ public class BJController {
                     break;
             }
         }
-
 
     private void definePlayers(){               //Ausgewählte anzahl an spielern erzeugen und ihnen die jeweiligen Panes,Buttons, TextFields und Co zuordnen
         Model.getBank().setID(6);
@@ -216,7 +216,7 @@ public class BJController {
             }
     }
 
-        private void doubleBet(){
+    private void showDoubleBet(){
         GameStatusLabel.setText("Do you want to double your bet?");
         for(Player player : Model.getPlayers()){
             if(player.getHand().size() == 2 && !player.BJ() && (player.getBet() < player.getCredit())) {    //Spieler kann nur verdoppeln wenn: er 2 karten hat, keinen blackjack und noch genug credits
@@ -224,7 +224,8 @@ public class BJController {
                 doubleButton.setVisible(true);                                                  //Die Buttons zum verdoppeln einblenden
                 notDoubleButton.setVisible(true);
             }else{
-                Model.setMovesThisTurn(Model.getMovesThisTurn()+1);                                         //Kann ein spieler nicht verdoppeln, wird die Anzahl der Spielzüge der runde um eins erhöht, da der spieler automatisch nicht verdoppelt
+                //Model.setMovesThisTurn(Model.getMovesThisTurn()+1);                                         //Kann ein spieler nicht verdoppeln, wird die Anzahl der Spielzüge der runde um eins erhöht, da der spieler automatisch nicht verdoppelt
+                countMoves();
                 System.out.println(Model.getMovesThisTurn());
             }
         }
@@ -311,22 +312,22 @@ public class BJController {
         if(handValue == 21){                    //Kartenwert von 21
             if(player.getHand().size() < 3){    //und max. 2 karten
                 player.setBJ(true);             //BlackJack!
-                statusLabel.setText("You have got a BlackJack!");
+                cardValueLabel.setText("You have got a BlackJack!");
             }else{
                 player.setStand(true);          //Kartenwert 21 und mehr als 3 karten -> stand
                 cardButton.setVisible(false);                                  //Buttons ausblenden
                 standButton.setVisible(false);
                 countMoves();
-                statusLabel.setText("You reached 21 points. Stand!");
+                cardValueLabel.setText("You reached 21 points. Stand!");
             }
         }else if (handValue > 21) {
             player.setOut(true);
-            statusLabel.setText("More than 21 Points, your out");
+            cardValueLabel.setText("More than 21 Points, your out");
             cardButton.setVisible(false);                                  //Buttons ausblenden
             standButton.setVisible(false);
             countMoves();
         }else{
-            statusLabel.setText("Total card value: " + handValue);
+            cardValueLabel.setText("Total card value: " + handValue);
         }
     }
 
@@ -377,15 +378,13 @@ public class BJController {
                         player.setCredit(player.getCredit() + player.getBet()); //Spieler bekommt seinen einsatz zurück
                         statusLabel.setText("Draw. You got your bet back");
                     }else{                                                      //Spieler hat BJ aber bank nicht
-                        winnings = player.getBet()*2.5;                           //Spieler erhält dreifachen einsatz
+                        winnings = player.getBet()*2.5;                           //Spieler erhält 2,5fachen einsatz
                         player.setCredit(player.getCredit() + winnings);
-                       // System.out.println(player.getName() + " wins " + winnings);
                         statusLabel.setText("You won " + winnings + " credits!");
                     }
                 }else if(Model.getBank().isOut()){                                         //Ist die Bank über 21 und der spieler nicht
                     winnings = player.getBet()*2;                               // erhält er seinen doppelten einsatz als gewinn
                     player.setCredit(player.getCredit() + winnings);
-                    //System.out.println(player.getName() + " wins " + winnings);
                     statusLabel.setText("You won " + winnings + " credits!");
                 }else if(getHandValue(player) == getHandValue(Model.getBank())){           //Spieler handwert = Bank
                     player.setCredit(player.getCredit() + player.getBet()); //Spieler bekommt seinen einsatz zurück
@@ -544,6 +543,7 @@ public class BJController {
                 playerPane = Player1Pane;
                 cardPane = Player1CardPane;
                 creditLabel = Player1CreditLabel;
+                cardValueLabel = Player1CardValueLabel;
                 statusLabel = Player1StatusLabel;
                 betField = Player1BetField;
                 betButton = Player1BetBtn;
@@ -558,6 +558,7 @@ public class BJController {
                 playerPane = Player2Pane;
                 cardPane = Player2CardPane;
                 creditLabel = Player2CreditLabel;
+                cardValueLabel = Player2CardValueLabel;
                 statusLabel = Player2StatusLabel;
                 betField = Player2BetField;
                 betButton = Player2BetBtn;
@@ -572,6 +573,7 @@ public class BJController {
                 playerPane = Player3Pane;
                 cardPane = Player3CardPane;
                 creditLabel = Player3CreditLabel;
+                cardValueLabel = Player3CardValueLabel;
                 statusLabel = Player3StatusLabel;
                 betField = Player3BetField;
                 betButton = Player3BetBtn;
@@ -586,6 +588,7 @@ public class BJController {
                 playerPane = Player4Pane;
                 cardPane = Player4CardPane;
                 creditLabel = Player4CreditLabel;
+                cardValueLabel = Player4CardValueLabel;
                 statusLabel = Player4StatusLabel;
                 betField = Player4BetField;
                 betButton = Player4BetBtn;
@@ -600,6 +603,7 @@ public class BJController {
                 playerPane = Player5Pane;
                 cardPane = Player5CardPane;
                 creditLabel = Player5CreditLabel;
+                cardValueLabel = Player5CardValueLabel;
                 statusLabel = Player5StatusLabel;
                 betField = Player5BetField;
                 betButton = Player5BetBtn;
@@ -614,6 +618,7 @@ public class BJController {
                 playerPane = Player6Pane;
                 cardPane = Player6CardPane;
                 creditLabel = Player6CreditLabel;
+                cardValueLabel = Player6CardValueLabel;
                 statusLabel = Player6StatusLabel;
                 betField = Player6BetField;
                 betButton = Player6BetBtn;
@@ -646,6 +651,8 @@ public class BJController {
     @FXML
     Label Player1CreditLabel;
     @FXML
+    Label Player1CardValueLabel;
+    @FXML
     Label Player1StatusLabel;
     @FXML
     TextField Player1BetField;
@@ -674,6 +681,8 @@ public class BJController {
     @FXML
     Label Player2StatusLabel;
     @FXML
+    Label Player2CardValueLabel;
+    @FXML
     TextField Player2BetField;
     @FXML
     Button Player2BetBtn;
@@ -696,6 +705,8 @@ public class BJController {
     Pane Player3CardPane;
     @FXML
     Label Player3CreditLabel;
+    @FXML
+    Label Player3CardValueLabel;
     @FXML
     Label Player3StatusLabel;
     @FXML
@@ -722,6 +733,8 @@ public class BJController {
     @FXML
     Label Player4CreditLabel;
     @FXML
+    Label Player4CardValueLabel;
+    @FXML
     Label Player4StatusLabel;
     @FXML
     TextField Player4BetField;
@@ -747,6 +760,8 @@ public class BJController {
     @FXML
     Label Player5CreditLabel;
     @FXML
+    Label Player5CardValueLabel;
+    @FXML
     Label Player5StatusLabel;
     @FXML
     TextField Player5BetField;
@@ -769,6 +784,8 @@ public class BJController {
     Pane Player6Pane;
     @FXML
     Label Player6CreditLabel;
+    @FXML
+    Label Player6CardValueLabel;
     @FXML
     Label Player6StatusLabel;
     @FXML
