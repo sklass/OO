@@ -17,7 +17,7 @@ public class CardDeck {
         int cardsTotal = numberOfDecks * numberOfCardsinDeck;
         cards = new Card[cardsTotal];    //Array das alle Karten beinhaltet
         createCardDeck();                   //Methode zum anlegen aller Spielkarten
-        shuffle(cards);                     //Methode zum mischen der karten
+        //shuffle(cards);                     //Methode zum mischen der karten
         //printCards();                       //methode zur anzeige der Karteneigenschaften - Debug only!
     }
 
@@ -393,16 +393,16 @@ public class CardDeck {
 
     //Methode zum mischen der karten
     //tauscht die position von zwei karten nach dem zufallsprinzip solange bis alle karten einmal getauscht wurden
-    static void shuffle(Card[] CardArray)
+    public void shuffle()
     {
         Random rnd = ThreadLocalRandom.current();
-        for (int i = CardArray.length - 1; i > 0; i--)  //array von hinten nach vorne durchlaufen
+        for (int i = this.cards.length - 1; i > 0; i--)  //array von hinten nach vorne durchlaufen
         {
             int randomIndex = rnd.nextInt(i + 1);     //zufallszahl zwischen 0 und 52 generieren
 
-            Card temp = CardArray[randomIndex];       //zufällige Karte in temp speichern
-            CardArray[randomIndex] = CardArray[i];    //Anstelle der zufällig bestimmten karte, die karte speichern die anhand der for schleife gerade dran ist
-            CardArray[i] = temp;                      //an der position der per schleife definierten karte wird nun die zufällig bestimmte karte abgelegt
+            Card temp = this.cards[randomIndex];       //zufällige Karte in temp speichern
+            this.cards[randomIndex] = this.cards[i];    //Anstelle der zufällig bestimmten karte, die karte speichern die anhand der for schleife gerade dran ist
+            this.cards[i] = temp;                      //an der position der per schleife definierten karte wird nun die zufällig bestimmte karte abgelegt
         }
     }
 
