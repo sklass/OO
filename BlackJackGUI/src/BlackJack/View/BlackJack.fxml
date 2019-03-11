@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -25,7 +26,7 @@
             <Pane fx:id="BankCardPane" layoutY="28.0" prefHeight="135.0" prefWidth="330.0" />
          </children>
       </Pane>
-      <Pane fx:id="Player1Pane" layoutX="37.0" layoutY="121.0" maxHeight="240.0" maxWidth="225.0" prefHeight="240.0" prefWidth="225.0">
+      <Pane fx:id="Player1Pane" layoutX="37.0" layoutY="121.0" maxHeight="240.0" maxWidth="225.0" prefHeight="240.0" prefWidth="225.0" visible="false">
          <children>
             <Pane layoutY="135.0" prefHeight="105.0" prefWidth="225.0" style="-fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
                <children>
@@ -66,7 +67,7 @@
             <Pane fx:id="Player1CardPane" prefHeight="135.0" prefWidth="225.0" />
          </children>
       </Pane>
-      <Pane fx:id="Player2Pane" layoutX="77.0" layoutY="383.0" prefHeight="240.0" prefWidth="225.0">
+      <Pane fx:id="Player2Pane" layoutX="77.0" layoutY="383.0" prefHeight="240.0" prefWidth="225.0" visible="false">
          <children>
             <Pane layoutY="135.0" prefHeight="105.0" prefWidth="225.0" style="-fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
                <children>
@@ -107,7 +108,7 @@
             <Pane fx:id="Player2CardPane" prefHeight="135.0" prefWidth="225.0" />
          </children>
       </Pane>
-      <Pane fx:id="Player3Pane" layoutX="325.0" layoutY="432.0" prefHeight="240.0" prefWidth="225.0">
+      <Pane fx:id="Player3Pane" layoutX="325.0" layoutY="432.0" prefHeight="240.0" prefWidth="225.0" visible="false">
          <children>
             <Pane layoutY="135.0" prefHeight="105.0" prefWidth="225.0" style="-fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
                <children>
@@ -132,7 +133,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="Player3BetField" layoutX="9.0" layoutY="72.0" prefHeight="25.0" prefWidth="42.0" />
-                  <Button fx:id="Player3BetBtn" layoutX="54.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#PlayerBets" prefHeight="25.0" prefWidth="35.0" text="OK" visible="false" />
+                  <Button fx:id="Player3BetBtn" layoutX="54.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#PlayerBets" prefHeight="25.0" prefWidth="35.0" text="OK" />
                   <Button fx:id="Player3DoubleBtn" layoutX="101.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#doublePlayerBet" prefHeight="25.0" prefWidth="57.0" text="Double" visible="false" />
                   <Button fx:id="Player3CardBtn" layoutX="101.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#takeCard" prefHeight="25.0" prefWidth="57.0" text="Card" visible="false" />
                   <Button fx:id="Player3StandBtn" layoutX="161.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#stand" prefHeight="25.0" prefWidth="57.0" text="Stand" visible="false" />
@@ -149,7 +150,7 @@
             <Pane fx:id="Player3CardPane" prefHeight="135.0" prefWidth="225.0" />
          </children>
       </Pane>
-      <Pane fx:id="Player4Pane" layoutX="566.0" layoutY="432.0" prefHeight="240.0" prefWidth="225.0">
+      <Pane fx:id="Player4Pane" layoutX="566.0" layoutY="432.0" prefHeight="240.0" prefWidth="225.0" visible="false">
          <children>
             <Pane layoutY="135.0" prefHeight="105.0" prefWidth="225.0" style="-fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
                <children>
@@ -191,7 +192,7 @@
             <Pane fx:id="Player4CardPane" prefHeight="135.0" prefWidth="225.0" />
          </children>
       </Pane>
-      <Pane fx:id="Player5Pane" layoutX="813.0" layoutY="383.0" prefHeight="240.0" prefWidth="225.0">
+      <Pane fx:id="Player5Pane" layoutX="813.0" layoutY="383.0" prefHeight="240.0" prefWidth="225.0" visible="false">
          <children>
             <Pane fx:id="Player5CardPane" prefHeight="135.0" prefWidth="225.0" />
             <Pane layoutY="135.0" prefHeight="105.0" prefWidth="225.0" style="-fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
@@ -233,7 +234,7 @@
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="Player6Pane" layoutX="868.0" layoutY="121.0" prefHeight="240.0" prefWidth="225.0">
+      <Pane fx:id="Player6Pane" layoutX="868.0" layoutY="121.0" prefHeight="240.0" prefWidth="225.0" visible="false">
          <children>
             <Pane layoutY="135.0" prefHeight="105.0" prefWidth="225.0" style="-fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
                <children>
@@ -277,16 +278,17 @@
       </Pane>
       <Pane fx:id="GameStatusPane" layoutX="374.0" layoutY="223.0" prefHeight="179.0" prefWidth="371.0" style="-fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
          <children>
-            <Label fx:id="GameStatusLabel" layoutX="47.0" layoutY="14.0">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
+            <ListView fx:id="GameStatusListView" layoutX="14.0" layoutY="12.0" prefHeight="156.0" prefWidth="346.0" style="-fx-background-color: transparent;" />
          </children></Pane>
       <Button fx:id="backToMainMenuBtn" layoutX="25.0" layoutY="645.0" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="back to MainMenu" />
       <Label layoutX="512.0" layoutY="198.0" text="Game Status" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="GameStatusLabel" layoutX="393.0" layoutY="412.0" prefHeight="20.0" prefWidth="0.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
    </children>

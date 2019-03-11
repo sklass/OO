@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -17,6 +18,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BJController {
     private BlackJackModel Model;
@@ -61,7 +63,8 @@ public class BJController {
                     GameStateHandler();
                     break;
                 case 3:                                          //Spieler auffordern ihre einsätze zu machen
-                    GameStatusLabel.setText("Please place your bets and press ok!");
+                    //GameStatusLabel.setText("Please place your bets and press ok!");
+                    //GameStatusListView.set
                     Model.setMovesThisTurn(0);
                     break;
                 case 4:
@@ -312,23 +315,23 @@ public class BJController {
         if(handValue == 21){                    //Kartenwert von 21
             if(player.getHand().size() < 3){    //und max. 2 karten
                 player.setBJ(true);             //BlackJack!
-                cardValueLabel.setText("You have got a BlackJack!");
+                statusLabel.setText("BlackJack!!");
             }else{
                 player.setStand(true);          //Kartenwert 21 und mehr als 3 karten -> stand
                 cardButton.setVisible(false);                                  //Buttons ausblenden
                 standButton.setVisible(false);
                 countMoves();
-                cardValueLabel.setText("You reached 21 points. Stand!");
+                statusLabel.setText("You've reached 21! Autostand!");
             }
         }else if (handValue > 21) {
             player.setOut(true);
-            cardValueLabel.setText("More than 21 Points, your out");
+            statusLabel.setText("You're out.More then 21!");
             cardButton.setVisible(false);                                  //Buttons ausblenden
             standButton.setVisible(false);
             countMoves();
-        }else{
-            cardValueLabel.setText("Total card value: " + handValue);
         }
+        cardValueLabel.setText("Total card value: " + handValue);
+
     }
 
     private void BanksTurn(){
@@ -337,29 +340,33 @@ public class BJController {
         int handValue = 0;
         handValue = getHandValue(Model.getBank());
 
+
         while(!Model.getBank().BJ() && !Model.getBank().isStand() && !Model.getBank().isOut()){
             if(handValue > 21){                     //hat die Bank mehr als 21 ist sie raus
                 Model.getBank().setOut(true);
-                System.out.println("The bank is out");
+                //System.out.println("The bank is out");
                 Label Info = new Label();
                 Info.setText("The Bank has more the 21 points. The Bank has lost");
-                GameStatusPane.getChildren().add(Info);
+                GameStatusListView.getItems().add(Info);
+                //GameStatusPane.getChildren().add(Info);
             }else if(handValue == 21){              //bei 21 Blackjack
                 Model.getBank().setBJ(true);
                 Label Info = new Label();
                 Info.setText("The Bank has  21 points");
-                GameStatusPane.getChildren().add(Info);
+                GameStatusListView.getItems().add(Info);
                 System.out.println("The bank has BlackJack");
             }else if(handValue < 17){                     //bei weniger als 17 -> karte ziehen
-                System.out.println("The bank takes another Card");
+                //System.out.println("The bank takes another Card");
                 drawCard(Model.getBank(),1);
-
                 handValue = getHandValue(Model.getBank());     //und hand wert berechnen
+                Label Info = new Label();
+                Info.setText("The Bank draws another Card");
+                GameStatusListView.getItems().add(Info);
             }else{                                  //ansonsten stehen
                 Label Info = new Label();
                 Info.setText("The Bank stands with " + handValue + " points");
-                GameStatusPane.getChildren().add(Info);
-                System.out.println("The bank stands");
+                GameStatusListView.getItems().add(Info);
+               // System.out.println("The bank stands");
                 Model.getBank().setStand(true);
             }
             showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
@@ -641,6 +648,8 @@ public class BJController {
     Pane BankCardPane;
     @FXML
     Pane GameStatusPane;
+    @FXML
+    ListView GameStatusListView;
     @FXML
     Label GameStatusLabel;
 
