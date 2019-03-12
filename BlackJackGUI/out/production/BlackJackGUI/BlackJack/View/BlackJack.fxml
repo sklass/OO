@@ -142,7 +142,7 @@
                   <Button fx:id="Player3QuitBtn" layoutX="161.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
                   <Label fx:id="Player3StatusLabel" layoutX="9.0" layoutY="52.0" text="Label" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                </children>
@@ -164,7 +164,7 @@
                   <Button fx:id="Player4QuitBtn" layoutX="161.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
                   <Label fx:id="Player4StatusLabel" layoutX="9.0" layoutY="52.0" text="Label" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="9.0" layoutY="28.0" text="Credit:">
@@ -227,7 +227,7 @@
                   <Button fx:id="Player5QuitBtn" layoutX="161.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
                   <Label fx:id="Player5StatusLabel" layoutX="9.0" layoutY="52.0" text="Label" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                </children>
@@ -268,7 +268,7 @@
                   <Button fx:id="Player6QuitBtn" layoutX="161.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#QuitPlayer" prefHeight="25.0" prefWidth="55.0" text="No" visible="false" />
                   <Label fx:id="Player6StatusLabel" layoutX="9.0" layoutY="52.0" text="Label" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                </children>
@@ -278,17 +278,12 @@
       </Pane>
       <Pane fx:id="GameStatusPane" layoutX="374.0" layoutY="223.0" prefHeight="179.0" prefWidth="371.0" style="-fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;">
          <children>
-            <ListView fx:id="GameStatusListView" layoutX="14.0" layoutY="12.0" prefHeight="156.0" prefWidth="346.0" style="-fx-background-color: transparent;" />
+            <ListView fx:id="GameStatusListView" layoutX="14.0" layoutY="12.0" prefHeight="156.0" prefWidth="346.0" style="-fx-background-color: transparent; -fx-control-inner-background: transparent;" />
          </children></Pane>
       <Button fx:id="backToMainMenuBtn" layoutX="25.0" layoutY="645.0" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="back to MainMenu" />
       <Label layoutX="512.0" layoutY="198.0" text="Game Status" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="GameStatusLabel" layoutX="393.0" layoutY="412.0" prefHeight="20.0" prefWidth="0.0">
-         <font>
-            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
    </children>
