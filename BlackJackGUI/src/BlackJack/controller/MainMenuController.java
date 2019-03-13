@@ -38,7 +38,6 @@ public class MainMenuController {
         Model.setMaxBet(Integer.parseInt(MaxBetTextField.getText()));
         Model.setGamestatus(0);
         Model.setCardCounter(0);
-        Model.setNumberOfCardDecks(6);
         BlackJackView BJView = new BlackJackView();
         BJView.start(Model);
     }

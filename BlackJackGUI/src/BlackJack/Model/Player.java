@@ -13,9 +13,6 @@ public class Player {
     private boolean doubleBet;
     private boolean quit;
 
-
-
-
     public Player(double startCredit){
         BJ = false;
         out = false;

@@ -15,10 +15,9 @@ public class CardDeck {
         numberOfCardsinDeck = 52;         //gesamt Anzahl Karten in einem Deck
         this.numberOfDecks = numberOfDecks;
         int cardsTotal = numberOfDecks * numberOfCardsinDeck;
-        cards = new Card[cardsTotal];    //Array das alle Karten beinhaltet
+        cards = new Card[cardsTotal];       //Array das alle Karten beinhaltet
         createCardDeck();                   //Methode zum anlegen aller Spielkarten
-        //shuffle(cards);                     //Methode zum mischen der karten
-        //printCards();                       //methode zur anzeige der Karteneigenschaften - Debug only!
+        //printCards();                     //methode zur anzeige der Karteneigenschaften - Debug only!
     }
 
 
@@ -100,22 +99,7 @@ public class CardDeck {
                     } else {
                         cards[i].setValue(value);//Ansonsten wird value als kartenwert gesetzt
                     }
-/*
-                    switch (type) {                      //Jede Karte wird 4mal erstellt , je einmal Herz,Pik,Karo,Kreuz
-                        case 0: //herz
-                            cards[i].setType("Herz");
-                            break;
-                        case 1: //piek
-                            cards[i].setType("Pik");
-                            break;
-                        case 2: //karo
-                            cards[i].setType("Karo");
-                            break;
-                        case 3: //kreuz
-                            cards[i].setType("Kreuz");
-                            break;
-                    }
-*/
+
                     switch (value) {                          //Zusätzlich zum Wert und Typ wird auch der Name der Karte definiert (hauptsächlich für Bube, Dame, König)
                         case 1:
                             cards[i].setName("Ass");

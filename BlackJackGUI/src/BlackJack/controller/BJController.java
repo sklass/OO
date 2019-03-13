@@ -23,6 +23,7 @@ public class BJController {
     private Pane playerPane = new Pane();
     private Pane cardPane = new Pane();
     private Label statusLabel = new Label();
+    private Label actionLabel = new Label();
     private Label creditLabel = new Label();
     private Label cardValueLabel = new Label();
     private TextField betField = new TextField();
@@ -60,7 +61,7 @@ public class BJController {
                 GameStateHandler();
                 break;
             case 3:                                          //Spieler können Ihre wetteinsätze machen
-                Model.setMovesThisTurn(0);                   //methode count moves zählt die Nutzeraktionen und springt dann weiter zum nächsten case
+                                                             //Hier wird auf klicks der spieler gewartet, haben alle spieler geklickt, springt count moves in den nächsten gamestatus
                 break;
             case 4:
                 drawStartCards();                           //Zu beginn des Spiels werden 2 karten an alle Spieler vergeben und eine an die bank
@@ -68,11 +69,10 @@ public class BJController {
                 GameStateHandler();
                 break;
             case 5:                                         //Nachdem die spieler ihre karten haben, können sie ihren einsatz verdoppeln
-                showDoubleBet();
+                showDoubleBet();                            //Hier wird auf klicks der spieler gewartet, haben alle spieler geklickt, springt count moves in den nächsten gamestatus
                 break;
             case 6:                                         //Spieler können weitere karten ziehen
-                Model.setMovesThisTurn(0);
-                anotherCard();
+                anotherCard();                              //Hier wird auf klicks der spieler gewartet, haben alle spieler geklickt, springt count moves in den nächsten gamestatus
                 break;
             case 7:
                 BanksTurn();                                //Nachdem alle Spieler ihre karten erhalten haben ist die bank dran
@@ -85,8 +85,7 @@ public class BJController {
                 GameStateHandler();
                 break;
             case 9:                                        //Spieler könne  den tisch verlassen oder weiter spielen
-                Model.setMovesThisTurn(0);
-                showPlayAgain();
+                showPlayAgain();                           //Hier wird auf klicks der spieler gewartet, haben alle spieler geklickt, springt count moves in den nächsten gamestatus
                 break;
             case 10:                                        //spieler die den tisch verlassen werden gelöscht
                 removePlayer();
@@ -97,7 +96,7 @@ public class BJController {
                     try {
                         backToMainMenu();                   //wenn nein, zurück ins hauptmenü
                     }catch(Exception e){
-
+                        System.out.println(e);
                     }
                 }
                 break;
@@ -113,43 +112,15 @@ public class BJController {
         }
     }
 
-    private void initGUI(){
-        GameStatusListView.getItems().add(addStatusEntry("A new game has started with " + Model.getNumberOfPlayers() + " players"));
-        GameStatusListView.getItems().add(addStatusEntry("Waiting for players to set their bet"));
-        for(int i=0; i < Model.getNumberOfPlayers(); i++){
-            switch(i) {
-                case 0:
-                    Player1Pane.setVisible(true);
-                    Player1StatusLabel.setText("Place your bet and press OK");
-                    Player1CreditLabel.setText(String.valueOf(getPlayer(i).getCredit()));
-                    break;
-                case 1:
-                    Player2Pane.setVisible(true);
-                    Player2StatusLabel.setText("Place your bet and press OK");
-                    Player2CreditLabel.setText(String.valueOf(getPlayer(i).getCredit()));
-                    break;
-                case 2:
-                    Player3Pane.setVisible(true);
-                    Player3StatusLabel.setText("Place your bet and press OK");
-                    Player3CreditLabel.setText(String.valueOf(getPlayer(i).getCredit()));
-
-                    break;
-                case 3:
-                    Player4Pane.setVisible(true);
-                    Player4StatusLabel.setText("Place your bet and press OK");
-                    Player4CreditLabel.setText(String.valueOf(getPlayer(i).getCredit()));
-                    break;
-                case 4:
-                    Player5Pane.setVisible(true);
-                    Player5StatusLabel.setText("Place your bet and press OK");
-                    Player5CreditLabel.setText(String.valueOf(getPlayer(i).getCredit()));
-                    break;
-                case 5:
-                    Player6Pane.setVisible(true);
-                    Player6StatusLabel.setText("Place your bet and press OK");
-                    Player6CreditLabel.setText(String.valueOf(getPlayer(i).getCredit()));
-                    break;
-            }
+    private void initGUI(){     //Methode zum einblenden der benötigen GUI inhalte, nur die inhalte der vorhandenen spieler werden angezeigt
+        addStatusEntry("A new game has started with " + Model.getNumberOfPlayers() + " players");
+        addStatusEntry("Waiting for players to set their bet");
+        for(Player player : Model.getPlayers()){
+            setPlayerUI(player.getID());
+            playerPane.setVisible(true);
+            cardValueLabel.setVisible(false);
+            actionLabel.setText("Place your bet and press OK");
+            creditLabel.setText(String.valueOf(player.getCredit()));
         }
     }
 
@@ -177,26 +148,26 @@ public class BJController {
             betField.setEditable(false);                                                                        //Button und textfeld deaktiveiren
             betButton.setDisable(true);
             creditLabel.setText(String.valueOf(getPlayer(playerID).getCredit()));                  //Und Anzeige des Guthabens aktualisieren
-            statusLabel.setText("Please wait for the other Players");
+            actionLabel.setText("Please wait for the other Players");
             countMoves();                                                                                       //Methode zum zählen der gesetzen Wetten aufrufen
         }
     }
 
-    private void drawStartCards() { //jeder spieler zieht 2 karten und die bank eine
-        GameStatusListView.getItems().add(addStatusEntry("All players have set their bet. Dealing out start cards"));
+    private void drawStartCards() {                     //jeder spieler zieht 2 karten und die bank eine
+        addStatusEntry("All players have set their bet. Dealing out start cards");
         drawCard(Model.getBank(),1);
-        showPlayerCards(Model.getBank());
-        for(Player player: Model.getPlayers()){
-            drawCard(player, 2);
-            checkCardValues(player);
-            showPlayerCards(player);
+        showPlayerCards(Model.getBank());               //Karten der Bank zeigen
+        for(Player player: Model.getPlayers()){         //alle spieler durchlaufen
+            drawCard(player, 2);          //2 karten ziehen
+            checkCardValues(player);                    //kartenwert prüfen
+            showPlayerCards(player);                    //karten anzeigen
         }
     }
 
-    private void drawCard(Player player , int numberOfCards) {  //methode um spielern neue karten zuzuweisen
-        for(int i=0; i< numberOfCards; i++) {
-            player.setCard(Model.getCardDeck().drawCard(Model.getCardCounter()));
-            Model.setCardCounter(Model.getCardCounter()+1);
+    private void drawCard(Player player , int numberOfCards) {                  //methode um spielern neue karten zuzuweisen
+        for(int i=0; i< numberOfCards; i++) {                                   //läuft so oft wie numberOfCards vorgibt
+            player.setCard(Model.getCardDeck().drawCard(Model.getCardCounter()));   //spieler eine karte zuweisen
+            Model.setCardCounter(Model.getCardCounter()+1);                         //globalen kartenzähler um ein erhöhen
         }
     }
 
@@ -214,15 +185,17 @@ public class BJController {
     }
 
     private void showDoubleBet(){                                  //Buttons zum verdoppeln bzw nicht verdoppeln anzeigen
-        GameStatusListView.getItems().add(addStatusEntry("Players may now double their bet"));
+        addStatusEntry("Players may now double their bet");
         for(Player player : Model.getPlayers()){
             setPlayerUI(player.getID());
             if(player.getHand().size() == 2 && !player.BJ() && (player.getBet() <= player.getCredit())) {    //Spieler kann nur verdoppeln wenn: er 2 karten hat, keinen blackjack und noch genug credits
-                statusLabel.setText("Double your bet?");
+                actionLabel.setText("Double your bet?");
                 doubleButton.setVisible(true);                                                  //Die Buttons zum verdoppeln einblenden
                 notDoubleButton.setVisible(true);
             }else{
-                statusLabel.setText("You cant double down");                      //kann ein spieler nicht verdoppeln wird nur eine meldung angezeigt
+                actionLabel.setText("You cant double down");                      //kann ein spieler nicht verdoppeln wird nur eine meldung angezeigt
+               // if(player.BJ()) statusLabel.setText("You've got a BlackJack");
+                //if((player.getBet() <= player.getCredit())) statusLabel.setText("Not enough Credits");
                 countMoves();                                                                   //und der counter für nutzeraktionen um ein erhöht, da er nicht klicken kann
             }
         }
@@ -253,7 +226,7 @@ public class BJController {
     }
 
     private void anotherCard(){
-        GameStatusListView.getItems().add(addStatusEntry("Players may now draw additional cards"));
+        addStatusEntry("Players may now draw additional cards");
         for(Player player : Model.getPlayers()){                                                                //alle spieler durchlaufen
             setPlayerUI(player.getID());
             if(player.isDoubleBet()){                                                                           //hat ein spieler verdoppelt bekommt er eine weitere karte
@@ -261,12 +234,12 @@ public class BJController {
                 showPlayerCards(player);
                 checkCardValues(player);
             }else if (!player.BJ() && !player.isStand() && !player.isOut()){
-                statusLabel.setText("Draw card or Stand");
+                actionLabel.setText("Draw card or Stand");
                 cardButton.setVisible(true);                                                  //Die Buttons zum karte ziehen anzeigen
                 standButton.setVisible(true);
             }
             else{
-                statusLabel.setText("You cant draw another card");
+                actionLabel.setText("You cant draw another card");
                 countMoves();
             }
         }
@@ -305,6 +278,7 @@ public class BJController {
 
     private void checkCardValues(Player player){
         setPlayerUI(player.getID());
+        cardValueLabel.setVisible(true);
         int handValue = getHandValue(player);
         if(handValue == 21) {                    //Kartenwert von 21
             if (player.getHand().size() < 3) {    //und max. 2 karten
@@ -314,47 +288,51 @@ public class BJController {
                 player.setStand(true);          //Kartenwert 21 und mehr als 3 karten -> stand
                 cardButton.setVisible(false);                                  //Buttons ausblenden
                 standButton.setVisible(false);
-                statusLabel.setText("You've reached 21! Autostand!");
+                cardValueLabel.setText("Hand Value: " + handValue);
+                actionLabel.setText("You've reached 21! Autostand!");
                 countMoves();
             }
         }else if(player.isDoubleBet() && handValue < 21){
-            cardValueLabel.setText("Card Value: " + handValue);
-            statusLabel.setText("You cant draw another card");
+            cardValueLabel.setText("Hand Value: " + handValue);
+            actionLabel.setText("You cant draw another card");
             countMoves();
         }else if (handValue > 21) {
             player.setOut(true);
-            statusLabel.setText("You're out.More then 21!");
+            cardValueLabel.setText("Hand Value: " + handValue);
+            actionLabel.setText("You're out.More then 21!");
             cardButton.setVisible(false);                                  //Buttons ausblenden
             standButton.setVisible(false);
             countMoves();
         }else {
-            cardValueLabel.setText("Card Value: " + handValue);
+            cardValueLabel.setText("Hand Value: " + handValue);
         }
 
     }
 
     private void BanksTurn(){
-        GameStatusListView.getItems().add(addStatusEntry("Banks turn begins"));
+        addStatusEntry("Banks turn begins");
         drawCard(Model.getBank(),1);                   //zunächst zieht die Bank eine weitere Karte
         showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
         int handValue = 0;
         handValue = getHandValue(Model.getBank());
+        BankCardValueLabel.setVisible(true);
 
         while(!Model.getBank().BJ() && !Model.getBank().isStand() && !Model.getBank().isOut()){
             if(handValue > 21){                     //hat die Bank mehr als 21 ist sie raus
                 Model.getBank().setOut(true);
-                GameStatusListView.getItems().add(addStatusEntry("The Bank has more the 21 points. The Bank has lost"));
+                addStatusEntry("The Bank has more the 21 points. The Bank has lost");
             }else if(handValue == 21){              //bei 21 Blackjack
                 Model.getBank().setBJ(true);
-                GameStatusListView.getItems().add(addStatusEntry("The Bank has  21 points"));
+                addStatusEntry("The Bank has  21 points");
             }else if(handValue < 17){                     //bei weniger als 17 -> karte ziehen
                  drawCard(Model.getBank(),1);
                 handValue = getHandValue(Model.getBank());     //und hand wert berechnen
-                GameStatusListView.getItems().add(addStatusEntry("The Bank draws another Card"));
+                addStatusEntry("The Bank draws another Card");
             }else{                                  //ansonsten stehen
-                GameStatusListView.getItems().add(addStatusEntry("The Bank stands with " + handValue + " points"));
+                addStatusEntry("The Bank stands with " + handValue + " points");
                 Model.getBank().setStand(true);
             }
+            BankCardValueLabel.setText("Hand Value: " + handValue);
             showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
         }
     }
@@ -395,11 +373,16 @@ public class BJController {
         }
     }
     private void showPlayAgain(){
-        GameStatusListView.getItems().add(addStatusEntry("Players may now choose to stay or leave the table"));
+        addStatusEntry("Players may now choose to stay or leave the table");
         for(Player player : Model.getPlayers()){        //Alle spieler durchlaufen
             setPlayerUI(player.getID());
-            playAgainButton.setVisible(true);
-            quitButton.setVisible(true);
+            if(player.getCredit() < Model.getMinBet()){
+                playerPane.setVisible(false);
+            }else {
+                actionLabel.setText("Play again?");
+                playAgainButton.setVisible(true);
+                quitButton.setVisible(true);
+            }
         }
     }
 
@@ -424,9 +407,9 @@ public class BJController {
     private void removePlayer(){
         ArrayList <Player> remPlayers = new ArrayList<>();
         for(Player player : Model.getPlayers()){
-            if(player.isQuit() || player.getCredit() < 10){
+            if(player.isQuit() || player.getCredit() < Model.getMinBet()){
                 remPlayers.add(player);
-                GameStatusListView.getItems().add(addStatusEntry("Player " + (player.getID()+1) + " left the table"));
+                addStatusEntry("Player " + (player.getID()+1) + " left the table");
             }
         }
         for(Player player : remPlayers){
@@ -444,14 +427,13 @@ public class BJController {
     }
 
     private boolean playersLeft(){
-       // System.out.println(Model.getPlayers().size());
         if(Model.getPlayers().size() == 0) return false;
         return true;
     }
 
     private void unsetPlayerVars(){
 
-        //GameStatusListView.getItems().clear();
+        addStatusEntry("Starting new round with " + Model.getPlayers().size() + " players");
         Model.setMovesThisTurn(0);
         for (Player player : Model.getPlayers()){
             setPlayerUI(player.getID());
@@ -460,11 +442,15 @@ public class BJController {
             player.setStand(false);
             player.setBJ(false);
             player.setOut(false);
+            player.setDoubleBet(false);
             betButton.setDisable(false);
             betField.setEditable(true);
             cardPane.getChildren().clear();
-            statusLabel.setText("Set your bet and press OK");
+            cardValueLabel.setVisible(false);
+            statusLabel.setText("");
+            actionLabel.setText("Set your bet and press OK");
         }
+        BankCardValueLabel.setVisible(false);
         Model.getBank().getHand().clear();
         Model.getBank().setStand(false);
         Model.getBank().setBJ(false);
@@ -481,10 +467,14 @@ public class BJController {
         }
     }
 
-    private Label addStatusEntry(String Text){
+    private void addStatusEntry(String Text){
         Label Info = new Label();
         Info.setText(Text);
-        return Info;
+        GameStatusListView.getItems().add(Info);
+        int index = GameStatusListView.getItems().size();
+        GameStatusListView.scrollTo(index);
+       // GameStatusListView.getSelectionModel().select(index);
+        //GameStatusListView.getFocusModel().focus(index);
     }
 
     private int whoClickedTheButton(MouseEvent event){
@@ -546,6 +536,7 @@ public class BJController {
                 creditLabel = Player1CreditLabel;
                 cardValueLabel = Player1CardValueLabel;
                 statusLabel = Player1StatusLabel;
+                actionLabel = Player1ActionLabel;
                 betField = Player1BetField;
                 betButton = Player1BetBtn;
                 cardButton = Player1CardBtn;
@@ -561,6 +552,7 @@ public class BJController {
                 creditLabel = Player2CreditLabel;
                 cardValueLabel = Player2CardValueLabel;
                 statusLabel = Player2StatusLabel;
+                actionLabel = Player2ActionLabel;
                 betField = Player2BetField;
                 betButton = Player2BetBtn;
                 cardButton = Player2CardBtn;
@@ -576,6 +568,7 @@ public class BJController {
                 creditLabel = Player3CreditLabel;
                 cardValueLabel = Player3CardValueLabel;
                 statusLabel = Player3StatusLabel;
+                actionLabel = Player3ActionLabel;
                 betField = Player3BetField;
                 betButton = Player3BetBtn;
                 cardButton = Player3CardBtn;
@@ -591,6 +584,7 @@ public class BJController {
                 creditLabel = Player4CreditLabel;
                 cardValueLabel = Player4CardValueLabel;
                 statusLabel = Player4StatusLabel;
+                actionLabel = Player4ActionLabel;
                 betField = Player4BetField;
                 betButton = Player4BetBtn;
                 cardButton = Player4CardBtn;
@@ -606,6 +600,7 @@ public class BJController {
                 creditLabel = Player5CreditLabel;
                 cardValueLabel = Player5CardValueLabel;
                 statusLabel = Player5StatusLabel;
+                actionLabel = Player5ActionLabel;
                 betField = Player5BetField;
                 betButton = Player5BetBtn;
                 cardButton = Player5CardBtn;
@@ -621,6 +616,7 @@ public class BJController {
                 creditLabel = Player6CreditLabel;
                 cardValueLabel = Player6CardValueLabel;
                 statusLabel = Player6StatusLabel;
+                actionLabel = Player6ActionLabel;
                 betField = Player6BetField;
                 betButton = Player6BetBtn;
                 cardButton = Player6CardBtn;
@@ -644,7 +640,8 @@ public class BJController {
     Pane GameStatusPane;
     @FXML
     ListView GameStatusListView;
-
+    @FXML
+    Label BankCardValueLabel;
 
     @FXML
     Pane Player1Pane;
@@ -656,6 +653,8 @@ public class BJController {
     Label Player1CardValueLabel;
     @FXML
     Label Player1StatusLabel;
+    @FXML
+    Label Player1ActionLabel;
     @FXML
     TextField Player1BetField;
     @FXML
@@ -682,6 +681,8 @@ public class BJController {
     Label Player2CreditLabel;
     @FXML
     Label Player2StatusLabel;
+    @FXML
+    Label Player2ActionLabel;
     @FXML
     Label Player2CardValueLabel;
     @FXML
@@ -712,6 +713,8 @@ public class BJController {
     @FXML
     Label Player3StatusLabel;
     @FXML
+    Label Player3ActionLabel;
+    @FXML
     TextField Player3BetField;
     @FXML
     Button Player3BetBtn;
@@ -738,6 +741,8 @@ public class BJController {
     Label Player4CardValueLabel;
     @FXML
     Label Player4StatusLabel;
+    @FXML
+    Label Player4ActionLabel;
     @FXML
     TextField Player4BetField;
     @FXML
@@ -766,6 +771,8 @@ public class BJController {
     @FXML
     Label Player5StatusLabel;
     @FXML
+    Label Player5ActionLabel;
+    @FXML
     TextField Player5BetField;
     @FXML
     Button Player5BetBtn;
@@ -790,6 +797,8 @@ public class BJController {
     Label Player6CardValueLabel;
     @FXML
     Label Player6StatusLabel;
+    @FXML
+    Label Player6ActionLabel;
     @FXML
     Pane Player6CardPane;
     @FXML
