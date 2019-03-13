@@ -294,6 +294,7 @@ public class BJController {
             }
         }else if(player.isDoubleBet() && handValue < 21){
             cardValueLabel.setText("Hand Value: " + handValue);
+            statusLabel.setText("You doubled down");
             actionLabel.setText("You cant draw another card");
             countMoves();
         }else if (handValue > 21) {
@@ -321,9 +322,12 @@ public class BJController {
             if(handValue > 21){                     //hat die Bank mehr als 21 ist sie raus
                 Model.getBank().setOut(true);
                 addStatusEntry("The Bank has more the 21 points. The Bank has lost");
-            }else if(handValue == 21){              //bei 21 Blackjack
+            }else if(handValue == 21 && Model.getBank().getHand().size() < 3) {              //bei 21 Blackjack
                 Model.getBank().setBJ(true);
-                addStatusEntry("The Bank has  21 points");
+                addStatusEntry("The Bank has BlackJack");
+            }else if(handValue == 21 && Model.getBank().getHand().size() > 2){              //bei 21 Blackjack
+                    addStatusEntry("The Bank stands with 21 points");
+                    Model.getBank().setStand(true);
             }else if(handValue < 17){                     //bei weniger als 17 -> karte ziehen
                  drawCard(Model.getBank(),1);
                 handValue = getHandValue(Model.getBank());     //und hand wert berechnen
@@ -343,15 +347,15 @@ public class BJController {
         for (Player player : Model.getPlayers()){
             setPlayerUI(player.getID());
             if(!player.isOut()){
-                if(player.BJ()){                                              //Spieler hat BlackJack
-                    if(Model.getBank().BJ()){                                      //und Bank auch
-                        player.setCredit(player.getCredit() + player.getBet()); //Spieler bekommt seinen einsatz zurück
-                        statusLabel.setText("Draw. You got your bet back");
-                    }else{                                                      //Spieler hat BJ aber bank nicht
-                        winnings = player.getBet()*2.5;                           //Spieler erhält 2,5fachen einsatz
-                        player.setCredit(player.getCredit() + winnings);
-                        statusLabel.setText("You won " + winnings + " credits!");
-                    }
+                if(player.BJ() && Model.getBank().BJ()) {                                              //Spieler hat BlackJack und Bank auch
+                    player.setCredit(player.getCredit() + player.getBet()); //Spieler bekommt seinen einsatz zurück
+                    statusLabel.setText("Draw. You got your bet back");
+                }else if(player.BJ() && !Model.getBank().BJ()) {                 //Spieler hat BJ aber bank nicht
+                    winnings = player.getBet() * 2.5;                           //Spieler erhält 2,5fachen einsatz
+                    player.setCredit(player.getCredit() + winnings);
+                    statusLabel.setText("You won " + winnings + " credits!");
+                }else if(!player.BJ() && Model.getBank().BJ()){                 //Bank hat Bj aber spieler nicht
+                    statusLabel.setText("You lost your bet!");                  //spieler verliert einsatz
                 }else if(Model.getBank().isOut()){                                         //Ist die Bank über 21 und der spieler nicht
                     winnings = player.getBet()*2;                               // erhält er seinen doppelten einsatz als gewinn
                     player.setCredit(player.getCredit() + winnings);
@@ -378,6 +382,8 @@ public class BJController {
             setPlayerUI(player.getID());
             if(player.getCredit() < Model.getMinBet()){
                 playerPane.setVisible(false);
+                player.setQuit(true);
+                countMoves();
             }else {
                 actionLabel.setText("Play again?");
                 playAgainButton.setVisible(true);
@@ -437,6 +443,10 @@ public class BJController {
         Model.setMovesThisTurn(0);
         for (Player player : Model.getPlayers()){
             setPlayerUI(player.getID());
+            betField.setEditable(true);
+            if(player.isDoubleBet()){
+                betField.setText(String.valueOf(player.getBet()/2));
+            }
             player.getHand().clear();
             player.setBet(0);
             player.setStand(false);
@@ -444,7 +454,6 @@ public class BJController {
             player.setOut(false);
             player.setDoubleBet(false);
             betButton.setDisable(false);
-            betField.setEditable(true);
             cardPane.getChildren().clear();
             cardValueLabel.setVisible(false);
             statusLabel.setText("");
