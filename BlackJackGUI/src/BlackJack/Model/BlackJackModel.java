@@ -5,14 +5,13 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class BlackJackModel {
-    Stage Stage;
+    private Stage Stage;
     private int gamestatus;         //Kontrolliert den Spielablauf in GameStateHandler()
     private int numberOfPlayers;
     private int MovesThisTurn;
     private ArrayList<Player> Players = new ArrayList<>(); //Array List mit allen vorhandenen Spielern
     private Player Bank = new Player(0);            //Der Spieler der die Bank repäsentiert
     private CardDeck CardDeck;      //Das bzw. die Kartenspiele
-   // private int numberOfCardDecks;  //Anzahl der verwendeten Kartenspiele
     private int CardCounter;                //zählt mit jeder gezogenen karte eins hoch
     private int minBet;                     //minimaler Wetteinsatz
     private int maxBet;                     //maximaler Wetteinsatz

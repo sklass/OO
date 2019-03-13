@@ -17,7 +17,7 @@ public class MainMenuView {
         MainMenuController Controller = loader.getController();
         Controller.setModel(Model);
         Scene scene = new Scene(root);
-        stage.setTitle("BlackJack v0.1");
+        stage.setTitle("BlackJack v1.0");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

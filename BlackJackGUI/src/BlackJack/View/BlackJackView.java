@@ -3,8 +3,10 @@ package BlackJack.View;
 import BlackJack.Model.BlackJackModel;
 import BlackJack.controller.BJController;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class BlackJackView {
@@ -21,11 +23,14 @@ public class BlackJackView {
         //Dem Controller wird das TTT Model zugewiesen. Auf diesem Weg sind dem Controller und der View das Modell bekannt
         Controller.setModel(Model);
         Controller.GameStateHandler();
-        Scene scene = new Scene(root);
+        stage.setX(0);
+        stage.setY(0);
+        Scene scene = new Scene(root, 1139,693);
         stage.setTitle("BlackJack");
         stage.setScene(scene);
         stage.setResizable(false);
         //Aufruf Gamestatehandler um das Soiel zu initialisieren
         stage.show();
+
     }
 }

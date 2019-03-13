@@ -126,7 +126,7 @@ public class BJController {
 
     @FXML
     private void PlayerBets(MouseEvent event){  //Methode verarbeitet die Wetteingaben der Spieler. Über den MouseEvent wird die Quelle des Klicks bestimmt
-        double bet = 0;
+        double bet;
         int playerID = whoClickedTheButton(event);                                                              //Aus der ID des Buttons die Id des spielers ableiten der geklickt hat
         setPlayerUI(playerID);                                                                                  //Festlegen welche Spieler GUi elemente genutzt werden
 
@@ -314,7 +314,7 @@ public class BJController {
         addStatusEntry("Banks turn begins");
         drawCard(Model.getBank(),1);                   //zunächst zieht die Bank eine weitere Karte
         showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
-        int handValue = 0;
+        int handValue;
         handValue = getHandValue(Model.getBank());
         BankCardValueLabel.setVisible(true);
 
@@ -433,8 +433,7 @@ public class BJController {
     }
 
     private boolean playersLeft(){
-        if(Model.getPlayers().size() == 0) return false;
-        return true;
+        return Model.getPlayers().size() != 0; //true wenn ungleich null -> false bei null
     }
 
     private void unsetPlayerVars(){
@@ -482,8 +481,6 @@ public class BJController {
         GameStatusListView.getItems().add(Info);
         int index = GameStatusListView.getItems().size();
         GameStatusListView.scrollTo(index);
-       // GameStatusListView.getSelectionModel().select(index);
-        //GameStatusListView.getFocusModel().focus(index);
     }
 
     private int whoClickedTheButton(MouseEvent event){
@@ -520,13 +517,13 @@ public class BJController {
         return playerID;
     }
 
-    private Player getPlayer(int playerID){
+    private Player getPlayer(int playerID){         //durchsucht die array list nach dem spieler mit der ID playerID
         for(Player player : Model.getPlayers()){
             if(player.getID() == playerID){
                 return player;
             }
         }
-        return null;
+        return Model.getPlayers().get(0);         //wird kein spieler gefunden, geben wir als default den ersten spieler zurück
     }
 
     @FXML
