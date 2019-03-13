@@ -3,7 +3,6 @@ package BlackJack.View;
 import BlackJack.Model.BlackJackModel;
 import BlackJack.controller.MainMenuController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;

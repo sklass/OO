@@ -194,8 +194,8 @@ public class BJController {
                 notDoubleButton.setVisible(true);
             }else{
                 actionLabel.setText("You cant double down");                      //kann ein spieler nicht verdoppeln wird nur eine meldung angezeigt
-               // if(player.BJ()) statusLabel.setText("You've got a BlackJack");
-                //if((player.getBet() <= player.getCredit())) statusLabel.setText("Not enough Credits");
+                if(player.BJ()) statusLabel.setText("You've got a BlackJack");
+                if((player.getBet() > player.getCredit())) statusLabel.setText("Not enough Credits");
                 countMoves();                                                                   //und der counter für nutzeraktionen um ein erhöht, da er nicht klicken kann
             }
         }
@@ -229,6 +229,7 @@ public class BJController {
         addStatusEntry("Players may now draw additional cards");
         for(Player player : Model.getPlayers()){                                                                //alle spieler durchlaufen
             setPlayerUI(player.getID());
+            statusLabel.setText("");
             if(player.isDoubleBet()){                                                                           //hat ein spieler verdoppelt bekommt er eine weitere karte
                 drawCard(player,1);
                 showPlayerCards(player);
@@ -276,50 +277,50 @@ public class BJController {
         return handValue;
     }
 
-    private void checkCardValues(Player player){
+    private void checkCardValues(Player player){                //auswertung der karten eines spielers
         setPlayerUI(player.getID());
-        cardValueLabel.setVisible(true);
-        int handValue = getHandValue(player);
-        if(handValue == 21) {                    //Kartenwert von 21
-            if (player.getHand().size() < 3) {    //und max. 2 karten
-                player.setBJ(true);             //BlackJack!
+        cardValueLabel.setVisible(true);                        //kartenwert label einblenden
+        int handValue = getHandValue(player);                   //kartenwerte zusammenrechnen und anschließend auswerten
+        if(handValue == 21) {                                   //Kartenwert von 21
+            if (player.getHand().size() < 3) {                  //und max. 2 karten
+                player.setBJ(true);                             //BlackJack!
                 cardValueLabel.setText("BlackJack!!");
             } else {
-                player.setStand(true);          //Kartenwert 21 und mehr als 3 karten -> stand
-                cardButton.setVisible(false);                                  //Buttons ausblenden
+                player.setStand(true);                          //Kartenwert 21 und mehr als 3 karten -> stand
+                cardButton.setVisible(false);                   //Buttons zum ziehen oder stehen ausblenden
                 standButton.setVisible(false);
-                cardValueLabel.setText("Hand Value: " + handValue);
-                actionLabel.setText("You've reached 21! Autostand!");
-                countMoves();
+                cardValueLabel.setText("Hand Value: " + handValue);     //Kartenwert anzeigen
+                actionLabel.setText("You've reached 21! Autostand!");   //autostand info bei 21 punkten
+                countMoves();                                           //bei autostand muss der nutzer nicht mehr klicken, daher werden die nutzeraktionen um eins hoch gezählt
             }
         }else if(player.isDoubleBet() && handValue < 21){
             cardValueLabel.setText("Hand Value: " + handValue);
             statusLabel.setText("You doubled down");
             actionLabel.setText("You cant draw another card");
             countMoves();
-        }else if (handValue > 21) {
-            player.setOut(true);
-            cardValueLabel.setText("Hand Value: " + handValue);
+        }else if (handValue > 21) {                                     //kartenwert größer 21
+            player.setOut(true);                                        //spieler ist raus
+            cardValueLabel.setText("Hand Value: " + handValue);         //info anzeigen
             actionLabel.setText("You're out.More then 21!");
             cardButton.setVisible(false);                                  //Buttons ausblenden
             standButton.setVisible(false);
-            countMoves();
+            countMoves();                                               //spieler kann nicht mehr klicken, daher werden die nutzeraktionen um eins erhöht
         }else {
-            cardValueLabel.setText("Hand Value: " + handValue);
+            cardValueLabel.setText("Hand Value: " + handValue);         //trifft keine der obigen bedingungen zu wird nur der kartenwert angezeigt
         }
 
     }
 
     private void BanksTurn(){
         addStatusEntry("Banks turn begins");
-        drawCard(Model.getBank(),1);                   //zunächst zieht die Bank eine weitere Karte
-        showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
+        drawCard(Model.getBank(),1);                                  //zunächst zieht die Bank eine weitere Karte
+        showPlayerCards(Model.getBank());                                           //Die karten der Bank werden angezeigt
         int handValue;
         handValue = getHandValue(Model.getBank());
         BankCardValueLabel.setVisible(true);
 
         while(!Model.getBank().BJ() && !Model.getBank().isStand() && !Model.getBank().isOut()){
-            if(handValue > 21){                     //hat die Bank mehr als 21 ist sie raus
+            if(handValue > 21){                                                     //hat die Bank mehr als 21 ist sie raus
                 Model.getBank().setOut(true);
                 addStatusEntry("The Bank has more the 21 points. The Bank has lost");
             }else if(handValue == 21 && Model.getBank().getHand().size() < 3) {              //bei 21 Blackjack
@@ -328,16 +329,16 @@ public class BJController {
             }else if(handValue == 21 && Model.getBank().getHand().size() > 2){              //bei 21 Blackjack
                     addStatusEntry("The Bank stands with 21 points");
                     Model.getBank().setStand(true);
-            }else if(handValue < 17){                     //bei weniger als 17 -> karte ziehen
+            }else if(handValue < 17){                                                       //bei weniger als 17 -> karte ziehen
                  drawCard(Model.getBank(),1);
-                handValue = getHandValue(Model.getBank());     //und hand wert berechnen
+                handValue = getHandValue(Model.getBank());                                  //und hand wert berechnen
                 addStatusEntry("The Bank draws another Card");
-            }else{                                  //ansonsten stehen
+            }else{                                                                          //ansonsten stehen
                 addStatusEntry("The Bank stands with " + handValue + " points");
                 Model.getBank().setStand(true);
             }
             BankCardValueLabel.setText("Hand Value: " + handValue);
-            showPlayerCards(Model.getBank());            //Die karten der Bank werden angezeigt
+            showPlayerCards(Model.getBank());                                               //Die karten der Bank werden angezeigt
         }
     }
 
@@ -376,16 +377,16 @@ public class BJController {
             }
         }
     }
-    private void showPlayAgain(){
+    private void showPlayAgain(){                                            //nachfrage buttons zum nochmal spielen einblenden
         addStatusEntry("Players may now choose to stay or leave the table");
-        for(Player player : Model.getPlayers()){        //Alle spieler durchlaufen
+        for(Player player : Model.getPlayers()){                            //Alle spieler durchlaufen
             setPlayerUI(player.getID());
-            if(player.getCredit() < Model.getMinBet()){
+            if(player.getCredit() < Model.getMinBet()){                     //wer zu wenig credits hat, bekommt keine buttons angezeigt
                 playerPane.setVisible(false);
                 player.setQuit(true);
                 countMoves();
             }else {
-                actionLabel.setText("Play again?");
+                actionLabel.setText("Play again?");                         //alle anderen können wählen ob sie noch eine runde spielen wollen oder nicht
                 playAgainButton.setVisible(true);
                 quitButton.setVisible(true);
             }
@@ -393,32 +394,32 @@ public class BJController {
     }
 
     @FXML
-    private void PlayAgain(MouseEvent event){
-        int playerID = whoClickedTheButton(event);
-        setPlayerUI(playerID);
+    private void PlayAgain(MouseEvent event){                               //Methode die beim klick auf nochmal spielen aufgerufen wird
+        int playerID = whoClickedTheButton(event);                          //wer hat geklickt
+        setPlayerUI(playerID);                                              //spieler gui inhalte definieren
         playAgainButton.setVisible(false);                                  //Buttons ausblenden
         quitButton.setVisible(false);
-        countMoves();
+        countMoves();                                                       //anzahl der der nutzer zählen die eine aktion getätigt haben
     }
 
     @FXML
-    private void QuitPlayer(MouseEvent event){
-        int playerID = whoClickedTheButton(event);
-        setPlayerUI(playerID);
-        playerPane.setVisible(false);
-        getPlayer(playerID).setQuit(true);
-        countMoves();                                                                                               //anzahl der der nutzer zählen die eine aktion getätigt haben
+    private void QuitPlayer(MouseEvent event){                              //methode die beim klick auf nicht nochmal spielen aufgerufen wird
+        int playerID = whoClickedTheButton(event);                          //wer hat geklickt
+        setPlayerUI(playerID);                                              //spieler gui inahlte definieren
+        playerPane.setVisible(false);                                       //spieler spielfläche ausblenden
+        getPlayer(playerID).setQuit(true);                                  //im spieler speichern das er nicht mehr mitspielt
+        countMoves();                                                       //anzahl der der nutzer zählen die eine aktion getätigt haben
     }
 
-    private void removePlayer(){
-        ArrayList <Player> remPlayers = new ArrayList<>();
+    private void removePlayer(){                                            //methode zum entfernen von spielern die nicht genug credits haben oder das speil beenden wollten
+        ArrayList <Player> remPlayers = new ArrayList<>();                  //array liste die die zu löschenden spieler beinhaltet
         for(Player player : Model.getPlayers()){
             if(player.isQuit() || player.getCredit() < Model.getMinBet()){
                 remPlayers.add(player);
                 addStatusEntry("Player " + (player.getID()+1) + " left the table");
             }
         }
-        for(Player player : remPlayers){
+        for(Player player : remPlayers){                                    //liste der zu löschenden spieler durchlaufen und aus der aktiven spieler arrayListe löschen
             Model.getPlayers().remove(player);
         }
     }
@@ -436,7 +437,7 @@ public class BJController {
         return Model.getPlayers().size() != 0; //true wenn ungleich null -> false bei null
     }
 
-    private void unsetPlayerVars(){
+    private void unsetPlayerVars(){                                                             //Methode um Variablen beim start einer neuen runde zurückzusetzen
 
         addStatusEntry("Starting new round with " + Model.getPlayers().size() + " players");
         Model.setMovesThisTurn(0);
@@ -466,7 +467,7 @@ public class BJController {
 
     }
 
-    private static boolean isDouble(String str) {
+    private static boolean isDouble(String str) {           //Methode zur prüfung bo ein Double wert eingegeben wurde
         try {
             Double.parseDouble(str);
             return true;
@@ -475,12 +476,12 @@ public class BJController {
         }
     }
 
-    private void addStatusEntry(String Text){
-        Label Info = new Label();
+    private void addStatusEntry(String Text){               //Methode zum hinzufügen von einträgen im GameStatus ListView
+        Label Info = new Label();                           //Jeder Eintrag ist ein Label
         Info.setText(Text);
         GameStatusListView.getItems().add(Info);
         int index = GameStatusListView.getItems().size();
-        GameStatusListView.scrollTo(index);
+        GameStatusListView.scrollTo(index);                 //Autoamtisch zum neuen Eintrag scrollen
     }
 
     private int whoClickedTheButton(MouseEvent event){
@@ -517,7 +518,7 @@ public class BJController {
         return playerID;
     }
 
-    private Player getPlayer(int playerID){         //durchsucht die array list nach dem spieler mit der ID playerID
+    private Player getPlayer(int playerID){         //durchsucht die Spieler array list nach dem spieler mit der ID playerID
         for(Player player : Model.getPlayers()){
             if(player.getID() == playerID){
                 return player;
@@ -527,13 +528,13 @@ public class BJController {
     }
 
     @FXML
-    private void backToMainMenu() throws Exception{
+    private void backToMainMenu() throws Exception{     //zurück zum Hauptmenü
         unsetPlayerVars();
         Model.getPlayers().clear();
         MainMenuView MainMenu = new MainMenuView(Model);
     }
 
-    private void setPlayerUI(int playerID){
+    private void setPlayerUI(int playerID){     //die methode ordnet anhand der spieler id die spielfläche einem spieler zu
 
         switch(playerID){
             case 0:

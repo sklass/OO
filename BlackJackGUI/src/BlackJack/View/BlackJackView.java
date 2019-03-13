@@ -3,10 +3,8 @@ package BlackJack.View;
 import BlackJack.Model.BlackJackModel;
 import BlackJack.controller.BJController;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class BlackJackView {
