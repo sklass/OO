@@ -24,10 +24,9 @@ public class BlackJackView {
         stage.setX(0);
         stage.setY(0);
         Scene scene = new Scene(root, 1139,693);
-        stage.setTitle("BlackJack");
+        stage.setTitle("BlackJack v1.0 by S.Klaß");
         stage.setScene(scene);
         stage.setResizable(false);
-        //Aufruf Gamestatehandler um das Soiel zu initialisieren
         stage.show();
 
     }

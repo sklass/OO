@@ -15,7 +15,7 @@
             <Image url="@../img/mainmenu_640.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="NumberOfPlayersTextField" layoutX="164.0" layoutY="67.0" prefHeight="25.0" prefWidth="39.0" text="1" />
+      <TextField fx:id="NumberOfPlayersTextField" layoutX="164.0" layoutY="67.0" prefHeight="25.0" prefWidth="39.0" text="1-6" />
       <Label layoutX="27.0" layoutY="69.0" text="Number of Players" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -27,8 +27,8 @@
          </font>
       </Label>
       <Button fx:id="PlayBtn" layoutX="14.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#PlayBJ" prefHeight="25.0" prefWidth="39.0" text="Play" />
-      <TextField fx:id="MinBetTextField" layoutX="164.0" layoutY="142.0" prefHeight="25.0" prefWidth="39.0" text="10" />
-      <TextField fx:id="MaxBetTextField" layoutX="164.0" layoutY="184.0" prefHeight="25.0" prefWidth="39.0" text="250" />
+      <TextField fx:id="MinBetTextField" layoutX="164.0" layoutY="142.0" prefHeight="25.0" prefWidth="39.0" text="100" />
+      <TextField fx:id="MaxBetTextField" layoutX="164.0" layoutY="184.0" prefHeight="25.0" prefWidth="39.0" text="500" />
       <Label layoutX="27.0" layoutY="144.0" text="Minimum Bet" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -40,7 +40,7 @@
          </font>
       </Label>
       <Button fx:id="QuitBtn" layoutX="299.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#Quit" text="Quit" />
-      <TextField fx:id="StartCreditTextField" layoutX="164.0" layoutY="104.0" prefHeight="25.0" prefWidth="39.0" text="250" />
+      <TextField fx:id="StartCreditTextField" layoutX="164.0" layoutY="104.0" prefHeight="25.0" prefWidth="39.0" text="2500" />
       <Label layoutX="27.0" layoutY="107.0" text="StartCredit" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />

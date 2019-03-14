@@ -6,7 +6,7 @@ public class Player {
     private int ID;
     private double credit;
     private double bet;
-    ArrayList <Card> hand = new ArrayList();
+    ArrayList <Card> hand = new ArrayList<Card>();
     private boolean BJ;
     private boolean out;
     private boolean stand;

@@ -467,7 +467,7 @@ public class BJController {
 
     }
 
-    private static boolean isDouble(String str) {           //Methode zur prüfung bo ein Double wert eingegeben wurde
+    private boolean isDouble(String str) {           //Methode zur prüfung bo ein Double wert eingegeben wurde
         try {
             Double.parseDouble(str);
             return true;
