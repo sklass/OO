@@ -51,7 +51,7 @@ public class BJController {
                 GameStateHandler();
                 break;
             case 1:                                             //Wird beim ersten durchlauf übersprungen, hier wird bei start der 2ten runde begonnen
-                unsetPlayerVars();                              //Alle Spielerwerte der letzten runde zurücksetzen (außer credits)
+                unsetPlayerVars();                              //Alle Spielerwerte der letzten runde zurücksetzen (außer credits und wetteinsatz)
                 Model.setGamestatus(2);
                 GameStateHandler();
                 break;
@@ -61,7 +61,8 @@ public class BJController {
                 GameStateHandler();
                 break;
             case 3:                                          //Spieler können Ihre wetteinsätze machen
-                                                             //Hier wird auf klicks der spieler gewartet, haben alle spieler geklickt, springt count moves in den nächsten gamestatus
+                addStatusEntry("Minimum Bet is " + Model.getMinBet());                                             //Hier wird auf klicks der spieler gewartet, haben alle spieler geklickt, springt count moves in den nächsten gamestatus
+                addStatusEntry("Maximum Bet is " + Model.getMaxBet());
                 break;
             case 4:
                 drawStartCards();                           //Zu beginn des Spiels werden 2 karten an alle Spieler vergeben und eine an die bank
@@ -138,7 +139,7 @@ public class BJController {
             return;
         }
         if (bet < Model.getMinBet() || bet > Model.getMaxBet()){                                                //Prüfen ob Wette nicht zu klein oder groß ist
-            statusLabel.setText("Place a bet between " + Model.getMinBet() + " and "+ Model.getMaxBet());
+            statusLabel.setText("Min. Bet: " + Model.getMinBet() + " Max. Bet: "+ Model.getMaxBet());
             betField.setStyle("-fx-control-inner-background: red;");                                            //Meldung + hintergrund falls ungültige wette
         }else {
 
